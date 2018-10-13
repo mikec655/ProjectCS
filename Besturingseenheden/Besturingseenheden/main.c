@@ -302,6 +302,7 @@ void read_sensor0(void)
 
 void transmit_sensor_values()
 {
+    // stuur waarde voor elkeer sensor over serial
     for (int i = 0; i < 5; i++){
         transmit(sensor_values[i]);
     }
@@ -309,13 +310,16 @@ void transmit_sensor_values()
 
 int main()
 {
-	init_ports();
+	//init
+    init_ports();
     init_uart();
     init_adc();
-	scheduler_init_timer1(); // init de timer en verwijder alle taken
+	scheduler_init_timer1(); 
+    // tasks
 	scheduler_add_task(read_sensor0,0,100);
     scheduler_add_task(transmit_sensor_values,0,500);
-	scheduler_start(); // start de scheduler
+    // start de scheduler
+	scheduler_start(); 
 	while (1) {
 		scheduler_dispatch_tasks();
 	}
