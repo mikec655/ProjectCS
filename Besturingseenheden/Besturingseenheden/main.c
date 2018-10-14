@@ -314,12 +314,12 @@ int main()
     init_ports();
     init_uart();
     init_adc();
-	scheduler_init_timer1(); 
+	scheduler_init_timer1();
     // tasks
 	scheduler_add_task(read_sensor0,0,100);
     scheduler_add_task(transmit_sensor_values,0,500);
     // start de scheduler
-	scheduler_start(); 
+	scheduler_start();
 	while (1) {
 		scheduler_dispatch_tasks();
 	}

@@ -6,8 +6,9 @@ setup(name='centrale',
       author='Mike Clarke',
       author_email='mikec655@gmail.com',
       url='https://github.com/mikec655/ProjectCS.git',
-      packages=['centrale'],
+      packages=find_packages(exclude=['centrale']),
       install_requires=[
-        "serial"
+        "pyserial>=3.4",
+        "matplotlib>=3.0.0"
         ],
       )

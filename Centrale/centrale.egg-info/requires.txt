@@ -1,1 +1,2 @@
-serial
+pyserial>=3.4
+matplotlib>=3.0.0
