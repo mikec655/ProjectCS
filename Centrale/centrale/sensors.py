@@ -11,12 +11,10 @@ class SensorReader(Serial):
         while True:
             value = self.read()
             value = int.from_bytes(value, byteorder='little', signed=False)
+            # WARNING: onderstaande conditie is incorrect
             if value > 0:
-                v_out = value * (5.0 / 256)
-                celsius = round((v_out - 0.5) * 100)
-                
                 with open (self.log_file_path, "a") as f:
-                    f.write(datetime.now().strftime("%H:%M:%S") + "," + str(celsius) + '\n')
+                    f.write(datetime.now().strftime("%H:%M:%S") + "," + str(value) + '\n')
 
 ''' 
 ports_list = list_ports.comports()

@@ -19,7 +19,7 @@ void scheduler_start(void);
 // Core scheduler functions
 void scheduler_dispatch_tasks(void);
 unsigned char scheduler_add_task(void (*)(void), const unsigned int, const unsigned int);
-unsigned char scheduler_delete_task(const unsigned char);
+void scheduler_delete_task(const unsigned char);
 
 // hier het aantal taken aanpassen ....!!
 // Maximum number of tasks
