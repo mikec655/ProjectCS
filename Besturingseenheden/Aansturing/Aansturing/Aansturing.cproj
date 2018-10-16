@@ -12,9 +12,9 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>Besturingseenheden</AssemblyName>
-    <Name>Besturingseenheden</Name>
-    <RootNamespace>Besturingseenheden</RootNamespace>
+    <AssemblyName>Aansturing</AssemblyName>
+    <Name>Aansturing</Name>
+    <RootNamespace>Aansturing</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
     <OverrideVtor>false</OverrideVtor>
