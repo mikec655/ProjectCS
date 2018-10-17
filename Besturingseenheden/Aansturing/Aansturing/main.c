@@ -210,10 +210,9 @@ void init_ext_int1(void)
 
 void init_timer0()
 {
-    TCCR0A = (1<<WGM01);
+    TCCR0A = 0;
     TCCR0B = 0;
-    TIMSK0 = (1<<OCIE0A);
-    OCR0A = 255;
+    TIMSK0 = (1<<TOIE0);
 }
 
 
@@ -260,7 +259,7 @@ ISR (INT1_vect)
 	}
 }
 
-ISR (TIMER0_COMPA_vect)
+ISR (TIMER0_OVF_vect)
 {
     counter++;
 }
@@ -269,7 +268,7 @@ void start_timer()
 {
     TCNT0 = 0;
     counter = 0;
-    TCCR0B = (1<<CS02);
+    TCCR0B = (1<<CS01) | (1<<CS00);
 }
 
 void send_trigger(void)
@@ -284,7 +283,7 @@ void send_trigger(void)
 
 uint16_t calc_cm(uint16_t counter)
 {
-    uint16_t result = (counter * 4096 + TCNT0 * 256) / 58;
+    uint16_t result = (counter * 256 + TCNT0) * 4 / 58;
 	return result;
 }
 

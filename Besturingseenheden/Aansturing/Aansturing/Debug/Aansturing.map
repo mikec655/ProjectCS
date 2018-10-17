@@ -311,8 +311,8 @@ END GROUP
                 0x000000a2                __vector_21
                 0x000000a2                __vector_15
                 0x000000a2                __vector_8
+                0x000000a2                __vector_14
                 0x000000a2                __vector_10
-                0x000000a2                __vector_16
                 0x000000a2                __vector_18
                 0x000000a2                __vector_20
                 0x000000a6                . = ALIGN (0x2)
@@ -342,28 +342,28 @@ END GROUP
                 0x000001e4        0xc main.o
                 0x000001e4                init_ext_int1
  .text.init_timer0
-                0x000001f0       0x10 main.o
+                0x000001f0        0xc main.o
                 0x000001f0                init_timer0
  .text.init_uart
-                0x00000200       0x1c main.o
-                0x00000200                init_uart
+                0x000001fc       0x1c main.o
+                0x000001fc                init_uart
  .text.transmit
-                0x0000021c       0x10 main.o
-                0x0000021c                transmit
- .text.__vector_14
-                0x0000022c       0x2e main.o
-                0x0000022c                __vector_14
+                0x00000218       0x10 main.o
+                0x00000218                transmit
+ .text.__vector_16
+                0x00000228       0x2e main.o
+                0x00000228                __vector_16
  .text.start_timer
-                0x0000025a       0x10 main.o
-                0x0000025a                start_timer
+                0x00000256       0x10 main.o
+                0x00000256                start_timer
  .text.__vector_2
-                0x0000026a       0x64 main.o
-                0x0000026a                __vector_2
+                0x00000266       0x64 main.o
+                0x00000266                __vector_2
  .text.send_trigger
-                0x000002ce       0x2a main.o
-                0x000002ce                send_trigger
- .text.calc_cm  0x000002f8       0x26 main.o
-                0x000002f8                calc_cm
+                0x000002ca       0x2a main.o
+                0x000002ca                send_trigger
+ .text.calc_cm  0x000002f4       0x2a main.o
+                0x000002f4                calc_cm
  .text.main     0x0000031e       0x5e main.o
                 0x0000031e                main
  .text.libgcc.mul
@@ -512,10 +512,10 @@ END GROUP
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2      0x350 main.o
 
-.debug_line     0x00000000      0x6c3
+.debug_line     0x00000000      0x6bd
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000133      0x590 main.o
+ .debug_line    0x00000133      0x58a main.o
 
 .debug_frame    0x00000000      0x28c
  *(.debug_frame)
