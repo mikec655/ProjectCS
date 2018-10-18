@@ -3,6 +3,8 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <string.h>
 #include <util/delay.h>
 
 
@@ -216,6 +218,13 @@ void transmit(uint8_t data)
 	UDR0 = data;
 }
 
+void transmit_string(char* data)
+{
+	for (uint8_t i = 0; i < strlen(data); i++){
+		transmit(data[i]);
+	}
+}
+
 uint8_t receive(void)
 {
 	// wacht totdat er data op de recieve buffer wordt gezet 
@@ -240,8 +249,9 @@ void transmit_sensor_value()
     float v_out = (float) value * (5.0 / 1024.0);
     uint8_t celsius = (uint8_t) ((v_out - 0.5) * 100.0);
     // verstuurt waarde over serial
-    transmit(celsius);
-
+    char data[16];
+	sprintf(data, "_TEMP: %d\n", celsius);
+	transmit_string(data);
 }
 
 int main()
@@ -252,7 +262,6 @@ int main()
     init_adc();
 	scheduler_init_timer1();
     // tasks
-	//scheduler_add_task(,0,100);
     scheduler_add_task(transmit_sensor_value,0,500);
     // start de scheduler
 	scheduler_start();
