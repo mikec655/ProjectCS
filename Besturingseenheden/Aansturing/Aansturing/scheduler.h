@@ -24,4 +24,4 @@ void scheduler_delete_task(const unsigned char);
 // hier het aantal taken aanpassen ....!!
 // Maximum number of tasks
 
-#define SCHEDULER_MAX_TASKS (5)
+#define SCHEDULER_MAX_TASKS (10)

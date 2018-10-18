@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <math.h>
 #include "const.h"
 #include "scheduler.h"
 #include "distance.h"
@@ -7,13 +8,17 @@
 #include <util/delay.h>
 
 
+// Const
+
+
 // Uitrolwaardes
-int8_t MAX_UITROL;
-int8_t MIN_UITROL;
+uint8_t MAX_UITROL = 160;
+uint8_t MIN_UITROL = 5;
 
 // Ultrasoon waardes
 uint16_t counter = 0; // 16 bit counter value
 uint8_t echo = 0; // a flag
+uint8_t distance = 0; //de afstand
 
 // De array met taken
 sTask scheduler_tasks[SCHEDULER_MAX_TASKS];
@@ -185,10 +190,10 @@ ISR(TIMER1_COMPA_vect)
 // init functies
 void init_ports(void)
 {
-    // set pin PB5 (arduino: 13) as output for GREEN LED
-    // set pin PB4 (arduino: 12) as output for RED LED
-    // set pin PB3 (arduino: 11) as output for YELLOW LED
-    DDRB |= 0b00111000;
+    // set pin PB4 (arduino: 12) as output for GREEN LED
+    // set pin PB3 (arduino: 11) as output for RED LED
+    // set pin PB2 (arduino: 10) as output for YELLOW LED
+    DDRB |= 0b00011100;
     // set pin PB1 (arduino: 9) as output for motor (reversed)
     // set pin PB0 (arduino: 8) as output for motor
     DDRB |= 0b00000011;
@@ -212,6 +217,7 @@ void init_timer0()
 {
     TCCR0A = 0;
     TCCR0B = 0;
+    // Enable Overflow Interrupt 
     TIMSK0 = (1<<TOIE0);
 }
 
@@ -251,7 +257,7 @@ uint8_t receive(void)
 // Ultrasoon functies
 ISR (INT1_vect)
 {
-    echo = (~echo) & 1;
+    echo = (~echo) & 1; //invert echo flag
 	if (echo){
 		start_timer();
 	} else {
@@ -261,13 +267,16 @@ ISR (INT1_vect)
 
 ISR (TIMER0_OVF_vect)
 {
+    // Verhoog counter bij overflow interrupt timer 1
     counter++;
 }
 
 void start_timer()
 {
+    // Reset counter van Timer en counter
     TCNT0 = 0;
     counter = 0;
+    // start timer0 met prescaler 64
     TCCR0B = (1<<CS01) | (1<<CS00);
 }
 
@@ -287,35 +296,43 @@ uint16_t calc_cm(uint16_t counter)
 	return result;
 }
 
+void set_distance(void)
+{
+    send_trigger();
+	uint8_t dist = calc_cm(counter);
+    distance = dist;
+	transmit(distance);
+}
+
 // LED functies
 void turn_on_green_led(void)
-{
-    PORTB |= 0b00100000;
-}
-
-void turn_off_green_led(void)
-{
-    PORTB &= 0b11011111;
-}
-
-void turn_on_red_led(void)
 {
     PORTB |= 0b00010000;
 }
 
-void turn_off_red_led(void)
+void turn_off_green_led(void)
 {
     PORTB &= 0b11101111;
 }
 
-void turn_on_yellow_led(void)
+void turn_on_red_led(void)
 {
     PORTB |= 0b00001000;
 }
 
-void turn_off_yellow_led(void)
+void turn_off_red_led(void)
 {
     PORTB &= 0b11110111;
+}
+
+void turn_on_yellow_led(void)
+{
+    PORTB |= 0b00000100;
+}
+
+void turn_off_yellow_led(void)
+{
+    PORTB &= 0b11111011;
 }
 
 // Motor functies
@@ -341,8 +358,41 @@ void stop_motor(void)
     PORTB &= 0b11111100; 
 }
 
-int main()
+void change_sun_shade()
 {
+	uint8_t precentage = receive();
+	
+	set_distance();
+	uint8_t new_distance = (uint8_t) round((float) MAX_UITROL - (float) (MAX_UITROL - MIN_UITROL) / 100.0 * (float) precentage); 
+	if (distance == new_distance){
+		return;
+	}
+	// uitrollen
+	else if (distance < new_distance) {
+		turn_on_red_led();
+		while (distance >= new_distance){
+			//turn_on_yellow_led();
+			set_distance();
+		}
+		//turn_off_red_led();
+		return;
+	}
+	
+	// inrollen
+	else if (distance > new_distance) {
+		turn_on_green_led();
+		while (distance <= new_distance){
+			set_distance();
+		}
+		//turn_off_green_led();
+		return;
+	}
+	turn_on_yellow_led();
+	
+}
+
+int main()
+{ 
 	//init
     init_ports();
     init_uart();
@@ -350,15 +400,19 @@ int main()
     init_timer0();
 	scheduler_init_timer1();
     // tasks
-    scheduler_add_task(turn_on_red_led,0,400);
-    scheduler_add_task(turn_off_red_led,200,400);
+    //scheduler_add_task(turn_on_red_led, 0, 400);
+    //scheduler_add_task(turn_off_red_led, 200, 400);
+    //scheduler_add_task(turn_on_yellow_led, 0, 400);
+    //scheduler_add_task(turn_off_yellow_led, 200, 400);
+	//scheduler_add_task(turn_on_green_led, 0, 400);
+	//scheduler_add_task(turn_off_green_led, 200, 400);
+    //scheduler_add_task(set_distance, 100, 200);
     // start de scheduler
 	scheduler_start();
 	while (1) {
-		//scheduler_dispatch_tasks();
-        send_trigger();
-		_delay_ms(1000);
-		uint8_t distance = calc_cm(counter);
+		scheduler_dispatch_tasks();
+		//change_sun_shade();
+		set_distance();
 		transmit(distance);
 	}
 
