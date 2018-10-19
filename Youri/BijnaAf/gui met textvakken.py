@@ -32,7 +32,7 @@ class Project:
         graph = FigureCanvasTkAgg(fig, master=self.sensor)
         graph.get_tk_widget().pack(side="top",fill='both',expand=1)
 
-        graph_data = open("C:\\Users\\youri\\OneDrive\\Documenten\\ProjectCS\\Centrale\\centrale\\data.txt","r").read()
+        graph_data = open("data.txt","r").read()
         lines = graph_data.split('\n')
         xs = []
         ys = []
