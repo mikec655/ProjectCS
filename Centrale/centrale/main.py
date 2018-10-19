@@ -12,7 +12,7 @@ from tkinter import Tk, Label, Button, Entry
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import time
-import threading
+import _thread
 from sensors import SensorReader
 
 
@@ -153,8 +153,8 @@ class Application(tk.Tk):
 class Graph(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
-        self.sensor_reader1 = SensorReader("COM3", "Centrale/centrale/data.txt")
-        _thread.start_new_thread(self.sensor_reader1.log,())
+        self.sensor_reader1 = SensorReader("COM5", "data.txt")
+        _thread.start_new_thread(self.sensor_reader1.log, tuple())
         self.fig = plt.figure()
         self.ax1 = self.fig.add_subplot(1,1,1)
 
@@ -162,7 +162,7 @@ class Graph(ttk.Frame):
         self.graph.get_tk_widget().pack(side="top",fill='both',expand=1)
 
     def redraw(self, i):
-        graph_data = open("C:\\Users\\bernt\\OneDrive\\Jaar2\\Project\\ProjectCS\\Centrale\\centrale\\data.txt","r").read()
+        graph_data = open(self.sensor_reader1.log_file_path,"r").read()
         lines = graph_data.split('\n')
         xs = []
         ys = []
