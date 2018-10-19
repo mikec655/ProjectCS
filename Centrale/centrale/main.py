@@ -36,26 +36,18 @@ class Application(tk.Tk):
         minuitrollabel = Label(properties, text="Maximale Inrol:")
         minuitrolbox = Entry(properties)
 
-        minwaardelabel = Label(properties, text="Minimale waarde")
-        minwaardebox1 = Entry(properties)
-        minwaardebox2 = Entry(properties)
-        minwaardebox3 = Entry(properties)
-        minwaardebox4 = Entry(properties)
-        minwaardebox5 = Entry(properties)
+        grenswaardelabel = Label(properties, text="Grenswaarde")
+        grenswaardebox1 = Entry(properties)
+        grenswaardebox2 = Entry(properties)
+        grenswaardebox3 = Entry(properties)
+        grenswaardebox4 = Entry(properties)
+        grenswaardebox5 = Entry(properties)
 
-        maxwaardelabel = Label(properties, text="Maximale waarde")
-        maxwaardebox1 = Entry(properties)
-        maxwaardebox2 = Entry(properties)
-        maxwaardebox3 = Entry(properties)
-        maxwaardebox4 = Entry(properties)
-        maxwaardebox5 = Entry(properties)
+        aantimerlabel = Label(properties, text="Automatisch aan")
+        uittimerlabel = Label(properties, text="Automatisch uit")
 
-        uitrolpercentagelabel = Label(properties, text="Uitrol percentage")
-        uitrolpercentagebox1 = Entry(properties)
-        uitrolpercentagebox2 = Entry(properties)
-        uitrolpercentagebox3 = Entry(properties)
-        uitrolpercentagebox4 = Entry(properties)
-        uitrolpercentagebox5 = Entry(properties)
+        aantimerbox = Entry(properties)
+        uittimerbox = Entry(properties)
 
         aanuitlabel = Label(properties, text="Aan uit")
 
@@ -64,22 +56,17 @@ class Application(tk.Tk):
         sensor3label = Label(properties, text="SensorNaam")
         sensor4label = Label(properties, text="SensorNaam")
         sensor5label = Label(properties, text="SensorNaam")
-        manueellabel = Label(properties, text="Manueel")
 
-        # label.pack(fill=Y,padx=10)
+        luikopenlabel = Label(properties, text="Rol luik open")
+        luikdichtlabel = Label(properties, text="Rol luik dicht")
 
-        # label.pack(expand=1, fill="both")
         rolluiklabel.grid(row = 0, column = 0, columnspan = 50, padx = 1, pady = 20, sticky = 'w')
-       
 
         maxuitrollabel.grid(row=5, column=0 , columnspan = 20, padx = 1, pady = 1, sticky = 'w')
-        maxuitrolbox.grid(row = 15, column=0 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+        maxuitrolbox.grid(row = 5, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
 
         minuitrollabel.grid(row=25, column=0 , columnspan = 20, padx = 1, pady = 1, sticky = 'w')
-        minuitrolbox.grid(row = 35, column=0 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-
-        autobox = Checkbutton(properties, text="Automatisch")
-        autobox.grid(row = 45, column=1, padx = 1, pady = 1, sticky = 'n')
+        minuitrolbox.grid(row = 25, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
 
         sensor1label.grid(row = 55, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
         sensor2label.grid(row = 56, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
@@ -87,28 +74,23 @@ class Application(tk.Tk):
         sensor4label.grid(row = 58, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
         sensor5label.grid(row = 59, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
 
-        minwaardelabel.grid(row = 50, column = 30, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-        minwaardebox1.grid(row = 55, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        minwaardebox2.grid(row = 56, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        minwaardebox3.grid(row = 57, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        minwaardebox4.grid(row = 58, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        minwaardebox5.grid(row = 59, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        
-        maxwaardelabel.grid(row = 50, column = 70, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-        maxwaardebox1.grid(row = 55, column=70 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        maxwaardebox2.grid(row = 56, column=70 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        maxwaardebox3.grid(row = 57, column=70 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        maxwaardebox4.grid(row = 58, column=70 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        maxwaardebox5.grid(row = 59, column=70 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+        aantimerlabel.grid(row = 60, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
+        uittimerlabel.grid(row = 61, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
 
-        uitrolpercentagelabel.grid(row = 50, column = 130, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-        uitrolpercentagebox1.grid(row = 55, column=130 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        uitrolpercentagebox2.grid(row = 56, column=130 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        uitrolpercentagebox3.grid(row = 57, column=130 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        uitrolpercentagebox4.grid(row = 58, column=130 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-        uitrolpercentagebox5.grid(row = 59, column=130 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+        luikopenlabel.grid(row = 62, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
+        luikdichtlabel.grid(row = 63, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
 
-        aanuitlabel.grid(row = 50, column = 180, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
+        grenswaardelabel.grid(row = 50, column = 45, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
+        grenswaardebox1.grid(row = 55, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+        grenswaardebox2.grid(row = 56, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+        grenswaardebox3.grid(row = 57, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+        grenswaardebox4.grid(row = 58, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+        grenswaardebox5.grid(row = 59, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+
+        aantimerbox.grid(row = 60, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+        uittimerbox.grid(row = 61, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
+
+        aanuitlabel.grid(row = 50, column = 260, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
         s1box = Checkbutton(properties)
         s1box.grid(row = 55, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
         s2box = Checkbutton(properties)
@@ -119,8 +101,14 @@ class Application(tk.Tk):
         s4box.grid(row = 58, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
         s5box = Checkbutton(properties)
         s5box.grid(row = 59, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-
-        manueellabel.grid(row = 100, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
+        s6box = Checkbutton(properties)
+        s6box.grid(row = 60, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
+        s7box = Checkbutton(properties)
+        s7box.grid(row = 61, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
+        s8box = Checkbutton(properties)
+        s8box.grid(row = 62, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
+        s9box = Checkbutton(properties)
+        s9box.grid(row = 63, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
 
 
         # file = ttk.Frame(nb)
@@ -153,7 +141,7 @@ class Application(tk.Tk):
 class Graph(ttk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
-        self.sensor_reader1 = SensorReader("COM5", "data.txt")
+        self.sensor_reader1 = SensorReader("COM7", "data.txt")
         _thread.start_new_thread(self.sensor_reader1.log, tuple())
         self.fig = plt.figure()
         self.ax1 = self.fig.add_subplot(1,1,1)
