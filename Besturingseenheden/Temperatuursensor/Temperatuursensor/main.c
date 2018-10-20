@@ -234,13 +234,13 @@ uint8_t receive(void)
 }
 
 //sensor functies
-uint8_t get_adc_value()
+uint16_t get_adc_value()
 {
 	ADCSRA |= (1<<ADSC); // start conversion
 	loop_until_bit_is_clear(ADCSRA, ADSC);
-	return ADCH * 4 + ADCL / 64; // 8-bit resolution, left adjusted
+	// 10-bit resolution, left adjusted
+	return ADCL / 64 + ADCH * 4; //ADCL has to be first!
 }
-
 
 void transmit_sensor_value()
 {
