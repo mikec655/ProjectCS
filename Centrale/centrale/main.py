@@ -13,7 +13,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import time
 import _thread
-from sensors import SensorReader
+from sensors import Sensor, SerialException, list_ports, Serial
 
 
 class Application(tk.Tk):
@@ -21,6 +21,8 @@ class Application(tk.Tk):
     def __init__(self):
         # initialise a window.
         super().__init__()
+        self.sensors = []
+        self.threads = []
         self.config(background='white')
         self.geometry("1000x700")
         self.title("Application")
@@ -110,60 +112,30 @@ class Application(tk.Tk):
         s9box = Checkbutton(properties)
         s9box.grid(row = 63, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
 
-
-        # file = ttk.Frame(nb)
-
-        # # second page
-        # sensor1 = ttk.Frame(nb)
-        # text = ScrolledText(sensor1)
-        # text.pack(expand=1, fill="both")
-        sensor2graph = Graph(nb)        
-        # sensor3 = ttk.Frame(nb)
-        # sensor4 = ttk.Frame(nb)
-
-
         nb.add(properties, text='properties')
-        # nb.add(file, text='File')
-        # nb.add(sensor1, text='Sensor1')
-        nb.add(sensor2graph, text='Sensor2')
-        # nb.add(sensor3, text='Sensor3')
-        # nb.add(sensor4, text='Sensor4')
 
+        while True:
+            self.update()
+            self.check_for_sensors(nb)
+            for sensor in self.sensors:
+                pass
+                # nb.add(sensor.graph, text=sensor.name)
+                # ani = animation.FuncAnimation(sensor.graph.fig, sensor.graph.redraw, interval=5000)
+            nb.pack(expand=1, fill="both")
 
-
-        
-        nb.pack(expand=1, fill="both")
-        ani = animation.FuncAnimation(sensor2graph.fig, sensor2graph.redraw, interval=5000)
-
-        
-        self.mainloop()
-
-class Graph(ttk.Frame):
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.sensor_reader1 = SensorReader("COM7", "data.txt")
-        _thread.start_new_thread(self.sensor_reader1.log, tuple())
-        self.fig = plt.figure()
-        self.ax1 = self.fig.add_subplot(1,1,1)
-
-        self.graph = FigureCanvasTkAgg(self.fig, master=self)
-        self.graph.get_tk_widget().pack(side="top",fill='both',expand=1)
-
-    def redraw(self, i):
-        graph_data = open(self.sensor_reader1.log_file_path,"r").read()
-        lines = graph_data.split('\n')
-        xs = []
-        ys = []
-        for line in lines:
-            if len(line) > 1:
-                x, y = line.split(',')
-                # xs.append(datetime.strptime(x, "%H:%M:%S"))
-                xs.append(x)
-                #xs.append(float(x))
-                ys.append(float(y))
-            self.ax1.clear()
-            self.ax1.plot(xs, ys)
-
-     
+    def check_for_sensors(self, nb):
+        available_ports = list_ports.comports()
+        for port in available_ports:
+            # Als sensor niet in de sensors staat voeg toe
+            if port.device not in [sensor.port for sensor in self.sensors]:
+                s = Sensor(port.device, len(self.sensors) + 1)
+                self.sensors.append(s)
+                nb.add(s.graph, text=s.name)
+        for sensor in self.sensors:
+            # Als sensor niet meer aangesloten staat verwijder van sensor
+            if sensor.port not in [port.device for port in available_ports]:
+                sensor.graph.destroy()
+                self.sensors.remove(sensor)
+    
 if __name__ == '__main__':
     app = Application()
