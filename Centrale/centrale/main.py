@@ -13,7 +13,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 import time
 import _thread
-from sensors import Sensor, SerialException, list_ports, Counter, Serial
+from sensors import Sensor, SerialException, list_ports, Serial
 
 
 class Application(tk.Tk):
@@ -128,21 +128,25 @@ class Application(tk.Tk):
 
         while True:
             self.update()
-            self.check_for_sensors()
+            self.check_for_sensors(nb)
             for sensor in self.sensors:
-                nb.add(sensor.graph, text=sensor.name)
-                ani = animation.FuncAnimation(sensor.graph.fig, sensor.graph.redraw, interval=5000)
+                pass
+                # nb.add(sensor.graph, text=sensor.name)
+                # ani = animation.FuncAnimation(sensor.graph.fig, sensor.graph.redraw, interval=5000)
             nb.pack(expand=1, fill="both")
 
-    def check_for_sensors(self):
+    def check_for_sensors(self, nb):
         available_ports = list_ports.comports()
         for port in available_ports:
             # Als sensor niet in de sensors staat voeg toe
             if port.device not in [sensor.port for sensor in self.sensors]:
-                self.sensors.append(Sensor(port.device))
+                s = Sensor(port.device, len(self.sensors) + 1)
+                self.sensors.append(s)
+                nb.add(s.graph, text=s.name)
         for sensor in self.sensors:
             # Als sensor niet meer aangesloten staat verwijder van sensor
             if sensor.port not in [port.device for port in available_ports]:
+                sensor.graph.destroy()
                 self.sensors.remove(sensor)
     
 if __name__ == '__main__':

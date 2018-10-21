@@ -1,19 +1,15 @@
 from serial import Serial, SerialException
 from serial.tools import list_ports
 from datetime import datetime
-
-# only for code on the end of the page
-from collections import Counter
-from time import sleep
 import graph as g
 import threading
 
 class Sensor():
-    def __init__(self, comport):
+    def __init__(self, comport, index):
         self.serial = Serial(comport, 19200)
         self.serial.close()
         self.port = comport
-        self.name = self.get_name()
+        self.name = self.get_name(index)
         self.log_file_path = "Centrale/logs/" + self.name + datetime.now().strftime("%d-%m-%Y") + ".txt"
         # self.log_file_path = "../logs/" + self.name + datetime.now().strftime("%d-%m-%Y") + ".txt"
         self.graph = g.Graph(self.log_file_path)
@@ -26,8 +22,8 @@ class Sensor():
         self.thread = threading.Thread(target=self.log, name=self.name + "Thread")
         self.thread.start()
 
-    def get_name(self):
-        sensor_name = "My"
+    def get_name(self, index):
+        sensor_name = "Sensor" + str(index) + "_"
         while True:
             self.serial.open()
             response = self.serial.read_until()
@@ -44,14 +40,11 @@ class Sensor():
                 break
         return sensor_name
             
-
     def log(self):
+        self.serial.open()
         while True:
             try: 
-                self.serial.open()
                 response = self.serial.readline()
-                sleep(5)
-                self.serial.close()
                 response = response.decode("utf-8")
                 sensor_type, value = response.split(":")
                 value = int(value)
@@ -62,5 +55,4 @@ class Sensor():
                 pass
             except SerialException:
                 pass
-
-# s = Sensor("COM3")
+        self.serial.close()
