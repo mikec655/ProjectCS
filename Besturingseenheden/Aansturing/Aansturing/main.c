@@ -6,19 +6,19 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
-
-
-// Const
-
+#include <string.h>
 
 // Uitrolwaardes
-uint8_t MAX_UITROL = 160;
-uint8_t MIN_UITROL = 5;
+uint16_t MAX_UITROL = 5;
+uint16_t MIN_UITROL = 160;
+
+uint8_t UP = 1;
+uint8_t DOWN = 2;
 
 // Ultrasoon waardes
 uint16_t counter = 0; // 16 bit counter value
 uint8_t echo = 0; // a flag
-uint8_t distance = 0; //de afstand
+uint16_t distance = 0; //de afstand
 
 // De array met taken
 sTask scheduler_tasks[SCHEDULER_MAX_TASKS];
@@ -104,7 +104,7 @@ unsigned char scheduler_add_task(void (*pFunction)(), const unsigned int DELAY, 
 
 /* scheduler_delete_task()
 
-Verwijderd taak uit de scheduler. Dit verwijderd de functie niet van het geheugen,
+Verwijdert taak uit de scheduler. Dit verwijderd de functie niet van het geheugen,
 maar de taak wordt niet meer uitgevoerd door de scheduler
  
 TASK_INDEX - Taak index: gegeven door scheduler_add_task(). 
@@ -118,10 +118,22 @@ void scheduler_delete_task(const unsigned char TASK_INDEX)
    scheduler_tasks[TASK_INDEX].RunMe = 0;
 }
 
+/* scheduler_delete_all_tasks()
+
+Verwijdert alle taken uit de scheduler.
+*/
+
+void scheduler_delete_all_tasks()
+{
+	for (uint8_t i = 0; i < SCHEDULER_MAX_TASKS; i++){
+		scheduler_delete_task(i);
+	}
+}
+
 /* scheduler_init_timer1()
 
-  Instellen van de timer1: Prescaler, Compare Register, CTC mode.
-  Deze funcie roep je aan voor het gebruiken van de scheduler.  
+Instellen van de timer1: Prescaler, Compare Register, CTC mode.
+Deze funcie roep je aan voor het gebruiken van de scheduler.  
 
 */
 
@@ -246,6 +258,14 @@ void transmit(uint8_t data)
 	UDR0 = data;
 }
 
+void transmit_string(char* data)
+{
+	transmit(strlen(data));
+	for (uint8_t i = 0; i < strlen(data); i++){
+		//transmit(data[i]);
+	}
+}
+
 uint8_t receive(void)
 {
 	// wacht totdat er data op de recieve buffer wordt gezet 
@@ -254,12 +274,25 @@ uint8_t receive(void)
 	return UDR0;
 }
 
+void receive_string(char* data){
+	uint8_t i = 0;
+	strcpy(data, "");
+	char c = receive();
+	while (c != '\n') {
+		data[i] = c;
+		i++;
+		c = receive();
+	}
+}
+
 // Ultrasoon functies
+void start_timer0(void);
+
 ISR (INT1_vect)
 {
     echo = (~echo) & 1; //invert echo flag
 	if (echo){
-		start_timer();
+		start_timer0();
 	} else {
 		init_timer0();
 	}
@@ -271,7 +304,7 @@ ISR (TIMER0_OVF_vect)
     counter++;
 }
 
-void start_timer()
+void start_timer0(void)
 {
     // Reset counter van Timer en counter
     TCNT0 = 0;
@@ -296,11 +329,10 @@ uint16_t calc_cm(uint16_t counter)
 	return result;
 }
 
-void set_distance(void)
+void refresh_distance(void)
 {
     send_trigger();
-	uint8_t dist = calc_cm(counter);
-    distance = dist;
+	distance = calc_cm(counter);
 	transmit(distance);
 }
 
@@ -358,36 +390,60 @@ void stop_motor(void)
     PORTB &= 0b11111100; 
 }
 
-void change_sun_shade()
+void action(void);
+
+void check_if_down(void)
 {
-	uint8_t precentage = receive();
-	
-	set_distance();
-	uint8_t new_distance = (uint8_t) round((float) MAX_UITROL - (float) (MAX_UITROL - MIN_UITROL) / 100.0 * (float) precentage); 
-	if (distance == new_distance){
-		return;
+	if (distance <= MAX_UITROL && distance > 0)
+	{
+		scheduler_delete_all_tasks();
+		scheduler_add_task(turn_off_yellow_led, 0, 0);
+		scheduler_add_task(stop_motor, 0, 0);
+		scheduler_add_task(refresh_distance, 0, 20);
+		scheduler_add_task(action, 10, 20);
 	}
+}
+
+void check_if_up(void)
+{
+	if (distance >= MIN_UITROL)
+	{
+		scheduler_delete_all_tasks();
+		scheduler_add_task(turn_off_yellow_led, 0, 0);
+		scheduler_add_task(stop_motor, 0, 0);
+		scheduler_add_task(refresh_distance, 0, 20);
+		scheduler_add_task(action, 10, 20);
+	}
+}
+
+void action(void)
+{
+	char action[16] = "";
+	receive_string(action);
+	transmit_string(action);
 	// uitrollen
-	else if (distance < new_distance) {
-		turn_on_red_led();
-		while (distance >= new_distance){
-			//turn_on_yellow_led();
-			set_distance();
-		}
-		//turn_off_red_led();
-		return;
+	if (strcmp(action, "_DWN") == 0) {
+		transmit(255);
+		scheduler_delete_all_tasks();
+		scheduler_add_task(turn_off_green_led, 0, 0);
+		scheduler_add_task(turn_on_red_led, 0, 0);
+		scheduler_add_task(turn_on_yellow_led, 0, 50);
+		scheduler_add_task(turn_off_yellow_led, 25, 50);
+		scheduler_add_task(start_motor_reversed, 0, 0);
+		scheduler_add_task(refresh_distance, 0, 20);
+		scheduler_add_task(check_if_down, 10, 20);
 	}
-	
 	// inrollen
-	else if (distance > new_distance) {
-		turn_on_green_led();
-		while (distance <= new_distance){
-			set_distance();
-		}
-		//turn_off_green_led();
-		return;
+	else if (strcmp(action, "_UP") == 0) {
+		scheduler_delete_all_tasks();
+		scheduler_add_task(turn_off_red_led, 0, 0);
+		scheduler_add_task(turn_on_green_led, 0, 0);
+		scheduler_add_task(turn_on_yellow_led, 0, 50);
+		scheduler_add_task(turn_off_yellow_led, 25, 50);
+		scheduler_add_task(start_motor, 0, 0);
+		scheduler_add_task(refresh_distance, 0, 20);
+		scheduler_add_task(check_if_up, 10, 20);
 	}
-	turn_on_yellow_led();
 	
 }
 
@@ -400,20 +456,13 @@ int main()
     init_timer0();
 	scheduler_init_timer1();
     // tasks
-    //scheduler_add_task(turn_on_red_led, 0, 400);
-    //scheduler_add_task(turn_off_red_led, 200, 400);
-    //scheduler_add_task(turn_on_yellow_led, 0, 400);
-    //scheduler_add_task(turn_off_yellow_led, 200, 400);
-	//scheduler_add_task(turn_on_green_led, 0, 400);
-	//scheduler_add_task(turn_off_green_led, 200, 400);
-    //scheduler_add_task(set_distance, 100, 200);
+	scheduler_add_task(turn_on_yellow_led, 0, 0);
+	scheduler_add_task(refresh_distance, 0, 20);
+	scheduler_add_task(action, 10, 20);
     // start de scheduler
 	scheduler_start();
 	while (1) {
 		scheduler_dispatch_tasks();
-		//change_sun_shade();
-		set_distance();
-		transmit(distance);
 	}
 
 	return(0);
