@@ -1,22 +1,11 @@
-
-from random import randint
-from tkinter import *
-import tkinter as tk
+from tkinter import Tk, Label, Entry, Button, Checkbutton
 from tkinter import ttk
-from tkinter.scrolledtext import ScrolledText
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-from tkinter import Tk, Label, Button, Entry
- 
-# these two imports are important
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
+from sensors import Sensor, SerialException, list_ports
 import time
-import _thread
-from sensors import Sensor, SerialException, list_ports, Serial
+import threading
 
 
-class Application(tk.Tk):
+class Application(Tk):
 
     def __init__(self):
         # initialise a window.
@@ -117,10 +106,6 @@ class Application(tk.Tk):
         while True:
             self.update()
             self.check_for_sensors(nb)
-            for sensor in self.sensors:
-                pass
-                # nb.add(sensor.graph, text=sensor.name)
-                # ani = animation.FuncAnimation(sensor.graph.fig, sensor.graph.redraw, interval=5000)
             nb.pack(expand=1, fill="both")
 
     def check_for_sensors(self, nb):
@@ -128,14 +113,17 @@ class Application(tk.Tk):
         for port in available_ports:
             # Als sensor niet in de sensors staat voeg toe
             if port.device not in [sensor.port for sensor in self.sensors]:
-                s = Sensor(port.device, len(self.sensors) + 1)
+                time.sleep(1)
+                s = Sensor(port.device, self.sensors)
                 self.sensors.append(s)
                 nb.add(s.graph, text=s.name)
         for sensor in self.sensors:
             # Als sensor niet meer aangesloten staat verwijder van sensor
             if sensor.port not in [port.device for port in available_ports]:
                 sensor.graph.destroy()
+                sensor.stop()
                 self.sensors.remove(sensor)
+                
     
 if __name__ == '__main__':
     app = Application()
