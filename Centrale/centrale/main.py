@@ -88,22 +88,14 @@ class Application(Tk):
         nb.add(properties, text='properties')
         
         while True:
-<<<<<<< HEAD
             try:
                 self.update()
-                self.check_for_sensors(nb)
+                print(self.aansturingen)
+                self.check_for_devices(nb)
                 nb.pack(expand=1, fill="both")
             except TclError:
                 print("programma afgesloten")
                 break
-        
-                
-=======
-            self.update()
-            print(self.aansturingen)
-            self.check_for_devices(nb)
-            nb.pack(expand=1, fill="both")
->>>>>>> main
 
     def check_for_devices(self, nb):
         available_ports = list_ports.comports()
