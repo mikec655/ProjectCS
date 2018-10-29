@@ -1,6 +1,7 @@
-from tkinter import Tk, Label, Entry, Button, Checkbutton
+from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError
 from tkinter import ttk
 from sensors import Sensor, SerialException, list_ports
+
 import time
 import threading
 
@@ -102,11 +103,17 @@ class Application(Tk):
         s9box.grid(row = 63, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
 
         nb.add(properties, text='properties')
-
+        
         while True:
-            self.update()
-            self.check_for_sensors(nb)
-            nb.pack(expand=1, fill="both")
+            try:
+                self.update()
+                self.check_for_sensors(nb)
+                nb.pack(expand=1, fill="both")
+            except TclError:
+                print("programma afgesloten")
+                break
+        
+                
 
     def check_for_sensors(self, nb):
         available_ports = list_ports.comports()
