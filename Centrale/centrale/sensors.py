@@ -5,9 +5,10 @@ from linegraph import Graph
 import threading
 
 class Sensor():
-    def __init__(self, comport, existing_sensors):
+    def __init__(self, comport, device_type, existing_sensors):
         self.serial = Serial(comport, 19200)
         self.port = comport
+        self.sensor_type = device_type.split(":")[0]
         self.name = self.get_name(existing_sensors)
         self.log_file_path = "Centrale/logs/" + self.name + "_" + datetime.now().strftime("%d-%m-%Y") + ".txt"
         # self.log_file_path = "../logs/" + self.name + "_" + datetime.now().strftime("%d-%m-%Y") + ".txt"
@@ -29,13 +30,9 @@ class Sensor():
             "_LGHT": "Lichtsensor"
             }
         while True:
-            response = self.serial.read_until()
-            response = response.decode("utf-8")
-            sensor_type = response.split(":")[0]
-            if sensor_type in naming_dict.keys():
-                self.sensor_type = sensor_type
-                sensor_number = len([sensor for sensor in existing_sensors if sensor.sensor_type == sensor_type]) + 1
-                sensor_name += naming_dict[sensor_type] + str(sensor_number)
+            if self.sensor_type in naming_dict.keys():
+                sensor_number = len([sensor for sensor in existing_sensors if sensor.sensor_type == self.sensor_type]) + 1
+                sensor_name += naming_dict[self.sensor_type] + str(sensor_number)
                 break
         return sensor_name
             
