@@ -11,9 +11,7 @@ class Aansturing():
         self.serial.write(b"_CONN\n")
         self.port = comport
         self.name = "AansturingX"
-        # self.alive = True
-        # self.thread = threading.Thread(target=self.log, name=self.name + "Thread")
-        # self.thread.start()
+
 
     def uitrollen(self):
         sleep(1)
@@ -25,7 +23,3 @@ class Aansturing():
    
     def disconnect(self):
         self.serial.close()
-
-
-mtr = Aansturing("COM3")
-mtr.uitrollen()
