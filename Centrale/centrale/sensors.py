@@ -35,7 +35,7 @@ class Sensor():
             if sensor_type in naming_dict.keys():
                 self.sensor_type = sensor_type
                 sensor_number = len([sensor for sensor in existing_sensors if sensor.sensor_type == sensor_type]) + 1
-                sensor_name += "Temperatuursensor" + str(sensor_number)
+                sensor_name += naming_dict[sensor_type] + str(sensor_number)
                 break
         return sensor_name
             
