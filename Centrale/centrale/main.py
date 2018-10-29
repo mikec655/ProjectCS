@@ -20,6 +20,16 @@ class Application(Tk):
         self.geometry("1000x700")
         self.title("Application")
         nb = ttk.Notebook(self)
+
+        home = ttk.Frame(nb)
+        inrol_button = Button(home, text="Inrollen", command=self.inrollen)
+        uitrol_button = Button(home, text="Uitrollen", command=self.uitrollen)
+        inrol_button.grid()
+        uitrol_button.grid()
+
+        nb.add(home, text='Home')
+
+
         properties = ttk.Frame(nb)
         
 
@@ -79,7 +89,8 @@ class Application(Tk):
         s7box = Checkbutton(properties)
         s7box.grid(row = 61, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
 
-        nb.add(properties, text='properties')
+        nb.add(properties, text='Properties')
+
         
         while True:
             try:
@@ -124,6 +135,14 @@ class Application(Tk):
         ser.write(b"_CONN\n")
         ser.close()
         return device_type
+
+    def uitrollen(self):
+        for aansturing in self.aansturingen:
+            aansturing.uitrollen()
+
+    def inrollen(self):
+        for aansturing in self.aansturingen:
+            aansturing.inrollen()
 
 if __name__ == '__main__':
     app = Application()
