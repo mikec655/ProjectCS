@@ -260,9 +260,8 @@ void transmit(uint8_t data)
 
 void transmit_string(char* data)
 {
-	transmit(strlen(data));
 	for (uint8_t i = 0; i < strlen(data); i++){
-		//transmit(data[i]);
+		transmit(data[i]);
 	}
 }
 
@@ -394,7 +393,7 @@ void action(void);
 
 void check_if_down(void)
 {
-	if (distance <= MAX_UITROL && distance > 0)
+	if (distance <= MAX_UITROL && distance > MAX_UITROL - 5)
 	{
 		scheduler_delete_all_tasks();
 		scheduler_add_task(turn_off_yellow_led, 0, 0);
@@ -406,7 +405,7 @@ void check_if_down(void)
 
 void check_if_up(void)
 {
-	if (distance >= MIN_UITROL)
+	if (distance >= MIN_UITROL && distance < MIN_UITROL + 5)
 	{
 		scheduler_delete_all_tasks();
 		scheduler_add_task(turn_off_yellow_led, 0, 0);
@@ -416,14 +415,29 @@ void check_if_up(void)
 	}
 }
 
+void init_connection(void) {
+    char type[16] = "_MTR\n";
+	transmit_string(type);
+    char response[16] = "";
+    recieve_string(response)
+    if (strcmp(action, "_CONN") == 0) {
+        scheduler_delete_all_tasks();
+        scheduler_add_task(refresh_distance, 0, 20);
+        scheduler_add_task(action, 10, 20);
+    } 
+}
+
 void action(void)
 {
 	char action[16] = "";
 	receive_string(action);
-	transmit_string(action);
+    //init
+    if (strcmp(action, "_INIT") == 0) {
+		scheduler_delete_all_tasks();
+        scheduler_add_task(init_connection, 0, 50);
+	}
 	// uitrollen
 	if (strcmp(action, "_DWN") == 0) {
-		transmit(255);
 		scheduler_delete_all_tasks();
 		scheduler_add_task(turn_off_green_led, 0, 0);
 		scheduler_add_task(turn_on_red_led, 0, 0);
