@@ -1,16 +1,10 @@
 from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError
 from tkinter import ttk
-<<<<<<< HEAD
-from sensors import Sensor, SerialException, list_ports
-
-import time
-=======
 from serial import Serial, SerialException
 from serial.tools import list_ports
 from sensors import Sensor
 from aansturing import Aansturing
 from time import sleep
->>>>>>> main
 import threading
 
 
