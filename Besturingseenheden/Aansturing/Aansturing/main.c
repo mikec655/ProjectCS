@@ -12,9 +12,6 @@
 uint16_t MAX_UITROL = 5;
 uint16_t MIN_UITROL = 160;
 
-uint8_t UP = 1;
-uint8_t DOWN = 2;
-
 // Ultrasoon waardes
 uint16_t counter = 0; // 16 bit counter value
 uint8_t echo = 0; // a flag
@@ -332,7 +329,6 @@ void refresh_distance(void)
 {
     send_trigger();
 	distance = calc_cm(counter);
-	transmit(distance);
 }
 
 // LED functies
@@ -389,7 +385,7 @@ void stop_motor(void)
     PORTB &= 0b11111100; 
 }
 
-void action(void);
+void wait_for_task(void);
 
 void check_if_down(void)
 {
@@ -399,7 +395,7 @@ void check_if_down(void)
 		scheduler_add_task(turn_off_yellow_led, 0, 0);
 		scheduler_add_task(stop_motor, 0, 0);
 		scheduler_add_task(refresh_distance, 0, 20);
-		scheduler_add_task(action, 10, 20);
+		scheduler_add_task(wait_for_task, 10, 20);
 	}
 }
 
@@ -411,7 +407,7 @@ void check_if_up(void)
 		scheduler_add_task(turn_off_yellow_led, 0, 0);
 		scheduler_add_task(stop_motor, 0, 0);
 		scheduler_add_task(refresh_distance, 0, 20);
-		scheduler_add_task(action, 10, 20);
+		scheduler_add_task(wait_for_task, 10, 20);
 	}
 }
 
@@ -419,28 +415,28 @@ void init_connection(void) {
     char type[16] = "_MTR\n";
 	transmit_string(type);
     char response[16] = "";
-    recieve_string(response)
-    if (strcmp(action, "_CONN") == 0) {
+    receive_string(response);
+    if (strcmp(response, "_CONN") == 0) {
         scheduler_delete_all_tasks();
         scheduler_add_task(refresh_distance, 0, 20);
-        scheduler_add_task(action, 10, 20);
+        scheduler_add_task(wait_for_task, 10, 20);
     } 
 }
 
-void action(void)
+void wait_for_task(void)
 {
-	char action[16] = "";
-	receive_string(action);
-    //init
-    if (strcmp(action, "_INIT") == 0) {
+	char task[16] = "";
+	receive_string(task);
+    // init
+    if (strcmp(task, "_INIT") == 0) {
 		scheduler_delete_all_tasks();
-        scheduler_add_task(init_connection, 0, 50);
+        scheduler_add_task(init_connection, 0, 10);
 	}
 	// uitrollen
-	if (strcmp(action, "_DWN") == 0) {
+	else if (strcmp(task, "_DWN") == 0) {
 		scheduler_delete_all_tasks();
-		scheduler_add_task(turn_off_green_led, 0, 0);
-		scheduler_add_task(turn_on_red_led, 0, 0);
+		scheduler_add_task(turn_off_green_led, 0, 100);
+		scheduler_add_task(turn_on_red_led, 0, 100);
 		scheduler_add_task(turn_on_yellow_led, 0, 50);
 		scheduler_add_task(turn_off_yellow_led, 25, 50);
 		scheduler_add_task(start_motor_reversed, 0, 0);
@@ -448,17 +444,16 @@ void action(void)
 		scheduler_add_task(check_if_down, 10, 20);
 	}
 	// inrollen
-	else if (strcmp(action, "_UP") == 0) {
+	else if (strcmp(task, "_UP") == 0) {
 		scheduler_delete_all_tasks();
-		scheduler_add_task(turn_off_red_led, 0, 0);
-		scheduler_add_task(turn_on_green_led, 0, 0);
+		scheduler_add_task(turn_off_red_led, 0, 100);
+		scheduler_add_task(turn_on_green_led, 0, 100);
 		scheduler_add_task(turn_on_yellow_led, 0, 50);
 		scheduler_add_task(turn_off_yellow_led, 25, 50);
 		scheduler_add_task(start_motor, 0, 0);
 		scheduler_add_task(refresh_distance, 0, 20);
 		scheduler_add_task(check_if_up, 10, 20);
 	}
-	
 }
 
 int main()
@@ -472,7 +467,7 @@ int main()
     // tasks
 	scheduler_add_task(turn_on_yellow_led, 0, 0);
 	scheduler_add_task(refresh_distance, 0, 20);
-	scheduler_add_task(action, 10, 20);
+	scheduler_add_task(wait_for_task, 10, 20);
     // start de scheduler
 	scheduler_start();
 	while (1) {
