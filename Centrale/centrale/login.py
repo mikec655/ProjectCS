@@ -6,7 +6,7 @@ import properties as pp
 class Login:
 
     def __init__(self):
-        self.creds = 'tempfile.temp'
+        self.creds = 'Centrale/centrale/tempfile.temp'
         self.pwordE = ''
         self.nameE = ''
         self.loginN = ''

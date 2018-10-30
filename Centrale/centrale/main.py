@@ -1,3 +1,4 @@
+import sys
 from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError
 from tkinter import ttk
 from serial import Serial, SerialException
@@ -50,16 +51,17 @@ class Application(Tk):
         while True:
             try:
                 self.update()
-                print(self.aansturingen)
                 self.check_for_devices(self.nb)
                 self.nb.pack(expand=1, fill="both")
                 if loginFrame.loggedin == True:
-	                print(908876)
 	                loginFrame.loggedin = False
 	                instellingen = ttk.Frame(self.nb)
 	                rpropertie.propertieFrame(self.nb ,instellingen)
             except TclError:
-                print("programma afgesloten")
+                try:
+                    sys.exit(1)
+                except SystemExit:
+                    print("programma afgesloten")
                 break
 
     def check_for_devices(self, nb):
