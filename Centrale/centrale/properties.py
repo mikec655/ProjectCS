@@ -8,12 +8,6 @@ class properties:
     def propertieFrame(self, nb, properties):
         rolluiklabel = Label(properties, text="Rolluik:")
         rolluiklabel.config(font=("Times new roman", 18))
-        
-        maxuitrollabel = Label(properties, text="Maximale uitrol:")
-        maxuitrolbox = Entry(properties)
-
-        minuitrollabel = Label(properties, text="Maximale Inrol:")
-        minuitrolbox = Entry(properties)
 
         grenswaardelabel = Label(properties, text="Grenswaarde")
         grenswaardebox1 = Entry(properties)
@@ -36,16 +30,7 @@ class properties:
         sensor4label = Label(properties, text="SensorNaam")
         sensor5label = Label(properties, text="SensorNaam")
 
-        luikopenlabel = Label(properties, text="Rol luik open")
-        luikdichtlabel = Label(properties, text="Rol luik dicht")
-
         rolluiklabel.grid(row = 0, column = 0, columnspan = 50, padx = 1, pady = 20, sticky = 'w')
-
-        maxuitrollabel.grid(row=5, column=0 , columnspan = 20, padx = 1, pady = 1, sticky = 'w')
-        maxuitrolbox.grid(row = 5, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-
-        minuitrollabel.grid(row=25, column=0 , columnspan = 20, padx = 1, pady = 1, sticky = 'w')
-        minuitrolbox.grid(row = 25, column=30 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
 
         sensor1label.grid(row = 55, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
         sensor2label.grid(row = 56, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
@@ -55,9 +40,6 @@ class properties:
 
         aantimerlabel.grid(row = 60, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
         uittimerlabel.grid(row = 61, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-
-        luikopenlabel.grid(row = 62, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-        luikdichtlabel.grid(row = 63, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
 
         grenswaardelabel.grid(row = 50, column = 45, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
         grenswaardebox1.grid(row = 55, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
@@ -84,9 +66,5 @@ class properties:
         s6box.grid(row = 60, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
         s7box = Checkbutton(properties)
         s7box.grid(row = 61, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-        s8box = Checkbutton(properties)
-        s8box.grid(row = 62, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-        s9box = Checkbutton(properties)
-        s9box.grid(row = 63, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
 
         nb.add(properties, text='properties')
