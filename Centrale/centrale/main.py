@@ -6,11 +6,10 @@ from serial.tools import list_ports
 from aansturing import Aansturing
 from time import sleep
 from sensors import Sensor, SerialException, list_ports
-import login
+import loginscherm
 import properties as prprts
 import time
 import threading
-
 
 
 class Application(Tk):
@@ -33,7 +32,6 @@ class Application(Tk):
     def makeFrame(self):
     	pass
 
-  
     def home(self):
         home = ttk.Frame(self.nb)
         inrol_button = Button(home, text="Inrollen", command=self.inrollen)
@@ -45,7 +43,7 @@ class Application(Tk):
     def apploop(self):
         login0 = ttk.Frame(self.nb)
         rpropertie = prprts.properties()
-        loginFrame = login.Login()    
+        loginFrame = loginscherm.Login()    
         loginFrame.frame(login0, self.nb)
 
         while True:

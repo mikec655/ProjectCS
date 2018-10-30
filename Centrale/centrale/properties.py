@@ -1,6 +1,4 @@
-import main
-import login
-from tkinter import *
+from tkinter import Entry, Label, Checkbutton, Button
 
 class properties:
 
