@@ -6,6 +6,7 @@ class properties:
         pass
 
     def propertieFrame(self, nb, properties):
+
         rolluiklabel = Label(properties, text="Rolluik:")
         rolluiklabel.config(font=("Times new roman", 18))
 
@@ -24,7 +25,7 @@ class properties:
 
         aanuitlabel = Label(properties, text="Aan uit")
 
-        sensor1label = Label(properties, text="Licht Sensor")
+        sensor1label = Label(properties, text="Licht Sensor",background='white')
         sensor2label = Label(properties, text="Temperatuur Sensor")
         sensor3label = Label(properties, text="SensorNaam")
         sensor4label = Label(properties, text="SensorNaam")

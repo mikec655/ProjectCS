@@ -33,7 +33,9 @@ class Application(Tk):
     	pass
 
     def home(self):
-        home = ttk.Frame(self.nb)
+        style = ttk.Style()
+        style.configure("BW.TLabel", foreground="black",background="white")
+        home = ttk.Frame(self.nb, style="BW.TLabel")
         inrol_button = Button(home, text="Inrollen", command=self.inrollen)
         uitrol_button = Button(home, text="Uitrollen", command=self.uitrollen)
         inrol_button.grid()
@@ -41,7 +43,7 @@ class Application(Tk):
         self.nb.add(home, text='Home')
 
     def apploop(self):
-        login0 = ttk.Frame(self.nb)
+        login0 = ttk.Frame(self.nb, style="BW.TLabel")
         rpropertie = prprts.properties()
         loginFrame = loginscherm.Login()    
         loginFrame.frame(login0, self.nb)
@@ -53,7 +55,7 @@ class Application(Tk):
                 self.nb.pack(expand=1, fill="both")
                 if loginFrame.loggedin == True:
 	                loginFrame.loggedin = False
-	                instellingen = ttk.Frame(self.nb)
+	                instellingen = ttk.Frame(self.nb, style="BW.TLabel")
 	                rpropertie.propertieFrame(self.nb ,instellingen)
             except TclError:
                 try:

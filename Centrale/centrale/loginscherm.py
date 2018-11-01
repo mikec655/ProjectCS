@@ -44,7 +44,7 @@ class Login:
         loginB.grid(columnspan=2, sticky=W)
 
 
-        nb.add(login, text='login')
+        nb.add(login, text='Login')
 
     def CheckLogin(self):
         with open(self.creds) as f:
@@ -58,4 +58,4 @@ class Login:
 
 
         else:
-            print('foute loggin')
+            print('foute login')
