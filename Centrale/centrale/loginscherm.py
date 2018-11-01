@@ -4,6 +4,7 @@ class Login:
 
     def __init__(self):
         self.creds = 'Centrale/centrale/tempfile.temp'
+        #'C:\\Users\\gerben\\Desktop\\school\\jaar 2\\Per 1\\project\\ProjectCS\\Centrale\\centrale\\tempfile.temp'
         self.pwordE = ''
         self.nameE = ''
         self.loginN = ''
@@ -26,11 +27,11 @@ class Login:
         self.loginN = login
         self.sNB = nb
         
-        instruction = Label(login, text='Please login: ')
+        instruction = Label(login, text='Please login: ',background='white')
         instruction.grid(sticky=E)
 
-        name = Label(login,text = 'Username: ')
-        passw = Label(login, text='Password')
+        name = Label(login,text = 'Username: ',background='white')
+        passw = Label(login, text='Password',background='white')
 
         name.grid(row=1,sticky=W)
         passw.grid(row=2,sticky=W)
@@ -44,7 +45,7 @@ class Login:
         loginB.grid(columnspan=2, sticky=W)
 
 
-        nb.add(login, text='login')
+        nb.add(login, text='Login')
 
     def CheckLogin(self):
         with open(self.creds) as f:
@@ -58,4 +59,4 @@ class Login:
 
 
         else:
-            print('foute loggin')
+            print('foute login')
