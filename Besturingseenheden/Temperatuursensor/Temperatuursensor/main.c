@@ -109,6 +109,19 @@ void scheduler_delete_task(const unsigned char TASK_INDEX)
    scheduler_tasks[TASK_INDEX].RunMe = 0;
 }
 
+/* scheduler_delete_all_tasks()
+
+Verwijdert alle taken uit de scheduler.
+*/
+
+void scheduler_delete_all_tasks()
+{
+	for (uint8_t i = 0; i < SCHEDULER_MAX_TASKS; i++){
+		scheduler_delete_task(i);
+	}
+}
+
+
 /* scheduler_init_timer1()
 
   Instellen van de timer1: Prescaler, Compare Register, CTC mode.
@@ -233,6 +246,30 @@ uint8_t receive(void)
 	return UDR0;
 }
 
+void receive_string(char* data){
+	uint8_t i = 0;
+	strcpy(data, "");
+	char c = receive();
+	while (c != '\n') {
+		data[i] = c;
+		i++;
+		c = receive();
+	}
+}
+
+void transmit_sensor_value(void);
+
+void init_connection(void) {
+    char type[16] = "_TEMP\n";
+	transmit_string(type);
+    char response[16] = "";
+    receive_string(response);
+    if (strcmp(response, "_CONN") == 0) {
+        scheduler_delete_all_tasks();
+        scheduler_add_task(transmit_sensor_value, 100, 1000);
+    } 
+}
+
 //sensor functies
 uint16_t get_adc_value()
 {
@@ -254,6 +291,17 @@ void transmit_sensor_value()
 	transmit_string(data);
 }
 
+void wait_for_task(void)
+{
+	char task[16] = "";
+	receive_string(task);
+    // init
+    if (strcmp(task, "_INIT") == 0) {
+		scheduler_delete_all_tasks();
+        scheduler_add_task(init_connection, 0, 10);
+	}
+}
+
 int main()
 {
 	//init
@@ -262,7 +310,7 @@ int main()
     init_adc();
 	scheduler_init_timer1();
     // tasks
-    scheduler_add_task(transmit_sensor_value,0,500);
+    scheduler_add_task(wait_for_task,0,500);
     // start de scheduler
 	scheduler_start();
 	while (1) {
