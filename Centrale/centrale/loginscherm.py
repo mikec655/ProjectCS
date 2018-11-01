@@ -3,10 +3,12 @@ from tkinter import ttk
 
 class Login(ttk.Frame):
 
+
     def __init__(self,master=None):
         super().__init__(master)
         self.creds = 'Centrale/centrale/tempfile.temp'
         #'C:\\Users\\gerben\\Desktop\\school\\jaar 2\\Per 1\\project\\ProjectCS\\Centrale\\centrale\\tempfile.temp'
+
         self.loggedin = False
 
         with open(self.creds, 'w+') as f:
@@ -16,11 +18,11 @@ class Login(ttk.Frame):
 
 
     def frame(self, login, nb):
-        instruction = Label(login, text='Please login: ')
+        instruction = Label(login, text='Please login: ',background='white')
         instruction.grid(sticky=E)
 
-        name = Label(login,text = 'Username: ')
-        passw = Label(login, text='Password')
+        name = Label(login,text = 'Username: ',background='white')
+        passw = Label(login, text='Password',background='white')
 
         name.grid(row=1,sticky=W)
         passw.grid(row=2,sticky=W)
