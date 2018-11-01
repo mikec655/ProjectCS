@@ -5,10 +5,10 @@ from linegraph import Graph
 import threading
 
 class Sensor():
-    def __init__(self, comport, device_type, existing_sensors):
-        self.serial = Serial(comport, 19200)
-        self.port = comport
-        self.sensor_type = device_type.split(":")[0]
+    def __init__(self, my_serial, device_type, existing_sensors):
+        self.serial = my_serial
+        self.port = my_serial.port
+        self.sensor_type = device_type.strip("\n")
         self.name = self.get_name(existing_sensors)
         self.log_file_path = "Centrale/logs/" + self.name + "_" + datetime.now().strftime("%d-%m-%Y") + ".txt"
         # self.log_file_path = "../logs/" + self.name + "_" + datetime.now().strftime("%d-%m-%Y") + ".txt"

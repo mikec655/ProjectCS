@@ -21,13 +21,11 @@ class Application(Tk):
         self.aansturingen = []
         self.threads = []
         self.frames = []
-        self.destroi = 0
         self.config(background='white')
         self.geometry("1000x700")
         self.title("Application")
         self.nb = ttk.Notebook(self)
         self.home()
-        # self.makeFrame()
         self.apploop()
 
     def home(self):
@@ -43,14 +41,12 @@ class Application(Tk):
         self.rpropertie = prprts.Properties()
         loginFrame = loginscherm.Login()    
         loginFrame.frame(login0, self.nb)
-        logout = ttk.Frame(self.nb)
 
         while True:
             try:
                 self.update()
-                self.check_for_devices(self.nb)
+                self.check_for_devices()
                 self.nb.pack(expand=1, fill="both")
-                instellingen = ttk.Frame(self.nb)
                 if loginFrame.loggedin == 'I':
 	                loginFrame.loggedin = ''
 	                self.rpropertie.propertieFrame(self.nb, self.sensors, self.aansturingen)
@@ -65,20 +61,13 @@ class Application(Tk):
                     print("programma afgesloten")
                 break
 
-    def check_for_devices(self, nb):
+    def check_for_devices(self):
         available_ports = list_ports.comports()
         for port in available_ports:
             # Als sensor niet in de sensors staat voeg toe
             if port.device not in [sensor.port for sensor in self.sensors] and \
             port.device not in [aansturing.port for aansturing in self.aansturingen]:
-                device_type = self.init_device(port.device)
-                if device_type == "_MTR\n":
-                    a = Aansturing(port.device)
-                    self.aansturingen.append(a)
-                else:
-                    s = Sensor(port.device, device_type, self.sensors)
-                    self.sensors.append(s)
-                    nb.add(s.graph, text=s.name)
+                self.init_device(port.device)
         for sensor in self.sensors:
             # Als sensor niet meer aangesloten staat verwijder van sensor
             if sensor.port not in [port.device for port in available_ports]:
@@ -91,13 +80,21 @@ class Application(Tk):
                 self.aansturingen.remove(aansturing)
                 
     def init_device(self, comport):
-        ser = Serial(comport, 19200)
+        ser = Serial(comport, 19200, timeout=5)
         sleep(2)
         ser.write(b"_INIT\n")
         device_type = ser.readline().decode("UTF-8")
         ser.write(b"_CONN\n")
-        ser.close()
-        return device_type
+        if device_type == "_MTR\n":
+            a = Aansturing(ser)
+            self.aansturingen.append(a)
+        elif device_type == "":
+            pass
+        else:
+            s = Sensor(ser, device_type, self.sensors)
+            self.sensors.append(s)
+            self.nb.add(s.graph, text=s.name)
+        
 
     def uitrollen(self):
         for aansturing in self.aansturingen:
