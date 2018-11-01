@@ -3,9 +3,9 @@ import threading
 from time import sleep
 
 class Aansturing():
-    def __init__(self, comport):
-        self.serial = Serial(comport, 19200)
-        self.port = comport
+    def __init__(self, my_serial):
+        self.serial = my_serial
+        self.port = my_serial.port
         self.name = "AansturingX"
 
     def uitrollen(self):
