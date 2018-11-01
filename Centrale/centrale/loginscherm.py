@@ -18,28 +18,30 @@ class Login(ttk.Frame):
 
 
     def frame(self, login, nb):
-        instruction = Label(login, text='Please login: ',background='white')
+        self.login = login
+        self.nb = nb
+        instruction = Label(self.login, text='Please login: ',background='white')
         instruction.grid(sticky=E)
 
-        name = Label(login,text = 'Username: ',background='white')
-        passw = Label(login, text='Password',background='white')
+        name = Label(self.login,text = 'Username: ',background='white')
+        passw = Label(self.login, text='Password',background='white')
 
         name.grid(row=1,sticky=W)
         passw.grid(row=2,sticky=W)
 
-        self.nameE = Entry(login)
-        self.pwordE = Entry(login, show='*')
+        self.nameE = Entry(self.login)
+        self.pwordE = Entry(self.login, show='*')
         self.nameE.bind('<Return>', lambda _: self.CheckLogin())
         self.pwordE.bind('<Return>', lambda _: self.CheckLogin())
         self.nameE.grid(row=1, column=1)
         self.pwordE.grid(row=2, column=1)
         
 
-        loginB = Button(login, text='Login',command=self.CheckLogin)
+        loginB = Button(self.login, text='Login',command=self.CheckLogin)
         loginB.grid(columnspan=2, sticky=W)
         
 
-        logoutB = Button(login, text='Logout',command=self.logout)
+        logoutB = Button(self.login, text='Logout',command=self.logout)
         logoutB.grid(columnspan=2, sticky=W)
 
 
@@ -49,13 +51,19 @@ class Login(ttk.Frame):
             username = data[0].rstrip()
             password = data[1].rstrip()
 
-        if self.nameE.get() == username and self.pwordE.get() == password:
+
+
+        if not self.nameE.get() == username or not self.pwordE.get() == password:
+            print('foute login')
+            self.loginFault = Label(self.login, text='Fout wachtwoord',background='white')
+            self.loginFault.grid(row=5,sticky=W)
+        else:
             self.loggedin = "I"          
             print('correct pass')
             self.nameE.delete(0, 'end')
             self.pwordE.delete(0, 'end')
-        else:
-            print('foute login')
+            self.loginFault.destroy()
+
 
     def logout(self):
         self.loggedin = "U"

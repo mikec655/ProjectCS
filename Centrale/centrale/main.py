@@ -57,8 +57,11 @@ class Application(Tk):
 	                self.rpropertie.propertieFrame(self.nb, self.sensors, self.aansturingen)
                 elif loginFrame.loggedin == 'U':
                     loginFrame.loggedin = ''
-                    self.rpropertie.destroy()
-                    self.verwijderFrame(self.home, 'Home')
+                    try:
+                        self.rpropertie.destroy()
+                        self.verwijderFrame(self.home, 'Home')
+                    except:
+                        print('error')
             except TclError:
                 try:
                     sys.exit(1)
