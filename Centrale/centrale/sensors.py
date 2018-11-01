@@ -1,7 +1,6 @@
 from serial import Serial, SerialException
 from serial.tools import list_ports
 from datetime import datetime
-from time import sleep
 from linegraph import Graph
 import threading
 
@@ -9,7 +8,7 @@ class Sensor():
     def __init__(self, comport, device_type, existing_sensors):
         self.serial = Serial(comport, 19200)
         self.port = comport
-        self.sensor_type = device_type.strip("\n")
+        self.sensor_type = device_type.split(":")[0]
         self.name = self.get_name(existing_sensors)
         self.log_file_path = "Centrale/logs/" + self.name + "_" + datetime.now().strftime("%d-%m-%Y") + ".txt"
         # self.log_file_path = "../logs/" + self.name + "_" + datetime.now().strftime("%d-%m-%Y") + ".txt"
@@ -27,7 +26,7 @@ class Sensor():
     def get_name(self, existing_sensors):
         sensor_name = ""
         naming_dict = {
-            "_TEMP": "Temperatuursensor",
+            "_TEMP": "Temperatuursensor", 
             "_LGHT": "Lichtsensor"
             }
         while True:
@@ -40,10 +39,8 @@ class Sensor():
     def log(self):
         while self.alive:
             try: 
-                print("XYZ")
                 response = self.serial.readline()
                 response = response.decode("utf-8")
-                print(response)
                 sensor_type, value = response.split(":")
                 value = int(value)
                 if sensor_type == self.sensor_type:
@@ -55,6 +52,7 @@ class Sensor():
                 pass
             except SerialException:
                 pass
+
         
     def stop(self):
         self.serial.close()
