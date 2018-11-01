@@ -33,14 +33,9 @@ class Application(Tk):
     	pass
 
     def home(self):
-<<<<<<< HEAD
         style = ttk.Style()
         style.configure("BW.TLabel", foreground="black",background="white")
-        home = ttk.Frame(self.nb, style="BW.TLabel")
-=======
-        home = ttk.Frame(self.nb)
-        
->>>>>>> 620d7d965d16a9ed6da4e96d9710cfd182d88ca0
+        home = ttk.Frame(self.nb, style="BW.TLabel")       
         inrol_button = Button(home, text="Inrollen", command=self.inrollen)
         uitrol_button = Button(home, text="Uitrollen", command=self.uitrollen)
         inrol_button.grid()
@@ -60,13 +55,8 @@ class Application(Tk):
                 self.nb.pack(expand=1, fill="both")
                 if loginFrame.loggedin == True:
 	                loginFrame.loggedin = False
-<<<<<<< HEAD
 	                instellingen = ttk.Frame(self.nb, style="BW.TLabel")
-	                rpropertie.propertieFrame(self.nb ,instellingen)
-=======
-	                instellingen = ttk.Frame(self.nb)
 	                rpropertie.propertieFrame(self.nb ,instellingen,self.sensors,self.aansturingen)
->>>>>>> 620d7d965d16a9ed6da4e96d9710cfd182d88ca0
             except TclError:
                 try:
                     sys.exit(1)
