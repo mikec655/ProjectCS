@@ -5,7 +5,11 @@ class properties:
     def __init__(self):
         pass
 
+<<<<<<< HEAD
     def propertieFrame(self, nb, properties):
+=======
+    def propertieFrame(self, nb, properties,sensors, aansturingen):
+>>>>>>> 620d7d965d16a9ed6da4e96d9710cfd182d88ca0
 
         rolluiklabel = Label(properties, text="Rolluik:")
         rolluiklabel.config(font=("Times new roman", 18))
@@ -69,3 +73,6 @@ class properties:
         s7box.grid(row = 61, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
 
         nb.add(properties, text='properties')
+        
+        print(sensors)
+
