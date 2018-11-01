@@ -3,13 +3,15 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <util/delay.h>
 
-
-// Sensorwaarde
-int8_t sensor_value;
+//average sensor_value
+#define AMOUNT_OF_SENSOR_VALUES 20
+int8_t sensor_values[AMOUNT_OF_SENSOR_VALUES];
+uint8_t sensor_value_index = 0;
 
 // De array met taken
 sTask scheduler_tasks[SCHEDULER_MAX_TASKS];
@@ -258,16 +260,21 @@ void receive_string(char* data){
 }
 
 void transmit_sensor_value(void);
+void save_sensor_value(void);
 
 void init_connection(void) {
+	//transmit(3);
     char type[16] = "_TEMP\n";
 	transmit_string(type);
     char response[16] = "";
     receive_string(response);
     if (strcmp(response, "_CONN") == 0) {
-        scheduler_delete_all_tasks();
-        scheduler_add_task(transmit_sensor_value, 0, 200);
-    } 
+		//transmit(4);
+		scheduler_add_task(save_sensor_value, 0, 50);
+        scheduler_add_task(transmit_sensor_value, 1000, 1000);
+    } else {
+		scheduler_add_task(init_connection, 0, 0);
+	}
 }
 
 //sensor functies
@@ -277,28 +284,49 @@ uint16_t get_adc_value()
 	loop_until_bit_is_clear(ADCSRA, ADSC);
 	// 10-bit resolution, left adjusted
 	return ADCL / 64 + ADCH * 4; //ADCL has to be first!
+	//transmit(13);
+}
+
+void save_sensor_value()
+{
+	uint16_t value = get_adc_value();
+	float v_out = (float) value * (5.0 / 1024.0);
+	int8_t celsius = (int8_t) ((v_out - 0.5) * 100.0);
+	sensor_values[sensor_value_index] = celsius;
+	sensor_value_index += 1;
+	sensor_value_index %= AMOUNT_OF_SENSOR_VALUES;
 }
 
 void transmit_sensor_value()
 {
+	//transmit(12);
     // rekent waarde om naar graden celsius
-    uint16_t value = get_adc_value();
-    float v_out = (float) value * (5.0 / 1024.0);
-    uint8_t celsius = (uint8_t) ((v_out - 0.5) * 100.0);
+	int64_t sum = 0;
+    for (uint8_t i = 0; i < AMOUNT_OF_SENSOR_VALUES; i++){
+		sum += sensor_values[i];
+	}
+	float result = (float) sum / (float) AMOUNT_OF_SENSOR_VALUES; 
     // verstuurt waarde over serial
     char data[16];
-	sprintf(data, "_TEMP: %d\n", celsius);
+	char formatted_result[8];
+	dtostrf(result, 3, 1, formatted_result);
+	sprintf(data, "_TEMP: %s\n", formatted_result);
+	//transmit
 	transmit_string(data);
 }
 
 void wait_for_task(void)
 {
+	//transmit(1);
 	char task[16] = "";
 	receive_string(task);
     // init
     if (strcmp(task, "_INIT") == 0) {
-		scheduler_delete_all_tasks();
-        scheduler_add_task(init_connection, 0, 10);
+		//transmit(2);
+        scheduler_add_task(init_connection, 0, 0);
+	} else {
+		scheduler_add_task(wait_for_task, 0, 0);
+		//transmit(5);
 	}
 }
 
@@ -310,7 +338,7 @@ int main()
     init_adc();
 	scheduler_init_timer1();
     // tasks
-    scheduler_add_task(wait_for_task,0,500);
+    scheduler_add_task(wait_for_task,10,0);
     // start de scheduler
 	scheduler_start();
 	while (1) {
@@ -319,3 +347,4 @@ int main()
 
 	return(0);
 }
+
