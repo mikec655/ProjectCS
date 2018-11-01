@@ -41,8 +41,9 @@ class Sensor():
             try: 
                 response = self.serial.readline()
                 response = response.decode("utf-8")
+                print(response)
                 sensor_type, value = response.split(":")
-                value = int(value)
+                value = float(value)
                 if sensor_type == self.sensor_type:
                     with open (self.log_file_path, "a") as f:
                         f.write(datetime.now().strftime("%H:%M:%S") + "," + str(value) + '\n')
