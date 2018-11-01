@@ -27,11 +27,11 @@ class Login:
         self.loginN = login
         self.sNB = nb
         
-        instruction = Label(login, text='Please login: ')
+        instruction = Label(login, text='Please login: ',background='white')
         instruction.grid(sticky=E)
 
-        name = Label(login,text = 'Username: ')
-        passw = Label(login, text='Password')
+        name = Label(login,text = 'Username: ',background='white')
+        passw = Label(login, text='Password',background='white')
 
         name.grid(row=1,sticky=W)
         passw.grid(row=2,sticky=W)
