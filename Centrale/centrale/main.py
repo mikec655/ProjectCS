@@ -21,26 +21,31 @@ class Application(Tk):
         self.aansturingen = []
         self.threads = []
         self.frames = []
+        self.naamFrame = []
         self.config(background='white')
         self.geometry("1000x700")
         self.title("Application")
         self.nb = ttk.Notebook(self)
-        self.home()
+        self.homeFrame()
         self.apploop()
 
-    def home(self):
-        home = ttk.Frame(self.nb)
-        inrol_button = Button(home, text="Inrollen", command=self.inrollen)
-        uitrol_button = Button(home, text="Uitrollen", command=self.uitrollen)
+    def homeFrame(self):
+        self.home = ttk.Frame(self.nb)
+        inrol_button = Button(self.home, text="Inrollen", command=self.inrollen)
+        uitrol_button = Button(self.home, text="Uitrollen", command=self.uitrollen)
         inrol_button.grid()
         uitrol_button.grid()
-        self.nb.add(home, text='Home')
+        # self.nb.add(home, text='Home')
+        self.voegFrameToe(self.home, 'Home')
+        self.maakFrame()
 
     def apploop(self):
-        login0 = ttk.Frame(self.nb)
+        self.login0 = ttk.Frame(self.nb)
         self.rpropertie = prprts.Properties()
         loginFrame = loginscherm.Login()    
-        loginFrame.frame(login0, self.nb)
+        loginFrame.frame(self.login0, self.nb)
+        self.voegFrameToe(self.login0, 'Login')
+        self.maakFrame()
 
         while True:
             try:
@@ -52,8 +57,8 @@ class Application(Tk):
 	                self.rpropertie.propertieFrame(self.nb, self.sensors, self.aansturingen)
                 elif loginFrame.loggedin == 'U':
                     loginFrame.loggedin = ''
-                    print(1)
                     self.rpropertie.destroy()
+                    self.verwijderFrame(self.home, 'Home')
             except TclError:
                 try:
                     sys.exit(1)
@@ -103,6 +108,24 @@ class Application(Tk):
     def inrollen(self):
         for aansturing in self.aansturingen:
             aansturing.inrollen()
+
+    def voegFrameToe(self, frame, name):
+        self.frames.append(frame)
+        self.naamFrame.append(name)
+
+    def maakFrame(self):
+        for i in self.frames: 
+            self.frame_name = i
+        for x in self.naamFrame:
+            self.nb.add(self.frame_name,text=x)
+    
+    def verwijderFrame(self, naamFrame, naam):
+        for x in self.frames:
+            if x == naamFrame:
+                self.frames.remove(x)
+        for y in self.naamFrame:
+            if y == naam:
+                self.naamFrame.remove(y)
 
 if __name__ == '__main__':
     app = Application()
