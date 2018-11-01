@@ -69,6 +69,7 @@ class Application(Tk):
             if port.device not in [sensor.port for sensor in self.sensors] and \
             port.device not in [aansturing.port for aansturing in self.aansturingen]:
                 device_type = self.init_device(port.device)
+                print(device_type)
                 if device_type == "_MTR\n":
                     a = Aansturing(port.device)
                     self.aansturingen.append(a)
