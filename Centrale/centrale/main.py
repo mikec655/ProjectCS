@@ -40,7 +40,7 @@ class Application(Tk):
 
     def apploop(self):
         login0 = ttk.Frame(self.nb)
-        self.rpropertie = prprts.properties()
+        self.rpropertie = prprts.Properties()
         loginFrame = loginscherm.Login()    
         loginFrame.frame(login0, self.nb)
         logout = ttk.Frame(self.nb)
@@ -51,13 +51,13 @@ class Application(Tk):
                 self.check_for_devices(self.nb)
                 self.nb.pack(expand=1, fill="both")
                 instellingen = ttk.Frame(self.nb)
-                if loginFrame.loggedin == True:
-	                loginFrame.loggedin = False
-	                self.rpropertie.propertieFrame(self.nb ,instellingen, self.sensors, self.aansturingen)
-                elif loginFrame.loggedin == False:
-                    pass
-                    # self.rpropertie.destroy()
-                    # print('hello')
+                if loginFrame.loggedin == 'I':
+	                loginFrame.loggedin = ''
+	                self.rpropertie.propertieFrame(self.nb, self.sensors, self.aansturingen)
+                elif loginFrame.loggedin == 'U':
+                    loginFrame.loggedin = ''
+                    print(1)
+                    self.rpropertie.destroy()
             except TclError:
                 try:
                     sys.exit(1)

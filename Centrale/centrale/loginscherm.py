@@ -9,7 +9,7 @@ class Login(ttk.Frame):
         self.creds = 'Centrale/centrale/tempfile.temp'
         #'C:\\Users\\gerben\\Desktop\\school\\jaar 2\\Per 1\\project\\ProjectCS\\Centrale\\centrale\\tempfile.temp'
 
-        self.loggedin = False
+        self.loggedin = ""
 
         with open(self.creds, 'w+') as f:
             f.write('Admin')
@@ -50,7 +50,7 @@ class Login(ttk.Frame):
         print(self.pwordE)
 
         if self.nameE.get() == username and self.pwordE.get() == password:  # Checks to see if you entered the correct data.        print('logedin')
-            self.loggedin = True
+            self.loggedin = "I"
             
             print('correct pass')
 
@@ -59,4 +59,4 @@ class Login(ttk.Frame):
             print('foute login')
     
     def logout(self):
-        self.loggedin = False
+        self.loggedin = "U"
