@@ -6,7 +6,7 @@ from serial.tools import list_ports
 from aansturing import Aansturing
 from time import sleep
 from sensors import Sensor, SerialException, list_ports
-import loginscherm as loginscherm
+import loginscherm
 import properties as prprts
 import time
 import threading
@@ -21,21 +21,17 @@ class Application(Tk):
         self.aansturingen = []
         self.threads = []
         self.frames = []
+        self.destroi = 0
         self.config(background='white')
         self.geometry("1000x700")
         self.title("Application")
         self.nb = ttk.Notebook(self)
         self.home()
-        self.makeFrame()
+        # self.makeFrame()
         self.apploop()
 
-    def makeFrame(self):
-    	pass
-
     def home(self):
-        style = ttk.Style()
-        style.configure("BW.TLabel", foreground="black",background="white")
-        home = ttk.Frame(self.nb, style="BW.TLabel")       
+        home = ttk.Frame(self.nb)
         inrol_button = Button(home, text="Inrollen", command=self.inrollen)
         uitrol_button = Button(home, text="Uitrollen", command=self.uitrollen)
         inrol_button.grid()
@@ -43,20 +39,25 @@ class Application(Tk):
         self.nb.add(home, text='Home')
 
     def apploop(self):
-        login0 = ttk.Frame(self.nb, style="BW.TLabel")
-        rpropertie = prprts.properties()
+        login0 = ttk.Frame(self.nb)
+        self.rpropertie = prprts.properties()
         loginFrame = loginscherm.Login()    
         loginFrame.frame(login0, self.nb)
+        logout = ttk.Frame(self.nb)
 
         while True:
             try:
                 self.update()
                 self.check_for_devices(self.nb)
                 self.nb.pack(expand=1, fill="both")
+                instellingen = ttk.Frame(self.nb)
                 if loginFrame.loggedin == True:
 	                loginFrame.loggedin = False
-	                instellingen = ttk.Frame(self.nb, style="BW.TLabel")
-	                rpropertie.propertieFrame(self.nb ,instellingen,self.sensors,self.aansturingen)
+	                self.rpropertie.propertieFrame(self.nb ,instellingen, self.sensors, self.aansturingen)
+                elif loginFrame.loggedin == False:
+                    pass
+                    # self.rpropertie.destroy()
+                    # print('hello')
             except TclError:
                 try:
                     sys.exit(1)
@@ -108,4 +109,3 @@ class Application(Tk):
 
 if __name__ == '__main__':
     app = Application()
-    
