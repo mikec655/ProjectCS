@@ -3,7 +3,7 @@ from tkinter import Button, Entry, Label, W, E
 class Login:
 
     def __init__(self):
-        self.creds = 'Centrale/centrale/tempfile.temp'
+        self.creds = 'C:\\Users\\gerben\\Desktop\\school\\jaar 2\\Per 1\\project\\ProjectCS\\Centrale\\centrale\\tempfile.temp'
         self.pwordE = ''
         self.nameE = ''
         self.loginN = ''

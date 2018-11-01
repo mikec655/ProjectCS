@@ -6,7 +6,7 @@ from serial.tools import list_ports
 from aansturing import Aansturing
 from time import sleep
 from sensors import Sensor, SerialException, list_ports
-import loginscherm
+import loginscherm as loginscherm
 import properties as prprts
 import time
 import threading
@@ -34,6 +34,7 @@ class Application(Tk):
 
     def home(self):
         home = ttk.Frame(self.nb)
+        
         inrol_button = Button(home, text="Inrollen", command=self.inrollen)
         uitrol_button = Button(home, text="Uitrollen", command=self.uitrollen)
         inrol_button.grid()
@@ -54,7 +55,7 @@ class Application(Tk):
                 if loginFrame.loggedin == True:
 	                loginFrame.loggedin = False
 	                instellingen = ttk.Frame(self.nb)
-	                rpropertie.propertieFrame(self.nb ,instellingen)
+	                rpropertie.propertieFrame(self.nb ,instellingen,self.sensors,self.aansturingen)
             except TclError:
                 try:
                     sys.exit(1)
@@ -106,3 +107,4 @@ class Application(Tk):
 
 if __name__ == '__main__':
     app = Application()
+    
