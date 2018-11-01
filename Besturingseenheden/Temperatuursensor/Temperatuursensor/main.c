@@ -266,7 +266,7 @@ void init_connection(void) {
     receive_string(response);
     if (strcmp(response, "_CONN") == 0) {
         scheduler_delete_all_tasks();
-        scheduler_add_task(transmit_sensor_value, 100, 1000);
+        scheduler_add_task(transmit_sensor_value, 0, 200);
     } 
 }
 

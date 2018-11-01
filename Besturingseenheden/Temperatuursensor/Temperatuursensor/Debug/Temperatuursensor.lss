@@ -15,11 +15,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 000000b0  00000000  00000000  00000f24  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000ca9  00000000  00000000  00000fd4  2**0
+  6 .debug_info   00000ca8  00000000  00000000  00000fd4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000853  00000000  00000000  00001c7d  2**0
+  7 .debug_abbrev 00000853  00000000  00000000  00001c7c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000005c6  00000000  00000000  000024d0  2**0
+  8 .debug_line   000005c6  00000000  00000000  000024cf  2**0
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000214  00000000  00000000  00002a98  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -573,10 +573,10 @@ void init_connection(void) {
  342:	51 f4       	brne	.+20     	; 0x358 <init_connection+0x7a>
         scheduler_delete_all_tasks();
  344:	0e 94 bb 00 	call	0x176	; 0x176 <scheduler_delete_all_tasks>
-        scheduler_add_task(transmit_sensor_value, 100, 1000);
+        scheduler_add_task(transmit_sensor_value, 0, 1000);
  348:	48 ee       	ldi	r20, 0xE8	; 232
  34a:	53 e0       	ldi	r21, 0x03	; 3
- 34c:	64 e6       	ldi	r22, 0x64	; 100
+ 34c:	60 e0       	ldi	r22, 0x00	; 0
  34e:	70 e0       	ldi	r23, 0x00	; 0
  350:	8e ef       	ldi	r24, 0xFE	; 254
  352:	91 e0       	ldi	r25, 0x01	; 1
