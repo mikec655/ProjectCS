@@ -1,0 +1,32 @@
+{
+    "123456789ABCDEF": {
+        "naam": "AANSTURING_NAAM",
+        "sensors": {
+            "123456789ABCDEF": {
+                "naam": "SENSOR_NAAM",
+                "value": 21.5
+            },
+            "FEDCBA987654321": {
+                "naam": "SENSOR_NAAM",
+                "value": 19.5
+            }
+        }
+    },
+    "135792468AABBCC": {
+        "naam": "AANSTURING_NAAM",
+        "sensors": {
+            "123456789ABCDEF": {
+                "naam": "SENSOR_NAAM",
+                "value": 21.5
+            },
+            "FEDCBA987654321": {
+                "naam": "SENSOR_NAAM",
+                "value": 19.5
+            },
+            "FEDABC987454321": {
+                "naam": "SENSOR_NAAM",
+                "value": 19.5
+            }
+        }
+    },
+}
