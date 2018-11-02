@@ -13,10 +13,15 @@ import threading
 
 
 class Application(Tk):
+    __instance = None
 
     def __init__(self):
         # initialise a window.
         super().__init__()
+        if not Application.__instance:
+            print("Ik heb al een instantie.")
+        else:
+            print('Ik heb nog geen instantie')
         self.sensors = []
         self.aansturingen = []
         self.threads = []
@@ -28,6 +33,12 @@ class Application(Tk):
         self.nb = ttk.Notebook(self)
         self.homeFrame()
         self.apploop()
+   
+    @classmethod 
+    def getInstance(cls):
+        if not cls.__instance:
+            cls.__instance = Application()
+        return cls.__instance
 
     def homeFrame(self):
         self.home = ttk.Frame(self.nb)
@@ -42,6 +53,7 @@ class Application(Tk):
     def apploop(self):
         self.login0 = ttk.Frame(self.nb)
         self.rpropertie = prprts.Properties()
+        self.rproperte = prprts.Properties()
         loginFrame = loginscherm.Login()    
         loginFrame.frame(self.login0, self.nb)
         self.voegFrameToe(self.login0, 'Login')
@@ -65,7 +77,7 @@ class Application(Tk):
             except TclError:
                 try:
                     sys.exit(1)
-                except SystemExit:
+                except Exception:
                     print("programma afgesloten")
                 break
 
@@ -132,3 +144,5 @@ class Application(Tk):
 
 if __name__ == '__main__':
     app = Application()
+    app2 = Application()
+    print("app: %s, app2: %s" % (app.getInstance(),app2.getInstance()))
