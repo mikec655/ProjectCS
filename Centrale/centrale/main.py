@@ -7,6 +7,7 @@ from aansturing import Aansturing
 from time import sleep
 from sensors import Sensor, SerialException, list_ports
 import loginscherm
+import myframe
 import properties as prprts
 import time
 import threading
@@ -40,12 +41,9 @@ class Application(Tk):
         # self.maakFrame()
 
     def apploop(self):
-        self.login0 = ttk.Frame(self.nb)
-        self.properties = ttk.Frame(self.nb)
-        self.rpropertie = prprts.Properties()
-        loginFrame = loginscherm.Login()    
-        loginFrame.frame(self.login0, self.nb)
-        self.nb.add(self.login0, text='Login')
+        login = loginscherm.Login(self.nb)   
+        # login.(self.login0, self.nb)
+        # self.nb.add(self.login0, text='Login')
         # self.voegFrameToe(self.login0, 'Login')
         # self.maakFrame()
 
@@ -54,11 +52,11 @@ class Application(Tk):
                 self.update()
                 self.check_for_devices()
                 self.nb.pack(expand=1, fill="both")
-                if loginFrame.loggedin == 'I':
-	                loginFrame.loggedin = ''
+                if login.loggedin == 'I':
+	                login.loggedin = ''
 	                self.rpropertie.propertieFrame(self.nb, self.properties, self.sensors, self.aansturingen)
-                elif loginFrame.loggedin == 'U':
-                    loginFrame.loggedin = ''
+                elif login.loggedin == 'U':
+                    login.loggedin = ''
                     try:
                         self.rpropertie.destroy()
                         self.verwijderFrame(self.home, 'Home')
