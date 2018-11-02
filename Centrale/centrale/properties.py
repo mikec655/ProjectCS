@@ -2,14 +2,9 @@ from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu
 from tkinter.ttk import Frame
 
 class Properties(Frame):
-    __instance = None
 
     def __init__(self, master=None):
         super().__init__(master)
-        if not Properties.__instance:
-            print("Ik heb al een instantie.")
-        else:
-            print('Ik heb nog geen instantie')
 
     def propertieFrame(self, nb, sensors, aansturingen):
         rolluiktitel = Label(self, text="Selecteer een rolluik:")
@@ -91,7 +86,3 @@ class Properties(Frame):
         
         print(sensors)
 
-
-# app = Properties()
-# app2 = Properties()
-# print("app: %s, app2: %s" % (app.getInstance(),app2.getInstance()))

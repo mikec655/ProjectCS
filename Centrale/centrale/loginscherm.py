@@ -2,18 +2,6 @@ from tkinter import Button, Entry, Label, W, E
 from tkinter import ttk
 
 class Login(ttk.Frame):
-    __instance = None
-    
-    # def __new__(cls):
-    #     if not hasattr(cls, 'instance'):
-    #         cls.instance = super(Login, cls).__new__(cls)
-    #     return cls.instance
-
-    @classmethod 
-    def getInstance(cls):
-        if not cls.__instance:
-            cls.__instance = Login()
-        return cls.__instance
 
 
     def __init__(self,master=None):
@@ -79,7 +67,3 @@ class Login(ttk.Frame):
 
     def logout(self):
         self.loggedin = "U"
-
-app = Login()
-app2 = Login()
-print("app: %s, app2: %s" % (app.getInstance(),app2.getInstance()))
