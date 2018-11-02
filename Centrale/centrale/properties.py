@@ -1,7 +1,7 @@
 from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu
 from tkinter.ttk import Frame
 
-class Properties(ttk.Frame):
+class Properties(Frame):
     __instance = None
 
     def __init__(self, master=None):
