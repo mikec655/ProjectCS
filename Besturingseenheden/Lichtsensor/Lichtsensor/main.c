@@ -291,7 +291,7 @@ void transmit_sensor_value()
     char data[32];
 	char formatted_result[16];
 	dtostrf(result, 6, 1, formatted_result);
-	sprintf(data, "_LGHT %s\n", formatted_result);
+	sprintf(data, "_LGHT: %s\n", formatted_result);
 	transmit_string(data);
 }
 

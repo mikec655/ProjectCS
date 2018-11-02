@@ -59,5 +59,3 @@ class Sensor():
         self.serial.close()
         self.graph.stop()
         self.alive = False
-        
-        
