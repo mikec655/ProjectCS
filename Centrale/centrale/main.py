@@ -20,6 +20,7 @@ class Application(Tk):
         super().__init__()
         self.sensors = []
         self.aansturingen = []
+        self.other_com_ports = []
         self.threads = []
         self.frames = []
         self.naamFrame = []
@@ -50,7 +51,6 @@ class Application(Tk):
 
         while True:
             try:
-                print(self.aansturingen)
                 self.update()
                 self.check_for_devices()
                 self.nb.pack(expand=1, fill="both")
@@ -92,6 +92,9 @@ class Application(Tk):
             # Als aansturing niet meer aangesloten staat verwijder aansturing
             if aansturing.port not in [port.device for port in available_ports]:
                 self.aansturingen.remove(aansturing)
+        for other_port in self.other_com_ports:
+            if other_port not in [port.device for port in available_ports]:
+                self.other_com_ports.remove(other_port)
                 
     def init_device(self, comport, id):
         sleep(1)
@@ -110,9 +113,7 @@ class Application(Tk):
             self.nb.add(s.graph, text=s.name)
             ser.write(b"_CONN\n")
         else:
-            pass
-       
-        
+            self.other_com_ports.append(comport)
 
     def uitrollen(self):
         for aansturing in self.aansturingen:
