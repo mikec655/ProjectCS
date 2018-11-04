@@ -1,32 +1,22 @@
 {
-    "123456789ABCDEF": {
-        "naam": "AANSTURING_NAAM",
-        "sensors": {
-            "123456789ABCDEF": {
-                "naam": "SENSOR_NAAM",
-                "value": 21.5
-            },
-            "FEDCBA987654321": {
-                "naam": "SENSOR_NAAM",
-                "value": 19.5
-            }
+    "aansturingen": {
+        "55731323136351A04150": {
+            "name": "Aansturing3",
+            "sensor_value": {}
+        },
+        "6": {
+            "name": "Aansturing4",
+            "sensor_value": {}
         }
     },
-    "135792468AABBCC": {
-        "naam": "AANSTURING_NAAM",
-        "sensors": {
-            "123456789ABCDEF": {
-                "naam": "SENSOR_NAAM",
-                "value": 21.5
-            },
-            "FEDCBA987654321": {
-                "naam": "SENSOR_NAAM",
-                "value": 19.5
-            },
-            "FEDABC987454321": {
-                "naam": "SENSOR_NAAM",
-                "value": 19.5
-            }
+    "sensor_name": {
+        "55731323136351A04150": {
+            "name": "Lichtsensor1",
+            "type": "_LGHT"
+        },
+        "6": {
+            "name": "Lichtsensor2",
+            "type": "_LGHT"
         }
-    },
+    }
 }
