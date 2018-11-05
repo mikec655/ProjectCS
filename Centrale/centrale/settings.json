@@ -7,6 +7,10 @@
         "6": {
             "name": "Aansturing4",
             "sensor_value": {}
+        },
+        "5": {
+            "name": "Aansturing3",
+            "sensor_value": {}
         }
     },
     "sensor_name": {
@@ -16,6 +20,14 @@
         },
         "6": {
             "name": "Lichtsensor2",
+            "type": "_LGHT"
+        },
+        "75435353138351F08050": {
+            "name": "Temperatuursensor1",
+            "type": "_TEMP"
+        },
+        "5": {
+            "name": "Lichtsensor3",
             "type": "_LGHT"
         }
     }

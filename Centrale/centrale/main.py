@@ -98,21 +98,24 @@ class Application(Tk):
                 
     def init_device(self, comport, id):
         sleep(1)
-        ser = Serial(comport, 19200, timeout=5)
-        sleep(2)
-        ser.write(b"_INIT\n")
-        device_type = ser.readline().decode("UTF-8")
-        if device_type == "_MTR\n":
-            a = Aansturing(ser, id)
-            sleep(1)
-            self.aansturingen.append(a)
-            ser.write(b"_CONN\n")
-        elif device_type == "_TEMP\n" or device_type == "_LGHT\n":
-            s = Sensor(ser, device_type, id, self.sensors)
-            self.sensors.append(s)
-            self.nb.add(s.graph, text=s.name)
-            ser.write(b"_CONN\n")
-        else:
+        try:
+            ser = Serial(comport, 19200, timeout=5)
+            sleep(2)
+            ser.write(b"_INIT\n")
+            device_type = ser.readline().decode("UTF-8")
+            if device_type == "_MTR\n":
+                a = Aansturing(ser, id)
+                sleep(1)
+                self.aansturingen.append(a)
+                ser.write(b"_CONN\n")
+            elif device_type == "_TEMP\n" or device_type == "_LGHT\n":
+                s = Sensor(ser, device_type, id, self.sensors)
+                self.sensors.append(s)
+                # self.nb.add(s.graph, text=s.name)
+                ser.write(b"_CONN\n")
+            else:
+                self.other_com_ports.append(comport)
+        except SerialException:
             self.other_com_ports.append(comport)
 
     def uitrollen(self):
