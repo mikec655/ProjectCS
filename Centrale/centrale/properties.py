@@ -5,7 +5,7 @@ import settings_editor
 variabelevoorrijenaanpassen = 1 #wordt gebruikt om row aan te passen per sensor
 knoplijst=[]
 
-class Properties(Frame):
+class Properties(MyFrame):
 
     def __init__(self, master=None):
         super().__init__(master)

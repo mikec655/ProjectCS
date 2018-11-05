@@ -1,7 +1,6 @@
 README.txt
 setup.py
 centrale/__init__.py
-centrale/uart.py
 centrale.egg-info/PKG-INFO
 centrale.egg-info/SOURCES.txt
 centrale.egg-info/dependency_links.txt
