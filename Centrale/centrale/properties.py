@@ -1,5 +1,5 @@
 from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu, ANCHOR
-from tkinter.ttk import Frame
+from myframe import MyFrame
 import settings_editor
 
 variabelevoorrijenaanpassen = 1 #wordt gebruikt om row aan te passen per sensor
@@ -7,12 +7,9 @@ knoplijst=[]
 
 class Properties(MyFrame):
 
-    def __init__(self, master=None):
-        super().__init__(master)
+    def __init__(self, sensors, aansturingen, nb):
+        super().__init__(nb, "Properties")
         
-        
-
-    def propertieFrame(self, nb, sensors, aansturingen):
         self.x= [1,2,3,4]
         self.sensors=sensors.copy()
         print(sensors)
@@ -48,7 +45,9 @@ class Properties(MyFrame):
         self.sensortitel.config(font=("Times new roman", 14))
 
         b = Button(self, text="OK")
-        b.config(row = 50, column = 100, columnspan = 1, padx = 1, pady = 5)
+
+        # Deze lijn sluit het programma af, Fout: unknown option "-row"
+        # b.config(row = 50, column = 100, columnspan = 1, padx = 1, pady = 5)
 
         for sensorinstantie in self.sensors:
             knoplijst.append(sensorblok(sensorinstantie))
@@ -78,15 +77,7 @@ class Properties(MyFrame):
 
             self.variabelevoorrijenaanpassen +=1
         """
-
-
-        nb.add(self, text='Properties')
-        
-       
-
-
-            
-                
+           
 
 class sensorblok():
 

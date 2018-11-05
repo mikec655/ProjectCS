@@ -66,7 +66,7 @@ class Application(Tk):
         if self.frames['Login'].loggedin == 'I':
             self.loggedin = True
             self.frames['Login'].loggedin = ''
-            self.frames['Properties'] = Properties(self.sensors, self.nb)
+            self.frames['Properties'] = Properties(self.sensors, self.aansturingen, self.nb)
             for sensor in self.sensors:
                 self.frames[sensor.name] = Graph(sensor, self.nb)
         elif self.frames['Login'].loggedin == 'U':
