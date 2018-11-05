@@ -2,13 +2,15 @@ from serial import Serial, SerialException
 from serial.tools import list_ports
 from datetime import datetime
 from linegraph import Graph
+import settings_editor
 import threading
 
 class Sensor():
-    def __init__(self, my_serial, device_type, existing_sensors):
+    def __init__(self, my_serial, device_type, id, existing_sensors):
         self.serial = my_serial
         self.port = my_serial.port
         self.sensor_type = device_type.strip("\n")
+        self.id = id
         self.name = self.get_name(existing_sensors)
         self.log_file_path = "Centrale/logs/" + self.name + "_" + datetime.now().strftime("%d-%m-%Y") + ".txt"
         # self.log_file_path = "../logs/" + self.name + "_" + datetime.now().strftime("%d-%m-%Y") + ".txt"
@@ -28,12 +30,18 @@ class Sensor():
         naming_dict = {
             "_TEMP": "Temperatuursensor", 
             "_LGHT": "Lichtsensor"
-            }
-        while True:
+            } 
+        settings = settings_editor.readSettings()
+        try:
+            sensor_name = settings["sensor_name"][self.id]["name"]
+        except KeyError:
             if self.sensor_type in naming_dict.keys():
-                sensor_number = len([sensor for sensor in existing_sensors if sensor.sensor_type == self.sensor_type]) + 1
+                sensor_number = len([sensor["name"] for sensor in settings["sensor_name"].values() if sensor["type"] == self.sensor_type]) + 1
                 sensor_name += naming_dict[self.sensor_type] + str(sensor_number)
-                break
+                settings["sensor_name"][self.id] = {}
+                settings["sensor_name"][self.id]["name"] = sensor_name
+                settings["sensor_name"][self.id]["type"] = self.sensor_type
+                settings_editor.writeSettings(settings)
         return sensor_name
             
     def log(self):
@@ -41,23 +49,15 @@ class Sensor():
             try: 
                 response = self.serial.readline()
                 response = response.decode("utf-8")
-                print(response)
                 sensor_type, value = response.split(":")
                 value = float(value)
                 if sensor_type == self.sensor_type:
                     with open (self.log_file_path, "a") as f:
                         f.write(datetime.now().strftime("%H:%M:%S") + "," + str(value) + '\n')
-            except ValueError:
+            except:
                 pass
-            except AttributeError:
-                pass
-            except SerialException:
-                pass
-
         
     def stop(self):
         self.serial.close()
         self.graph.stop()
         self.alive = False
-        
-        

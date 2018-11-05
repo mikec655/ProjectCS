@@ -3,227 +3,191 @@
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <util/delay.h>
 
+//average sensor_value
+#define AMOUNT_OF_SENSOR_VALUES 20
+int8_t sensor_values[AMOUNT_OF_SENSOR_VALUES];
+uint8_t sensor_value_index = 0;
 
-// Array met de sensorwaarden
-uint8_t sensor_values[5];
-
-// The array of tasks
+// De array met taken
 sTask scheduler_tasks[SCHEDULER_MAX_TASKS];
 
+/* scheduler_dispatch_tasks()
 
-/*------------------------------------------------------------------*-
+Voert taak uit wanneer de taak aan de beurt is.
+Roep de functie continu aan in main()
 
-  scheduler_dispatch_tasks()
-
-  This is the 'dispatcher' function.  When a task (function)
-  is due to run, scheduler_dispatch_tasks() will run it.
-  This function must be called (repeatedly) from the main loop.
-
--*------------------------------------------------------------------*/
+*/
 
 void scheduler_dispatch_tasks(void)
 {
-   unsigned char Index;
+   unsigned char index;
 
-   // Dispatches (runs) the next task (if one is ready)
-   for(Index = 0; Index < SCHEDULER_MAX_TASKS; Index++)
+   // Voor taak uit als de taak aan de beurt is
+   for(index = 0; index < SCHEDULER_MAX_TASKS; index++)
    {
-      if((scheduler_tasks[Index].RunMe > 0) && (scheduler_tasks[Index].pTask != 0))
+      if((scheduler_tasks[index].RunMe > 0) && (scheduler_tasks[index].pTask != 0))
       {
-         (*scheduler_tasks[Index].pTask)();  // Run the task
-         scheduler_tasks[Index].RunMe -= 1;   // Reset / reduce RunMe flag
+         (*scheduler_tasks[index].pTask)();  // Voert taak uit
+         scheduler_tasks[index].RunMe -= 1;   // Reset de taak
 
-         // Periodic tasks will automatically run again
-         // - if this is a 'one shot' task, remove it from the array
-         if(scheduler_tasks[Index].Period == 0)
+         // verwijderd eenmalige taken
+         if(scheduler_tasks[index].Period == 0)
          {
-            scheduler_delete_task(Index);
+            scheduler_delete_task(index);
          }
       }
    }
 }
 
-/*------------------------------------------------------------------*-
+/* scheduler_add_task()
 
-  scheduler_add_task()
+Voegt taak toe aan de scheduler
 
-  Causes a task (function) to be executed at regular intervals 
-  or after a user-defined delay
+pFunction - De naam van de functie die als taak moet worden toegevoegd.
+            NOTE: functie moet 'void function(void)' zijn dat betekent
+            geen parameters en return type void.
+                
+DELAY     - DELAY voor dat de taak voor het eerst wordt uitgevoerd
 
-  pFunction - The name of the function which is to be scheduled.
-              NOTE: All scheduled functions must be 'void, void' -
-              that is, they must take no parameters, and have 
-              a void return type. 
-                   
-  DELAY     - The interval (TICKS) before the task is first executed
-
-  PERIOD    - If 'PERIOD' is 0, the function is only called once,
-              at the time determined by 'DELAY'.  If PERIOD is non-zero,
-              then the function is called repeatedly at an interval
-              determined by the value of PERIOD (see below for examples
-              which should help clarify this).
+PERIOD    - Periode waarin de taak moet worden uitgevoerd
+            Als PERIOD == 0: Taak wordt eenmalig uitgevoerd
+            Als PERIOD > 0: Taak wordt uitgevoerd een keer per PERIOD
 
 
-  RETURN VALUE:  
+RETURN VALUE:  
 
-  Returns the position in the task array at which the task has been 
-  added.  If the return value is SCHEDULER_MAX_TASKS then the task could 
-  not be added to the array (there was insufficient space).  If the
-  return value is < SCHEDULER_MAX_TASKS, then the task was added 
-  successfully.  
+index - Geeft de positie van de taak in de array terug. 
+Als index == SCHEDULER_MAX_TASK: Taak niet toegevoegd aan array
+Als index < SCHEDULER_MAX_TASK: Taak toegevoegd aan array
 
-  Note: this return value may be required, if a task is
-  to be subsequently deleted - see scheduler_delete_task().
-
-  EXAMPLES:
-
-  Task_ID = scheduler_add_task(Do_X,1000,0);
-  Causes the function Do_X() to be executed once after 1000 sch ticks.            
-
-  Task_ID = scheduler_add_task(Do_X,0,1000);
-  Causes the function Do_X() to be executed regularly, every 1000 sch ticks.            
-
-  Task_ID = scheduler_add_task(Do_X,300,1000);
-  Causes the function Do_X() to be executed regularly, every 1000 ticks.
-  Task will be first executed at T = 300 ticks, then 1300, 2300, etc.            
- 
--*------------------------------------------------------------------*/
+*/
 
 unsigned char scheduler_add_task(void (*pFunction)(), const unsigned int DELAY, const unsigned int PERIOD)
 {
-   unsigned char Index = 0;
+   unsigned char index = 0;
 
-   // First find a gap in the array (if there is one)
-   while((scheduler_tasks[Index].pTask != 0) && (Index < SCHEDULER_MAX_TASKS))
+   // Zoekt naar een plaats voor de taak in de array
+   while((scheduler_tasks[index].pTask != 0) && (index < SCHEDULER_MAX_TASKS))
    {
-      Index++;
+      index++;
    }
 
-   // Have we reached the end of the list?   
-   if(Index == SCHEDULER_MAX_TASKS)
+   // Controleert of er nog een taak in de array past 
+   if(index == SCHEDULER_MAX_TASKS)
    {
-      // Task list is full, return an error code
+      // Geen ruimte voor nieuwe taak in array
       return SCHEDULER_MAX_TASKS;  
    }
 
-   // If we're here, there is a space in the task array
-   scheduler_tasks[Index].pTask = pFunction;
-   scheduler_tasks[Index].Delay =DELAY;
-   scheduler_tasks[Index].Period = PERIOD;
-   scheduler_tasks[Index].RunMe = 0;
+   // Taak in de array plaatsen
+   scheduler_tasks[index].pTask = pFunction;
+   scheduler_tasks[index].Delay =DELAY;
+   scheduler_tasks[index].Period = PERIOD;
+   scheduler_tasks[index].RunMe = 0;
 
-   // return position of task (to allow later deletion)
-   return Index;
+   // return positie van taak in array
+   return index;
 }
 
-/*------------------------------------------------------------------*-
 
-  scheduler_delete_task()
+/* scheduler_delete_task()
 
-  Removes a task from the scheduler.  Note that this does
-  *not* delete the associated function from memory: 
-  it simply means that it is no longer called by the scheduler. 
+Verwijderd taak uit de scheduler. Dit verwijderd de functie niet van het geheugen,
+maar de taak wordt niet meer uitgevoerd door de scheduler
  
-  TASK_INDEX - The task index.  Provided by scheduler_add_task(). 
+TASK_INDEX - Taak index: gegeven door scheduler_add_task(). 
+*/
 
-  RETURN VALUE:  RETURN_ERROR or RETURN_NORMAL
-
--*------------------------------------------------------------------*/
-
-unsigned char scheduler_delete_task(const unsigned char TASK_INDEX)
+void scheduler_delete_task(const unsigned char TASK_INDEX)
 {
-   // Return_code can be used for error reporting, NOT USED HERE THOUGH!
-   unsigned char Return_code = 0;
-
    scheduler_tasks[TASK_INDEX].pTask = 0;
    scheduler_tasks[TASK_INDEX].Delay = 0;
    scheduler_tasks[TASK_INDEX].Period = 0;
    scheduler_tasks[TASK_INDEX].RunMe = 0;
-
-   return Return_code;
 }
 
-/*------------------------------------------------------------------*-
+/* scheduler_delete_all_tasks()
 
-  scheduler_init_timer1()
+Verwijdert alle taken uit de scheduler.
+*/
 
-  Scheduler initialisation function.  Prepares scheduler
-  data structures and sets up timer interrupts at required rate.
-  You must call this function before using the scheduler.  
+void scheduler_delete_all_tasks()
+{
+	for (uint8_t i = 0; i < SCHEDULER_MAX_TASKS; i++){
+		scheduler_delete_task(i);
+	}
+}
 
--*------------------------------------------------------------------*/
+
+/* scheduler_init_timer1()
+
+  Instellen van de timer1: Prescaler, Compare Register, CTC mode.
+  Deze funcie roep je aan voor het gebruiken van de scheduler.  
+
+*/
 
 void scheduler_init_timer1(void)
 {
    unsigned char i;
-
+   // verwijderd taken als er meer zijn als het maximale toegestaande taken
    for(i = 0; i < SCHEDULER_MAX_TASKS; i++)
    {
       scheduler_delete_task(i);
    }
 
-   // Set up Timer 1
-   // Values for 1ms and 10ms ticks are provided for various crystals
-
-   // Hier moet de timer periode worden aangepast ....!
+   // Instellingen voor Timer 1 (10 ms):
    OCR1A = (uint16_t)625;   		     // 10ms = (256/16.000.000) * 625
-   TCCR1B = (1 << CS12) | (1 << WGM12);  // prescale op 64, top counter = value OCR1A (CTC mode)
+   TCCR1B = (1 << CS12) | (1 << WGM12);  // prescale op 256, top counter = value OCR1A (CTC mode)
    TIMSK1 = 1 << OCIE1A;   		     // Timer 1 Output Compare A Match Interrupt Enable
 }
 
-/*------------------------------------------------------------------*-
+/* scheduler_start()
 
-  scheduler_start()
+start de scheduler door interrupts aan te zetten
 
-  Starts the scheduler, by enabling interrupts.
-
-  NOTE: Usually called after all regular tasks are added,
-  to keep the tasks synchronised.
-
-  NOTE: ONLY THE SCHEDULER INTERRUPT SHOULD BE ENABLED!!! 
- 
--*------------------------------------------------------------------*/
+*/
 
 void scheduler_start(void)
 {
       sei();
 }
 
-/*------------------------------------------------------------------*-
+/* schudeler_update
 
-  schudele_update
+Dit is de scheduler ISR (update). Het wordt aangeroepen 
+op basis van de instellingen in scheduler_init_timer1().
 
-  This is the scheduler ISR.  It is called at a rate 
-  determined by the timer settings in scheduler_init_timer1().
-
--*------------------------------------------------------------------*/
+*/
 
 ISR(TIMER1_COMPA_vect)
 {
-   unsigned char Index;
-   for(Index = 0; Index < SCHEDULER_MAX_TASKS; Index++)
+   unsigned char index;
+   for(index = 0; index < SCHEDULER_MAX_TASKS; index++)
    {
-      // Check if there is a task at this location
-      if(scheduler_tasks[Index].pTask)
+      // Controleert of een taak op index in array aanwezig is
+      if(scheduler_tasks[index].pTask)
       {
-         if(scheduler_tasks[Index].Delay == 0)
+         if(scheduler_tasks[index].Delay == 0)
          {
-            // The task is due to run, Inc. the 'RunMe' flag
-            scheduler_tasks[Index].RunMe += 1;
+            // Taak is klaar om uitgevoerd te worden, inc 'RunMe' flag 
+            scheduler_tasks[index].RunMe += 1;
 
-            if(scheduler_tasks[Index].Period)
+            if(scheduler_tasks[index].Period)
             {
-               // Schedule periodic tasks to run again
-               scheduler_tasks[Index].Delay = scheduler_tasks[Index].Period;
-               scheduler_tasks[Index].Delay -= 1;
+               // periodieke taken opnieuw instellen
+               scheduler_tasks[index].Delay = scheduler_tasks[index].Period;
+               scheduler_tasks[index].Delay -= 1;
             }
          }
          else
          {
-            // Not yet ready to run: just decrement the delay
-            scheduler_tasks[Index].Delay -= 1;
+            // Verlaag Delay als taak niet klaar is om uitgevoerd te worden
+            scheduler_tasks[index].Delay -= 1;
          }
       }
    }
@@ -232,15 +196,8 @@ ISR(TIMER1_COMPA_vect)
 // init functies
 void init_ports()
 {
-    // set pin B3 - B5 (arduino: 11 - 13) as output for leds
-    DDRB |= 0b00111000;
-    // set pin B0 (arduino: 8) as output & B1 (arduino: 9) as input
-    // for ultrasoonsensor
-    DDRB |= 0b00000001;
-    DDRB &= 0b11111101;
-    // set pin C0 - C4 (arduino: A0 - A4) as input for sensors
-    DDRC &= 0b11100000;
-    
+    // set pin C0 (arduino: A0) as input for TMP 36
+    DDRC &= 0b11111110;
 }
 
 void init_uart()
@@ -276,6 +233,13 @@ void transmit(uint8_t data)
 	UDR0 = data;
 }
 
+void transmit_string(char* data)
+{
+	for (uint8_t i = 0; i < strlen(data); i++){
+		transmit(data[i]);
+	}
+}
+
 uint8_t receive(void)
 {
 	// wacht totdat er data op de recieve buffer wordt gezet 
@@ -284,28 +248,86 @@ uint8_t receive(void)
 	return UDR0;
 }
 
+void receive_string(char* data){
+	uint8_t i = 0;
+	strcpy(data, "");
+	char c = receive();
+	while (c != '\n') {
+		data[i] = c;
+		i++;
+		c = receive();
+	}
+}
+
+void transmit_sensor_value(void);
+void save_sensor_value(void);
+
+void init_connection(void) {
+	//transmit(3);
+    char type[16] = "_TEMP\n";
+	transmit_string(type);
+    char response[16] = "";
+    receive_string(response);
+    if (strcmp(response, "_CONN") == 0) {
+		//transmit(4);
+		scheduler_add_task(save_sensor_value, 0, 50);
+        scheduler_add_task(transmit_sensor_value, 1000, 1000);
+    } else {
+		scheduler_add_task(init_connection, 0, 0);
+	}
+}
+
 //sensor functies
-uint8_t get_adc_value()
+uint16_t get_adc_value()
 {
 	ADCSRA |= (1<<ADSC); // start conversion
 	loop_until_bit_is_clear(ADCSRA, ADSC);
-	return ADCH; // 8-bit resolution, left adjusted
+	// 10-bit resolution, left adjusted
+	return ADCL / 64 + ADCH * 4; //ADCL has to be first!
+	//transmit(13);
 }
 
-void read_sensor0(void)
+void save_sensor_value()
 {
-    // zet channel van adc op PC0
-    ADMUX &= 11110000;
-    // slaat adc value op in sensor_values array 
-    sensor_values[0] = get_adc_value();
+	uint16_t value = get_adc_value();
+	float v_out = (float) value * (5.0 / 1024.0);
+	int8_t celsius = (int8_t) ((v_out - 0.5) * 100.0);
+	sensor_values[sensor_value_index] = celsius;
+	sensor_value_index += 1;
+	sensor_value_index %= AMOUNT_OF_SENSOR_VALUES;
 }
 
-void transmit_sensor_values()
+void transmit_sensor_value()
 {
-    // stuur waarde voor elkeer sensor over serial
-    for (int i = 0; i < 5; i++){
-        transmit(sensor_values[i]);
-    }
+	//transmit(12);
+    // rekent waarde om naar graden celsius
+	int64_t sum = 0;
+    for (uint8_t i = 0; i < AMOUNT_OF_SENSOR_VALUES; i++){
+		sum += sensor_values[i];
+	}
+	float result = (float) sum / (float) AMOUNT_OF_SENSOR_VALUES; 
+    // verstuurt waarde over serial
+    char data[16];
+	char formatted_result[8];
+	dtostrf(result, 3, 1, formatted_result);
+	sprintf(data, "_TEMP: %s\n", formatted_result);
+	//transmit
+	transmit_string(data);
+}
+
+void wait_for_task(void)
+{
+	//transmit(1);
+	char task[16] = "";
+	receive_string(task);
+    // init
+    if (strcmp(task, "_INIT") == 0) {
+		//transmit(2);
+        scheduler_add_task(init_connection, 0, 0);
+	} else {
+		scheduler_add_task(wait_for_task, 0, 0);
+		//transmit(5);
+	}
 }
 
 int main()
@@ -316,8 +338,7 @@ int main()
     init_adc();
 	scheduler_init_timer1();
     // tasks
-	scheduler_add_task(read_sensor0,0,100);
-    scheduler_add_task(transmit_sensor_values,0,500);
+    scheduler_add_task(wait_for_task,10,0);
     // start de scheduler
 	scheduler_start();
 	while (1) {
@@ -326,3 +347,4 @@ int main()
 
 	return(0);
 }
+

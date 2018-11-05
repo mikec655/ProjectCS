@@ -6,6 +6,7 @@ from serial.tools import list_ports
 from aansturing import Aansturing
 from time import sleep
 from sensors import Sensor, SerialException, list_ports
+import settings_editor
 import loginscherm
 import properties as prprts
 import time
@@ -19,6 +20,7 @@ class Application(Tk):
         super().__init__()
         self.sensors = []
         self.aansturingen = []
+        self.other_com_ports = []
         self.threads = []
         self.frames = []
         self.naamFrame = []
@@ -65,7 +67,9 @@ class Application(Tk):
             except TclError:
                 try:
                     sys.exit(1)
-                except SystemExit:
+                except SystemExit: 
+                    for sensor in self.sensors:
+                        sensor.stop()
                     print("programma afgesloten")
                 break
 
@@ -75,7 +79,9 @@ class Application(Tk):
             # Als sensor niet in de sensors staat voeg toe
             if port.device not in [sensor.port for sensor in self.sensors] and \
             port.device not in [aansturing.port for aansturing in self.aansturingen]:
-                self.init_device(port.device)
+                threadName = port.device + "-Thread"
+                if threadName not in [thread.name for thread in threading.enumerate()]:
+                    threading.Thread(name=threadName, target=self.init_device, args=(port.device, port.serial_number)).start()
         for sensor in self.sensors:
             # Als sensor niet meer aangesloten staat verwijder van sensor
             if sensor.port not in [port.device for port in available_ports]:
@@ -86,23 +92,28 @@ class Application(Tk):
             # Als aansturing niet meer aangesloten staat verwijder aansturing
             if aansturing.port not in [port.device for port in available_ports]:
                 self.aansturingen.remove(aansturing)
+        for other_port in self.other_com_ports:
+            if other_port not in [port.device for port in available_ports]:
+                self.other_com_ports.remove(other_port)
                 
-    def init_device(self, comport):
+    def init_device(self, comport, id):
+        sleep(1)
         ser = Serial(comport, 19200, timeout=5)
         sleep(2)
         ser.write(b"_INIT\n")
         device_type = ser.readline().decode("UTF-8")
-        ser.write(b"_CONN\n")
         if device_type == "_MTR\n":
-            a = Aansturing(ser)
+            a = Aansturing(ser, id)
+            sleep(1)
             self.aansturingen.append(a)
-        elif device_type == "":
-            pass
-        else:
-            s = Sensor(ser, device_type, self.sensors)
+            ser.write(b"_CONN\n")
+        elif device_type == "_TEMP\n" or device_type == "_LGHT\n":
+            s = Sensor(ser, device_type, id, self.sensors)
             self.sensors.append(s)
             self.nb.add(s.graph, text=s.name)
-        
+            ser.write(b"_CONN\n")
+        else:
+            self.other_com_ports.append(comport)
 
     def uitrollen(self):
         for aansturing in self.aansturingen:
