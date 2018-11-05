@@ -1,14 +1,21 @@
 from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu, ANCHOR
 from tkinter.ttk import Frame
+import settings_editor
+
+variabelevoorrijenaanpassen = 1 #wordt gebruikt om row aan te passen per sensor
+knoplijst=[]
 
 class Properties(Frame):
 
     def __init__(self, master=None):
         super().__init__(master)
+        
+        
 
     def propertieFrame(self, nb, sensors, aansturingen):
         self.x= [1,2,3,4]
-
+        self.sensors=sensors.copy()
+        print(sensors)
 
         if len(aansturingen)==0:
             pass
@@ -20,7 +27,6 @@ class Properties(Frame):
         rolluiktitel = Label(self, text="Selecteer een rolluik:")
         rolluiktitel.grid(row = 0, column = 0, columnspan = 1, padx = 1, pady = 5)
         rolluiktitel.config(font=("Times new roman", 14))
-        #sensors.append("moooi")
         hernoemtitel = Label(self, text="hernoem de module:")
         hernoemtitel.grid(row = 2, column = 0, columnspan = 1,pady = 5)
         hernoemtitel.config(font=("Times new roman", 12))
@@ -41,9 +47,20 @@ class Properties(Frame):
         self.sensortitel.grid(row = 0, column = 100, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel.config(font=("Times new roman", 14))
 
-        self.variabelevoorrijenaanpassen = 1 #wordt gebruikt om row aan te passen per sensor
+        b = Button(self, text="OK")
+        b.config(row = 50, column = 100, columnspan = 1, padx = 1, pady = 5)
+
+        for sensorinstantie in self.sensors:
+            knoplijst.append(sensorblok(sensorinstantie))
+
+        for elke in knoplijst:
+            elke.sensorlijst()
+
+        print(knoplijst)
+
+        
         """
-        for sensorinstantie in sensors:
+        for sensorinstantie in self.sensors:
 
             
 
@@ -60,90 +77,63 @@ class Properties(Frame):
             self.checkbox.grid(row=self.variabelevoorrijenaanpassen, column= 100 , columnspan = 1, padx = 1, pady = 1)
 
             self.variabelevoorrijenaanpassen +=1
-            """
-
-        def sensorlijst(self, sensors):
-            for sensorinstantie in sensors:
-
-            self.sensortitel = Label(self, text= str(sensorinstantie.name))
-            self.sensortitel.grid(row = self.variabelevoorrijenaanpassen, column = 60, columnspan = 1, padx = 1, pady = 5)
-            self.sensortitel.config(font=("Times new roman", 14))
-    
-
-            self.sensorwaarde = Entry(self)
-            self.sensorwaarde.grid(row=self.variabelevoorrijenaanpassen, column= 80, columnspan = 1, padx = 1, pady = 1)
-            
-
-            self.checkbox = Checkbutton(self)
-            self.checkbox.grid(row=self.variabelevoorrijenaanpassen, column= 100 , columnspan = 1, padx = 1, pady = 1)
-
-            self.variabelevoorrijenaanpassen +=1
-
-            
-
         """
-        for x in sensors:
-            
-            grenswaardelabel = Label(self, text="Grenswaarde")
-            grenswaardebox1 = Entry(self)
-            grenswaardebox2 = Entry(self)
-            grenswaardebox3 = Entry(self)
-            grenswaardebox4 = Entry(self)
-            grenswaardebox5 = Entry(self)
 
-            aantimerlabel = Label(self, text="Automatisch aan")
-            uittimerlabel = Label(self, text="Automatisch uit")
 
-            aantimerbox = Entry(self)
-            uittimerbox = Entry(self)
-
-            aanuitlabel = Label(self, text="Aan uit")
-
-            sensor1label = Label(self, text="Licht Sensor",background='white')
-            sensor2label = Label(self, text="Temperatuur Sensor")
-            sensor3label = Label(self, text="SensorNaam")
-            sensor4label = Label(self, text="SensorNaam")
-            sensor5label = Label(self, text="SensorNaam")
-
-          
-
-            sensor1label.grid(row = 55, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-            sensor2label.grid(row = 56, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-            sensor3label.grid(row = 57, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-            sensor4label.grid(row = 58, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-            sensor5label.grid(row = 59, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-
-            aantimerlabel.grid(row = 60, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-            uittimerlabel.grid(row = 61, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-
-            grenswaardelabel.grid(row = 50, column = 45, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-            grenswaardebox1.grid(row = 55, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-            grenswaardebox2.grid(row = 56, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-            grenswaardebox3.grid(row = 57, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-            grenswaardebox4.grid(row = 58, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-            grenswaardebox5.grid(row = 59, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-
-            aantimerbox.grid(row = 60, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-            uittimerbox.grid(row = 61, column=45 , columnspan = 20, padx = 1, pady = 1, sticky = 'n')
-
-            aanuitlabel.grid(row = 50, column = 260, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
-            s1box = Checkbutton(self)
-            s1box.grid(row = 55, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-            s2box = Checkbutton(self)
-            s2box.grid(row = 56, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-            s3box = Checkbutton(self)
-            s3box.grid(row = 57, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-            s4box = Checkbutton(self)
-            s4box.grid(row = 58, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-            s5box = Checkbutton(self)
-            s5box.grid(row = 59, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-            s6box = Checkbutton(self)
-            s6box.grid(row = 60, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-            s7box = Checkbutton(self)
-            s7box.grid(row = 61, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-            print(x)
-        """
         nb.add(self, text='Properties')
         
-        print(sensors)
+       
 
+
+            
+                
+
+class sensorblok():
+
+    def __init__(self,sensor):
+        global variabelevoorrijenaanpassen
+        self.sensorwaarde = ''
+        self.sensornaam = sensor.name
+        
+        self.sensorwaarde =''
+        self.checkbox = ''
+        self.sensortitel = ''
+        
+        
+
+    def sensorlijst(self):
+            global variabelevoorrijenaanpassen
+            self.sensortitel = Label(self, text= str(self.sensornaam))
+            self.sensortitel.grid(row = variabelevoorrijenaanpassen, column = 60, columnspan = 1, padx = 1, pady = 5)
+            self.sensortitel.config(font=("Times new roman", 14))
+    
+
+            self.sensorwaarde = Entry(self)
+            self.sensorwaarde.grid(row=variabelevoorrijenaanpassen, column= 80, columnspan = 1, padx = 1, pady = 1)
+            
+
+            self.checkbox = Checkbutton(self)
+            self.checkbox.grid(row=variabelevoorrijenaanpassen, column= 100 , columnspan = 1, padx = 1, pady = 1)
+
+            variabelevoorrijenaanpassen +=1
+    
+    
+
+    """
+    def checksensor(self, sensors):
+        sensor_name = ""
+        naming_dict = {
+            "_TEMP": "Temperatuursensor", 
+            "_LGHT": "Lichtsensor"
+            } 
+        settings = settings_editor.readSettings()
+        try:
+            sensor_name = settings["sensor_name"][self.id]["name"]
+        except KeyError:
+            if self.sensor_type in naming_dict.keys():
+                sensor_number = len([sensor["name"] for sensor in settings["sensor_name"].values() if sensor["type"] == self.sensor_type]) + 1
+                sensor_name += naming_dict[self.sensor_type] + str(sensor_number)
+                settings["sensor_name"][self.id] = {}
+                settings["sensor_name"][self.id]["name"] = sensor_name
+                settings["sensor_name"][self.id]["type"] = self.sensor_type
+                settings_editor.writeSettings(settings)      """    
