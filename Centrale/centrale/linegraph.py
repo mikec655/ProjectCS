@@ -4,15 +4,16 @@ import matplotlib.animation as animation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
-from tkinter.ttk import Frame
+from myframe import MyFrame
 from datetime import datetime
 from time import sleep
 import threading
 
-class Graph(Frame):
-    def __init__(self, log_file_path, master=None):
-        super().__init__(master)
-        self.log_file_path = log_file_path      #zet de variabele voor het pad van de logfile
+class Graph(MyFrame):
+    def __init__(self, sensor, master=None):
+        super().__init__(master, sensor.name)
+        self.sensor = sensor
+        self.log_file_path = self.sensor.log_file_path      #zet de variabele voor het pad van de logfile
 
         self.fig = plt.figure()                 #maakt een figuur aan
         self.ax = self.fig.add_subplot(1,1,1)   #geeft dimensies mee aan het figuur
@@ -21,11 +22,11 @@ class Graph(Frame):
         self.graph.get_tk_widget().pack(side="top",fill='both',expand=1)    #packed de grafiek
 
         self.alive = True       #zodra het programma niet meer nodig is , stopt de thread met draaien
-        threading.Thread(target=self.redraw_animation, args=(1,), daemon=True).start()  
+        threading.Thread(target=self.redraw_animation, args=(1,), name=sensor.name + "GraphThread").start()  
 
     def redraw(self, i):
         self.ax.clear()
-        self.ax.set_title('SENSOR') #geeft de titel mee voor de grafiek
+        self.ax.set_title(self.sensor.name) #geeft de titel mee voor de grafiek
         self.ax.set_xlabel('Tijd')  #geeft de x-as label mee
         self.ax.set_ylabel('Temperatuur (°C)')  #geeft de y-as label mee
         # self.ax.tick_params(axis='x', labelrotation=45)
@@ -51,5 +52,9 @@ class Graph(Frame):
 
     def stop(self):
         self.alive = False  #zodra het programma niet meer nodig is , stopt de thread met draaien
+
+    def deleteFrame(self):
+        super().deleteFrame()
+        self.stop()
         
         

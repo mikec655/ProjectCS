@@ -9,11 +9,10 @@ class Sensor():
     def __init__(self, my_serial, device_type, id, existing_sensors):
         self.serial = my_serial
         self.port = my_serial.port
-        self.sensor_type = device_type.strip("\n")
+        self.sensor_type = device_type
         self.id = id
         self.name = self.get_name(existing_sensors)
         self.create_log_file()
-        #self.graph = Graph(self.log_file_path)
         self.alive = True
         self.thread = threading.Thread(target=self.log, name=self.name + "Thread")
         self.thread.start()
@@ -65,5 +64,4 @@ class Sensor():
         
     def stop(self):
         self.serial.close()
-        #self.graph.stop()
         self.alive = False

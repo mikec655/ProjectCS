@@ -1,16 +1,13 @@
 from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu
-from tkinter.ttk import Frame
+from myframe import MyFrame
 
-class Properties(Frame):
+class Properties(MyFrame):
 
-    def __init__(self, master=None):
-        super().__init__(master)
-
-    def propertieFrame(self, nb, sensors, aansturingen):
+    def __init__(self, sensors, nb):
+        super().__init__(nb, "Properties")
         rolluiktitel = Label(self, text="Selecteer een rolluik:")
         rolluiktitel.grid(row = 0, column = 0, columnspan = 25, padx = 1, pady = 5, sticky = 'w')
         rolluiktitel.config(font=("Times new roman", 14))
-        #sensors.append("moooi")
         hernoemtitel = Label(self, text="hernoem de module:")
         hernoemtitel.grid(row = 2, column = 0, columnspan = 25, padx = 1, pady = 5, sticky = 'w')
         hernoemtitel.config(font=("Times new roman", 12))
@@ -22,7 +19,7 @@ class Properties(Frame):
         
         
         for x in sensors:
-            
+            print(x)
             grenswaardelabel = Label(self, text="Grenswaarde")
             grenswaardebox1 = Entry(self)
             grenswaardebox2 = Entry(self)
@@ -43,8 +40,6 @@ class Properties(Frame):
             sensor3label = Label(self, text="SensorNaam")
             sensor4label = Label(self, text="SensorNaam")
             sensor5label = Label(self, text="SensorNaam")
-
-          
 
             sensor1label.grid(row = 55, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
             sensor2label.grid(row = 56, column = 0, columnspan = 40, padx = 1, pady = 1, sticky = 'w')
@@ -80,9 +75,4 @@ class Properties(Frame):
             s6box.grid(row = 60, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
             s7box = Checkbutton(self)
             s7box.grid(row = 61, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-            print(x)
-
-        nb.add(self, text='Properties')
-        
-        print(sensors)
 
