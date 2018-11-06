@@ -21,7 +21,6 @@ class Application(Tk):
     def __init__(self):
         # initialise a window.
         super().__init__()
-        self.config(background='white')
         self.geometry("1000x700")
         self.title("Application")
 
