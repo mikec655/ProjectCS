@@ -1,6 +1,7 @@
 from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu
 from myframe import MyFrame
 import os
+import os.path
 
 class Properties(MyFrame):
 
@@ -12,8 +13,8 @@ class Properties(MyFrame):
         hernoemtitel = Label(self, text="hernoem de module:")
         hernoemtitel.grid(row = 2, column = 0, columnspan = 25, padx = 1, pady = 5, sticky = 'w')
         hernoemtitel.config(font=("Times new roman", 12))
-        uitrol_button = Button(self, text="LogFileTemp", command=self.OpenLog)
-        uitrol_button.grid()
+        logfile = Button(self, text="LogFileTemp", command=self.OpenLog)
+        logfile.grid()
         
         self.var = StringVar(self)
         self.var.set("Selecteer motor module")
