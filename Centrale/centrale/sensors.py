@@ -16,6 +16,7 @@ class Sensor():
         self.alive = True
         self.thread = threading.Thread(target=self.log, name=self.name + "Thread")
         self.thread.start()
+        self.current_value = None
 
     def get_name(self, existing_sensors):
         sensor_name = ""
@@ -55,6 +56,7 @@ class Sensor():
                 sensor_type, value = response.split(":")
                 value = float(value)
                 if sensor_type == self.sensor_type:
+                    self.current_value = value
                     if self.current_log_file_date != datetime.now().strftime("%d-%m-%Y"):
                          self.create_log_file()
                     with open (self.log_file_path, "a") as f:

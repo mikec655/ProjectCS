@@ -43,10 +43,24 @@ class Application(Tk):
         
         self.applicationLoop()
 
+    def stuur_aan(self):
+        print([sensor.current_value for sensor in self.sensors])
+        settings = settings_editor.readSettings()
+        for aansturing in self.aansturingen:
+            for sensor in self.sensors:
+                if sensor.current_value > settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id] \
+                and not aansturing.uitgerold:
+                    aansturing.uitrollen()
+                elif sensor.current_value > settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id] \
+                and aansturing.uitgerold: 
+                    aansturing.inrollen()
+
     def applicationLoop(self):
         while True:
             try:
+
                 self.update()
+                self.stuur_aan()
                 self.check_for_devices()
                 for sensor in self.sensorsWithoutGraph:
                     self.frames[sensor.name] = Graph(sensor, self.nb)

@@ -9,6 +9,7 @@ class Aansturing():
         self.port = my_serial.port
         self.id = id
         self.name = self.get_name()
+        self.uitgerold = None 
 
     def get_name(self):
         name = "Aansturing"
