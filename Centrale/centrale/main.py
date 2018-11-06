@@ -48,12 +48,21 @@ class Application(Tk):
         settings = settings_editor.readSettings()
         for aansturing in self.aansturingen:
             for sensor in self.sensors:
-                if sensor.current_value > settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id] \
-                and not aansturing.uitgerold:
-                    aansturing.uitrollen()
-                elif sensor.current_value > settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id] \
-                and aansturing.uitgerold: 
-                    aansturing.inrollen()
+                if sensor.current_value == None:
+                    # Als de sensor nog geen waarde heeft doe niks
+                    continue
+                try:
+                    if sensor.current_value > settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id] \
+                    and not aansturing.status == "uitgerold":
+                        print("Actie: Uitrollen")
+                        aansturing.uitrollen()
+                    elif sensor.current_value < settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id] \
+                    and not aansturing.status == "ingerold": 
+                        print("Actie: Inrollen")
+                        aansturing.inrollen()
+                except KeyError:
+                    # Als de voor de sensor geen waarde staat opgeslagen, doe niks
+                    pass
 
     def applicationLoop(self):
         while True:
@@ -106,8 +115,11 @@ class Application(Tk):
         for sensor in self.sensors:
             # Als sensor niet meer aangesloten staat verwijder van sensor
             if sensor.port not in [port.device for port in available_ports]:
-                self.frames[sensor.name].deleteFrame()
-                del self.frames[sensor.name]
+                try:
+                    self.frames[sensor.name].deleteFrame()
+                    del self.frames[sensor.name]
+                except KeyError:
+                    pass
                 sensor.stop()
                 self.sensors.remove(sensor)
         for aansturing in self.aansturingen:

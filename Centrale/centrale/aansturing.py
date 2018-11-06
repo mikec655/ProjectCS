@@ -9,7 +9,7 @@ class Aansturing():
         self.port = my_serial.port
         self.id = id
         self.name = self.get_name()
-        self.uitgerold = None 
+        self.status = ""
 
     def get_name(self):
         name = "Aansturing"
@@ -28,10 +28,12 @@ class Aansturing():
     def uitrollen(self):
         sleep(1)
         self.serial.write(b"_DWN\n")
+        self.status = "uitgerold"
 
     def inrollen(self):
         sleep(1)
         self.serial.write(b"_UP\n")
+        self.status = "ingerold"
    
     def disconnect(self):
         self.serial.close()
