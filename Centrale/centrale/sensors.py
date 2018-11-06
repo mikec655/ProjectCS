@@ -9,10 +9,11 @@ class Sensor():
     def __init__(self, my_serial, device_type, id, existing_sensors):
         self.serial = my_serial
         self.port = my_serial.port
-        self.sensor_type = device_type
+        self.type = device_type
         self.id = id
         self.name = self.get_name(existing_sensors)
-        self.create_log_file()
+        self.current_log_file_date = datetime.now().strftime("%d-%m-%Y")
+        self.log_file_path = "Centrale/logs/" + self.name + "_" + self.current_log_file_date + ".txt"
         self.alive = True
         self.thread = threading.Thread(target=self.log, name=self.name + "Thread")
         self.thread.start()
@@ -27,12 +28,12 @@ class Sensor():
         try:
             sensor_name = settings["sensor_name"][self.id]["name"]
         except KeyError:
-            if self.sensor_type in naming_dict.keys():
-                sensor_number = len([sensor["name"] for sensor in settings["sensor_name"].values() if sensor["type"] == self.sensor_type]) + 1
-                sensor_name += naming_dict[self.sensor_type] + str(sensor_number)
+            if self.type in naming_dict.keys():
+                sensor_number = len([sensor["name"] for sensor in settings["sensor_name"].values() if sensor["type"] == self.type]) + 1
+                sensor_name += naming_dict[self.type] + str(sensor_number)
                 settings["sensor_name"][self.id] = {}
                 settings["sensor_name"][self.id]["name"] = sensor_name
-                settings["sensor_name"][self.id]["type"] = self.sensor_type
+                settings["sensor_name"][self.id]["type"] = self.type
                 settings_editor.writeSettings(settings)
         return sensor_name
 
@@ -54,9 +55,14 @@ class Sensor():
                 response = response.decode("utf-8")
                 sensor_type, value = response.split(":")
                 value = float(value)
-                if sensor_type == self.sensor_type:
+                if sensor_type == self.type:
                     if self.current_log_file_date != datetime.now().strftime("%d-%m-%Y"):
                          self.create_log_file()
+                    try:
+                        f = open(self.log_file_path)
+                        f.close()
+                    except FileNotFoundError:
+                        self.create_log_file()
                     with open (self.log_file_path, "a") as f:
                         f.write(datetime.now().strftime("%H:%M:%S") + "," + str(value) + '\n')
             except:

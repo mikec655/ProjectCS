@@ -1,5 +1,5 @@
 import sys
-from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError
+from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError, PhotoImage
 from tkinter import ttk
 from serial import Serial, SerialException
 from serial.tools import list_ports
@@ -23,12 +23,15 @@ class Application(Tk):
         super().__init__()
         self.geometry("1000x700")
         self.title("Application")
+        icon = PhotoImage(file='Centrale/centrale/icon.png')
+        self.tk.call('wm', 'iconphoto', self._w, icon)
 
         # control variables
         self.alive = True
         self.loggedin = False
         self.sensors = []
         self.sensorsWithoutGraph = []
+        self.framesToDelete = []
         self.aansturingen = []
         self.other_com_ports = []
         self.threads = []
@@ -51,6 +54,11 @@ class Application(Tk):
                 for sensor in self.sensorsWithoutGraph:
                     self.frames[sensor.name] = Graph(sensor, self.nb)
                     self.sensorsWithoutGraph.remove(sensor)
+                for frame in self.framesToDelete:
+                    if self.loggedin:
+                        self.frames[frame].deleteFrame()
+                        del self.frames[frame]
+                    self.framesToDelete.remove(frame)
                 self.check_logged_in()
                 self.nb.pack(expand=1, fill="both")
             except TclError:
@@ -60,7 +68,9 @@ class Application(Tk):
                     self.alive = False
                     for sensor in self.sensors:
                         sensor.stop()
-
+                    for frame in self.frames.keys():
+                        if "sensor" in frame:
+                            self.frames[frame].stop() 
                     print("programma afgesloten")
                 break
 
@@ -96,8 +106,7 @@ class Application(Tk):
             for sensor in self.sensors:
                 # Als sensor niet meer aangesloten staat verwijder van sensor
                 if sensor.port not in [port.device for port in available_ports]:
-                    self.frames[sensor.name].deleteFrame()
-                    del self.frames[sensor.name]
+                    self.framesToDelete.append(sensor.name)
                     sensor.stop()
                     self.sensors.remove(sensor)
             for aansturing in self.aansturingen:
