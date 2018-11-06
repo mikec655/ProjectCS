@@ -2,7 +2,10 @@
     "aansturingen": {
         "75435353138351F08050": {
             "name": "Aansturing1",
-            "sensor_value": {}
+            "sensor_value": {
+                "75435353138351F08050": 1999.0,
+                "5": 28.0
+            }
         },
         "55731323136351A04150": {
             "name": "Aansturing2",
@@ -24,6 +27,10 @@
         },
         "55735323535351705011": {
             "name": "Lichtsensor1",
+            "type": "_LGHT"
+        },
+        "5": {
+            "name": "Lichtsensor2",
             "type": "_LGHT"
         }
     }

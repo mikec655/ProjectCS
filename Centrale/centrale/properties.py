@@ -58,7 +58,7 @@ class Properties(MyFrame):
         self.sensortitel.grid(row = 0, column = 100, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel.config(font=("Times new roman", 14))
 
-        self.okbutton = Button(self, text="OK", command=self.savesettings)
+        self.okbutton = Button(self, text="Opslaan", command=self.savesettings)
         self.okbutton.grid(row = 50, column = 100, columnspan = 1, padx = 1, pady = 5)
 
         i = 0
@@ -70,31 +70,28 @@ class Properties(MyFrame):
           
     def savesettings(self):
         print("dikkesave")
+
+        settings = settings_editor.readSettings()
         #min en max uitrol lengte
         #motor id voor json file
        
-        if self.var.get() != "Selecteer motor module":
-            print(self.var.get())
+        # if self.var.get() != "Selecteer motor module":
+        #     print(self.var.get())
+
+        aansturing_id = "75435353138351F08050"
+        for A in self.aansturingen:
+            if str(self.var.get()) == A.name: #zoeken vanaf aansturing naam > aansturing id.
+                aansturing_id = A.id
+                print(A.id + "joooo") # aansturingid voor json file
         
         for x in self.knoplijst:
                 if x.checkboxwaarde.get() == 1:
+                    settings['aansturingen'][aansturing_id]['sensor_value'][x.sensor.id] = float(x.sensorwaardeblok.get())
                     print(x.sensor.name)    #sensor naam voor json file
                     print(x.sensor.id) #sensor id voor jsonfile
                     print(x.sensorwaardeblok.get())  #ingevulde waarde voor json file
             
-        for A in self.aansturingen:
-            if str(self.var.get()) == A.name: #zoeken vanaf aansturing naam > aansturing id.
-                print(A.id + "joooo") # aansturingid voor json file
-            """
-            settings = settings_editor.readSettings()
-            try:
-                name =settings["aansturingen"][self.id]["name"]
-                sensor_value =settings["aansturingen"][self.id]["sensor_value"]
-        
-                settings["aansturingen"][self.id]["sensor_value"] = {}
-                settings_editor.writeSettings(settings)
-            return name
-            """      
+        settings_editor.writeSettings(settings) 
 
 class sensorblok():
 
