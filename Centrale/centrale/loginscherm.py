@@ -1,4 +1,5 @@
-from tkinter import Button, Entry, Label, W, E
+from tkinter import Button, Entry, Label, W, E, X, CENTER
+from tkinter import ttk
 from myframe import MyFrame
 from PIL import Image, ImageTk
 
@@ -18,28 +19,9 @@ class Login(MyFrame):
             f.write('\n')
             f.write('Admin1') 
        
-        
-        instruction = Label(self, fg= 'black',bg='white', text='Please login: ')
-        instruction.grid(sticky=E)
-
-        name = Label(self,fg= 'black',bg='white', text = 'Username: ')
-        passw = Label(self, fg= 'black',bg='white', text='Password')
-
-        name.grid(row=1,sticky=W)
-        passw.grid(row=2,sticky=W)
-
-        self.nameE = Entry(self)
-        self.pwordE = Entry(self, show='*')
-        self.nameE.bind('<Return>', lambda _: self.CheckLogin())
-        self.pwordE.bind('<Return>', lambda _: self.CheckLogin())
-        self.nameE.grid(row=1, column=1)
-        self.pwordE.grid(row=2, column=1)
-        
-        loginB = Button(self, text='Login',command=self.CheckLogin)
-        loginB.grid(columnspan=2, sticky=W)
-
-        self.inlogError = Label(self, text='',background='white', foreground="red")
-        self.inlogError.grid(row=5,sticky=W)
+        style = ttk.Style()
+        style.configure('My.TFrame', background='white')
+        self.subFrame = ttk.Frame(self, style='My.TFrame')
 
         try:  
             self.path = Image.open("Centrale/centrale/zeng_logo.png")
@@ -47,9 +29,32 @@ class Login(MyFrame):
             pass
 
         Photo = ImageTk.PhotoImage(self.path)
-        Logo = Label(self, image=Photo)
+        Logo = Label(self.subFrame, background="white", image=Photo)
         Logo.image = Photo
-        Logo.place(x=300, y=100)    
+        Logo.grid(columnspan=2, pady=15) 
+
+        instruction = Label(self.subFrame, fg= 'black',bg='white', text='Please login: ')
+        instruction.grid(row=2, sticky=W)
+
+        name = Label(self.subFrame,fg='black',bg='white', text = 'Username:')
+        passw = Label(self.subFrame, fg='black',bg='white', text='Password:')
+
+        name.grid(row=3,sticky=W)
+        passw.grid(row=4,sticky=W)
+
+        self.nameE = Entry(self.subFrame)
+        self.pwordE = Entry(self.subFrame, show='*')
+        self.nameE.bind('<Return>', lambda _: self.CheckLogin())
+        self.pwordE.bind('<Return>', lambda _: self.CheckLogin())
+        self.nameE.grid(row=3, column=1, sticky="EW")
+        self.pwordE.grid(row=4, column=1, sticky="EW")
+        
+        self.loginB = Button(self.subFrame, text='Login',command=self.CheckLogin)
+        self.loginB.grid(row=7, column=1, columnspan=2, pady=15, sticky="EW")
+
+        self.inlogError = Label(self.subFrame, text='',background='white', foreground="red")
+        self.inlogError.grid(row=7, sticky=W)
+        self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER) 
 
     def CheckLogin(self):
         with open(self.creds) as f:
@@ -63,9 +68,10 @@ class Login(MyFrame):
             self.nameE.delete(0, 'end')
             self.pwordE.delete(0, 'end')
             self.inlogError['text'] = ""
-            self.logoutB = Button(self, text='Logout',command=self.logout)
-            self.logoutB.grid(columnspan=2, row=5, sticky=W)
+            self.loginB['text'] = "Logout"
+            self.loginB['command'] = self.logout
 
     def logout(self):
         self.loggedin = "U"
-        self.logoutB.destroy()
+        self.loginB['text'] = "Login"
+        self.loginB['command'] = self.CheckLogin
