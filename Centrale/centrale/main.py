@@ -85,7 +85,8 @@ class Application(Tk):
         for port in available_ports:
             # Als sensor niet in de sensors staat voeg toe
             if port.device not in [sensor.port for sensor in self.sensors] and \
-            port.device not in [aansturing.port for aansturing in self.aansturingen]:
+            port.device not in [aansturing.port for aansturing in self.aansturingen] and \
+            port.device not in self.other_com_ports:
                 threadName = port.device + "-Thread"
                 if threadName not in [thread.name for thread in threading.enumerate()]:
                     threading.Thread(name=threadName, target=self.init_device, args=(port.device, port.serial_number)).start()
