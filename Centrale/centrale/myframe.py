@@ -1,15 +1,10 @@
 from tkinter import ttk
-import loginscherm
-import properties
 
 class MyFrame(ttk.Frame):
-    def __init__(self, nb):
+    def __init__(self, nb, name):
         super().__init__(nb)
-
-
-    def voegFrameToe(self, nb):
-        nb.add(self, text="NAME")
+        nb.add(self, text=name)
     
-    def verwijderFrame(self, frame):
-        pass
+    def deleteFrame(self):
+        self.destroy()
 

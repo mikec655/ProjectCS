@@ -1,13 +1,11 @@
 from tkinter import Button, Entry, Label, W, E
-from tkinter import ttk
 from myframe import MyFrame
-import main
 
 class Login(MyFrame):
 
 
     def __init__(self, nb):
-        super().__init__(nb)
+        super().__init__(nb, "Login")
         self.creds = 'Centrale/centrale/tempfile.temp'
         #'C:\\Users\\gerben\\Desktop\\school\\jaar 2\\Per 1\\project\\ProjectCS\\Centrale\\centrale\\tempfile.temp'
 
@@ -43,9 +41,8 @@ class Login(MyFrame):
         logoutB = Button(self, text='Logout',command=self.logout)
         logoutB.grid(columnspan=2, sticky=W)
 
-
-        self.voegFrameToe(nb)
-
+        self.inlogError = Label(self, text='',background='white', foreground="red")
+        self.inlogError.grid(row=5,sticky=W)
 
 
     def CheckLogin(self):
@@ -53,19 +50,16 @@ class Login(MyFrame):
             data = f.readlines()
             username = data[0].rstrip()
             password = data[1].rstrip()
-
-
-
         if not self.nameE.get() == username or not self.pwordE.get() == password:
             print('foute login')
-            selfFault = Label(self, text='Fout wachtwoord',background='white')
-            selfFault.grid(row=5,sticky=W)
+            self.inlogError['text'] = "Incorrect inlog!"
         else:
             self.loggedin = "I"          
             print('correct pass')
             self.nameE.delete(0, 'end')
             self.pwordE.delete(0, 'end')
-            selfFault.destroy()
+            self.inlogError['text'] = ""
+           
 
 
     def logout(self):
