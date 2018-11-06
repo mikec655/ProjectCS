@@ -1,6 +1,5 @@
 from tkinter import Button, Entry, Label, W, E
 from myframe import MyFrame
-# from tkinter import *
 import os
 from PIL import Image, ImageTk
 
