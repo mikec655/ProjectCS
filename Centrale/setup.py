@@ -9,6 +9,7 @@ setup(name='centrale',
       packages=find_packages(exclude=['centrale']),
       install_requires=[
         "pyserial>=3.4",
-        "matplotlib>=3.0.0"
+        "matplotlib>=3.0.0",
+        "Pillow>=5.3.0"
         ],
       )
