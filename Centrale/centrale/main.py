@@ -1,5 +1,9 @@
 import sys
+<<<<<<< HEAD
 from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError 
+=======
+from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError, PhotoImage
+>>>>>>> 114f98cf9d850d977132714afb6ece0e11403d27
 from tkinter import ttk
 from serial import Serial, SerialException
 from serial.tools import list_ports
@@ -21,14 +25,17 @@ class Application(Tk):
     def __init__(self):
         # initialise a window.
         super().__init__()
-        self.config(background='white')
         self.geometry("1000x700")
         self.title("Application")
+        icon = PhotoImage(file='Centrale/centrale/icon.png')
+        self.tk.call('wm', 'iconphoto', self._w, icon)
 
         # control variables
+        self.alive = True
         self.loggedin = False
         self.sensors = []
         self.sensorsWithoutGraph = []
+        self.framesToDelete = []
         self.aansturingen = []
         self.other_com_ports = []
         self.threads = []
@@ -47,22 +54,35 @@ class Application(Tk):
         while True:
             try:
                 self.update()
+<<<<<<< HEAD
                 self.check_for_devices()
                 try:
                     self.frames['Properties'].update(self.aansturingen, self.sensors)
                 except KeyError:
                     pass
+=======
+                self.frames['Home'].update(self.aansturingen)
+>>>>>>> 114f98cf9d850d977132714afb6ece0e11403d27
                 for sensor in self.sensorsWithoutGraph:
                     self.frames[sensor.name] = Graph(sensor, self.nb)
                     self.sensorsWithoutGraph.remove(sensor)
+                for frame in self.framesToDelete:
+                    if self.loggedin:
+                        self.frames[frame].deleteFrame()
+                        del self.frames[frame]
+                    self.framesToDelete.remove(frame)
                 self.check_logged_in()
                 self.nb.pack(expand=1, fill="both")
             except TclError:
                 try:
                     sys.exit(1)
                 except SystemExit: 
+                    self.alive = False
                     for sensor in self.sensors:
                         sensor.stop()
+                    for frame in self.frames.keys():
+                        if "sensor" in frame:
+                            self.frames[frame].stop() 
                     print("programma afgesloten")
                 break
 
@@ -85,28 +105,29 @@ class Application(Tk):
                         print('FrameDestroyError :(')
 
     def check_for_devices(self):
-        available_ports = list_ports.comports()
-        for port in available_ports:
-            # Als sensor niet in de sensors staat voeg toe
-            if port.device not in [sensor.port for sensor in self.sensors] and \
-            port.device not in [aansturing.port for aansturing in self.aansturingen]:
-                threadName = port.device + "-Thread"
-                if threadName not in [thread.name for thread in threading.enumerate()]:
-                    threading.Thread(name=threadName, target=self.init_device, args=(port.device, port.serial_number)).start()
-        for sensor in self.sensors:
-            # Als sensor niet meer aangesloten staat verwijder van sensor
-            if sensor.port not in [port.device for port in available_ports]:
-                self.frames[sensor.name].deleteFrame()
-                del self.frames[sensor.name]
-                sensor.stop()
-                self.sensors.remove(sensor)
-        for aansturing in self.aansturingen:
-            # Als aansturing niet meer aangesloten staat verwijder aansturing
-            if aansturing.port not in [port.device for port in available_ports]:
-                self.aansturingen.remove(aansturing)
-        for other_port in self.other_com_ports:
-            if other_port not in [port.device for port in available_ports]:
-                self.other_com_ports.remove(other_port)
+        while self.alive:
+            available_ports = list_ports.comports()
+            for port in available_ports:
+                # Als sensor niet in de sensors staat voeg toe
+                if port.device not in [sensor.port for sensor in self.sensors] and \
+                port.device not in [aansturing.port for aansturing in self.aansturingen] and \
+                port.device not in self.other_com_ports:
+                    threadName = port.device + "-Thread"
+                    if threadName not in [thread.name for thread in threading.enumerate()]:
+                        threading.Thread(name=threadName, target=self.init_device, args=(port.device, port.serial_number)).start()
+            for sensor in self.sensors:
+                # Als sensor niet meer aangesloten staat verwijder van sensor
+                if sensor.port not in [port.device for port in available_ports]:
+                    self.framesToDelete.append(sensor.name)
+                    sensor.stop()
+                    self.sensors.remove(sensor)
+            for aansturing in self.aansturingen:
+                # Als aansturing niet meer aangesloten staat verwijder aansturing
+                if aansturing.port not in [port.device for port in available_ports]:
+                    self.aansturingen.remove(aansturing)
+            for other_port in self.other_com_ports:
+                if other_port not in [port.device for port in available_ports]:
+                    self.other_com_ports.remove(other_port)
                 
     def init_device(self, comport, id):
         sleep(1)
@@ -131,4 +152,5 @@ class Application(Tk):
             self.other_com_ports.append(comport)
 
 if __name__ == '__main__':
+#>>>>>>> home_frame
     app = Application()

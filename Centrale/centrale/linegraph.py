@@ -28,7 +28,10 @@ class Graph(MyFrame):
         self.ax.clear()
         self.ax.set_title(self.sensor.name) #geeft de titel mee voor de grafiek
         self.ax.set_xlabel('Tijd')  #geeft de x-as label mee
-        self.ax.set_ylabel('Temperatuur (°C)')  #geeft de y-as label mee
+        if self.sensor.type == "_TEMP":
+            self.ax.set_ylabel('Temperatuur (°C)')  #geeft de y-as label mee
+        elif self.sensor.type == "_LGHT":
+            self.ax.set_ylabel('Lichtintensiteit (lux)')
         # self.ax.tick_params(axis='x', labelrotation=45)
         graph_data = open(self.log_file_path,"r").read()    #haalt de data uit het log bestand
         lines = graph_data.split('\n')  #split de data uit het log bestand per lijn

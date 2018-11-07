@@ -1,39 +1,14 @@
+
 {
     "aansturingen": {
-        "75435353138351F08050": {
-            "name": "1234",
-            "sensor_value": {
-                "75435353138351F08050": 131.0,
-                "5": 12.0
-            }
-        },
         "55731323136351A04150": {
-            "name": "Aansturing2",
-            "sensor_value": {
-                "75435353138351F08050": 123.0,
-                "55735323535351705011": 123.0
-            }
+            "name": "Aansturing1",
+            "sensor_value": {}
         }
     },
     "sensor_name": {
-        "75435353138351F08051": {
-            "name": "Temperatuursensor1",
-            "type": "_TEMP"
-        },
-        "75435353138351F08054": {
-            "name": "Temperatuursensor2",
-            "type": "_TEMP"
-        },
-        "75435353138351F08050": {
-            "name": "Temperatuursensor3",
-            "type": "_TEMP"
-        },
-        "55735323535351705011": {
-            "name": "Lichtsensor1",
-            "type": "_LGHT"
-        },
         "5": {
-            "name": "Lichtsensor2",
+            "name": "Lichtsensor1",
             "type": "_LGHT"
         }
     }
