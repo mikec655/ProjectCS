@@ -25,35 +25,23 @@ class Properties(MyFrame):
         
         self.optiemenu(self.aansturingen)  
 
-        rolluiktitel = Label(self, text="Selecteer een rolluik:")
+        rolluiktitel = Label(self, text="Selecteer een rolluik:", background='white')
         rolluiktitel.grid(row = 0, column = 0, columnspan = 1, padx = 1, pady = 5)
         rolluiktitel.config(font=("Times new roman", 14))
 
-        hernoemtitel = Label(self, text="hernoem de module:")
+        hernoemtitel = Label(self, text="hernoem de module:", background='white')
         hernoemtitel.grid(row = 2, column = 0, columnspan = 1,pady = 5)
         hernoemtitel.config(font=("Times new roman", 12))
         
         
         self.hernoemen = Entry(self)
         self.hernoemen.grid(row = 2, column= 12 , columnspan = 1, padx = 1, pady = 1)
-        """ 
-        minuitroltitel = Label(self, text="minimale uitrol lengte:")
-        minuitroltitel.grid(row = 3, column = 0, columnspan = 1,pady = 5)
-        minuitroltitel.config(font=("Times new roman", 12))
-        self.minuitrol = Entry(self)
-        self.minuitrol.grid(row = 3, column= 12 , columnspan = 1, padx = 1, pady = 1)
 
-        maxuitroltitel = Label(self, text="maximale uitrol lengte:")
-        maxuitroltitel.grid(row = 4, column = 0, columnspan = 1,pady = 5)
-        maxuitroltitel.config(font=("Times new roman", 12))
-        self.maxuitrol = Entry(self)
-        self.maxuitrol.grid(row = 4, column= 12 , columnspan = 1, padx = 1, pady = 1)
-        """
-        self.sensortitel = Label(self, text= 'Grenswaarde:')
+        self.sensortitel = Label(self, text= 'Grenswaarde:', background='white')
         self.sensortitel.grid(row = 0, column = 80, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel.config(font=("Times new roman", 14))
 
-        self.sensortitel = Label(self, text= 'gebruiken:')
+        self.sensortitel = Label(self, text= 'gebruiken:', background='white')
         self.sensortitel.grid(row = 0, column = 100, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel.config(font=("Times new roman", 14))
 
@@ -103,14 +91,11 @@ class Properties(MyFrame):
        
           
     def savesettings(self):
-        print("dikkesave")
         
         settings = settings_editor.readSettings()
         
-        
         for A in self.aansturingen:
             if str(self.waardeoption.get()) == A.name: #zoeken vanaf aansturing naam > aansturing id.
-
 
                 self.aansturing_id = A.id
                 print("aansturing id = " + A.id ) # aansturingid voor json file
@@ -152,7 +137,7 @@ class sensorblok():
         self.checkboxwaarde = IntVar()
      
         self.sensortitel = ''
-        self.sensortitel = Label( self.frame, text= str(self.sensor.name))
+        self.sensortitel = Label( self.frame, text= str(self.sensor.name), background='white')
         self.sensortitel.grid(row = self.variabelevoorrijenaanpassen, column = 60, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel.config(font=("Times new roman", 14))
 
@@ -161,7 +146,7 @@ class sensorblok():
         
         self.sensorwaardeblok.bind('<Return>', lambda _: self.setsensorwaarde())
 
-        self.checkbox = Checkbutton( self.frame, variable= self.checkboxwaarde)
+        self.checkbox = Checkbutton( self.frame, variable= self.checkboxwaarde, background='white')
         self.checkbox.grid(row=self.variabelevoorrijenaanpassen, column= 100 , columnspan = 1, padx = 1, pady = 1)
 
         self.widget.append(self.sensortitel)

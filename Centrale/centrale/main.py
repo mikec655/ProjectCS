@@ -140,7 +140,8 @@ class Application(Tk):
                 ser.write(b"_CONN\n")
             else:
                 self.other_com_ports.append(comport)
-        except SerialException:
+        except SerialException as E:
+            print (E)
             self.other_com_ports.append(comport)
 
 if __name__ == '__main__':
