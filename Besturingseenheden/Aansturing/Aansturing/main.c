@@ -17,6 +17,8 @@ uint16_t counter = 0; // 16 bit counter value
 uint8_t echo = 0; // a flag
 uint16_t distance = 0; //de afstand
 
+uint8_t receiveInterrupt = 0;
+
 // De array met taken
 sTask scheduler_tasks[SCHEDULER_MAX_TASKS];
 
@@ -213,7 +215,6 @@ void init_ports(void)
 
 }
 
-
 void init_ext_int1(void)
 {
     // Voor lezen Echo van Ultrasoonsensor
@@ -230,6 +231,13 @@ void init_timer0()
     TIMSK0 = (1<<TOIE0);
 }
 
+void init_timer2()
+{
+	TCCR2A |= (1<<WGM21);
+	TCCR2B |= (1<<CS22) | (1<<CS21) | (1<<CS20);
+	OCR2A = 255;
+	TIMSK2 |= (1<<OCIE2A);
+}
 
 void init_uart(void)
 {
@@ -262,11 +270,23 @@ void transmit_string(char* data)
 	}
 }
 
+void start_timer2(void);
+
 uint8_t receive(void)
 {
 	// wacht totdat er data op de recieve buffer wordt gezet 
     // RXC0 wordt gezet wanneer de er data in de recieve buffer staat
-    loop_until_bit_is_set(UCSR0A, RXC0);
+	uint8_t i = 0;
+    while ((UCSR0A & (1<<RXC0)) != (1<<RXC0)) {
+		if (receiveInterrupt) {
+			receiveInterrupt = 0;
+			i += 1;
+		}
+		if (i >= 10){
+			return 10;
+		}
+		
+	}
 	return UDR0;
 }
 
@@ -278,6 +298,7 @@ void receive_string(char* data){
 		data[i] = c;
 		i++;
 		c = receive();
+		transmit(c);
 	}
 }
 
@@ -296,8 +317,13 @@ ISR (INT1_vect)
 
 ISR (TIMER0_OVF_vect)
 {
-    // Verhoog counter bij overflow interrupt timer 1
+    // Verhoog counter bij overflow interrupt timer 0
     counter++;
+}
+
+ISR (TIMER2_COMPA_vect)
+{
+	receiveInterrupt = 1;
 }
 
 void start_timer0(void)
@@ -307,6 +333,12 @@ void start_timer0(void)
     counter = 0;
     // start timer0 met prescaler 64
     TCCR0B = (1<<CS01) | (1<<CS00);
+}
+
+void start_timer2(void)
+{
+	TCNT2 = 0;
+	TCCR2B |= (1<<CS22) | (1<<CS20);
 }
 
 void send_trigger(void)
@@ -327,7 +359,7 @@ uint16_t calc_cm(uint16_t counter)
 
 void refresh_distance(void)
 {
-    send_trigger();
+	send_trigger();
 	distance = calc_cm(counter);
 }
 
@@ -389,6 +421,7 @@ void wait_for_task(void);
 
 void check_if_down(void)
 {
+	transmit(15);
 	if (distance <= MAX_UITROL && distance > MAX_UITROL - 5)
 	{
 		scheduler_delete_all_tasks();
@@ -440,8 +473,9 @@ void wait_for_task(void)
 		scheduler_add_task(turn_on_yellow_led, 0, 50);
 		scheduler_add_task(turn_off_yellow_led, 25, 50);
 		scheduler_add_task(start_motor_reversed, 0, 0);
-		scheduler_add_task(refresh_distance, 0, 20);
-		scheduler_add_task(check_if_down, 10, 20);
+		scheduler_add_task(refresh_distance, 0, 30);
+		scheduler_add_task(check_if_down, 10, 30);
+		scheduler_add_task(wait_for_task, 20, 30);
 	}
 	// inrollen
 	else if (strcmp(task, "_UP") == 0) {
@@ -451,8 +485,24 @@ void wait_for_task(void)
 		scheduler_add_task(turn_on_yellow_led, 0, 50);
 		scheduler_add_task(turn_off_yellow_led, 25, 50);
 		scheduler_add_task(start_motor, 0, 0);
+		scheduler_add_task(refresh_distance, 0, 30);
+		scheduler_add_task(check_if_up, 10, 30);
+		scheduler_add_task(wait_for_task, 20, 30);
+	} 
+	else if (strcmp(task, "_STOP") == 0) {
+		scheduler_delete_all_tasks();
+		scheduler_add_task(turn_on_yellow_led, 0, 0);
+		scheduler_add_task(turn_off_green_led, 0, 0);
+		scheduler_add_task(turn_off_red_led, 0, 0);
 		scheduler_add_task(refresh_distance, 0, 20);
-		scheduler_add_task(check_if_up, 10, 20);
+		scheduler_add_task(wait_for_task, 10, 20);
+	}
+	else if (strcmp(task, "") == 0) {
+		//do nothing
+	} 
+	else {
+		char error_message[8] = "_ERR\n";
+		transmit_string(error_message);
 	}
 }
 
@@ -463,6 +513,7 @@ int main()
     init_uart();
     init_ext_int1();
     init_timer0();
+	init_timer2();
 	scheduler_init_timer1();
     // tasks
 	scheduler_add_task(turn_on_yellow_led, 0, 0);

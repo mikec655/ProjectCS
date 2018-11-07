@@ -3,31 +3,31 @@ Aansturing.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000002a  00800100  00000786  0000081a  2**0
+  0 .data         00000038  00800100  000008aa  0000093e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000786  00000000  00000000  00000094  2**1
+  1 .text         000008aa  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000004b  0080012a  0080012a  00000844  2**0
+  2 .bss          0000004c  00800138  00800138  00000976  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000844  2**0
+  3 .comment      00000030  00000000  00000000  00000976  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000874  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000009a8  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000130  00000000  00000000  000008b4  2**0
+  5 .debug_aranges 00000148  00000000  00000000  000009e8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000014d0  00000000  00000000  000009e4  2**0
+  6 .debug_info   00001728  00000000  00000000  00000b30  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000911  00000000  00000000  00001eb4  2**0
+  7 .debug_abbrev 00000911  00000000  00000000  00002258  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000008e1  00000000  00000000  000027c5  2**0
+  8 .debug_line   000009c8  00000000  00000000  00002b69  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000354  00000000  00000000  000030a8  2**2
+  9 .debug_frame  00000398  00000000  00000000  00003534  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000066d  00000000  00000000  000033fc  2**0
+ 10 .debug_str    000006b0  00000000  00000000  000038cc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000669  00000000  00000000  00003a69  2**0
+ 11 .debug_loc    000006e7  00000000  00000000  00003f7c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000120  00000000  00000000  000040d2  2**0
+ 12 .debug_ranges 00000138  00000000  00000000  00004663  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -35,21 +35,21 @@ Disassembly of section .text:
 00000000 <__vectors>:
    0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
    4:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-   8:	0c 94 1a 03 	jmp	0x634	; 0x634 <__vector_2>
+   8:	0c 94 aa 03 	jmp	0x754	; 0x754 <__vector_2>
    c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   10:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   14:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   18:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  1c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
+  1c:	0c 94 93 03 	jmp	0x726	; 0x726 <__vector_7>
   20:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   24:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   28:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  2c:	0c 94 55 01 	jmp	0x2aa	; 0x2aa <__vector_11>
+  2c:	0c 94 23 01 	jmp	0x246	; 0x246 <__vector_11>
   30:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   34:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   38:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   3c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
-  40:	0c 94 fb 02 	jmp	0x5f6	; 0x5f6 <__vector_16>
+  40:	0c 94 7c 03 	jmp	0x6f8	; 0x6f8 <__vector_16>
   44:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   48:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
   4c:	0c 94 51 00 	jmp	0xa2	; 0xa2 <__bad_interrupt>
@@ -72,18 +72,18 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	e6 e8       	ldi	r30, 0x86	; 134
-  7c:	f7 e0       	ldi	r31, 0x07	; 7
+  7a:	ea ea       	ldi	r30, 0xAA	; 170
+  7c:	f8 e0       	ldi	r31, 0x08	; 8
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
   82:	0d 92       	st	X+, r0
-  84:	aa 32       	cpi	r26, 0x2A	; 42
+  84:	a8 33       	cpi	r26, 0x38	; 56
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
 
 0000008a <__do_clear_bss>:
   8a:	21 e0       	ldi	r18, 0x01	; 1
-  8c:	aa e2       	ldi	r26, 0x2A	; 42
+  8c:	a8 e3       	ldi	r26, 0x38	; 56
   8e:	b1 e0       	ldi	r27, 0x01	; 1
   90:	01 c0       	rjmp	.+2      	; 0x94 <.do_clear_bss_start>
 
@@ -91,22 +91,22 @@ Disassembly of section .text:
   92:	1d 92       	st	X+, r1
 
 00000094 <.do_clear_bss_start>:
-  94:	a5 37       	cpi	r26, 0x75	; 117
+  94:	a4 38       	cpi	r26, 0x84	; 132
   96:	b2 07       	cpc	r27, r18
   98:	e1 f7       	brne	.-8      	; 0x92 <.do_clear_bss_loop>
-  9a:	0e 94 83 03 	call	0x706	; 0x706 <main>
-  9e:	0c 94 c1 03 	jmp	0x782	; 0x782 <_exit>
+  9a:	0e 94 13 04 	call	0x826	; 0x826 <main>
+  9e:	0c 94 53 04 	jmp	0x8a6	; 0x8a6 <_exit>
 
 000000a2 <__bad_interrupt>:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <turn_on_green_led>:
+}
 
-*/
-
-void scheduler_start(void)
+void start_timer2(void)
 {
-      sei();
+	TCNT2 = 0;
+	TCCR2B |= (1<<CS22) | (1<<CS20);
   a6:	2c 9a       	sbi	0x05, 4	; 5
   a8:	08 95       	ret
 
@@ -152,11 +152,11 @@ void scheduler_start(void)
   d6:	cf 93       	push	r28
   d8:	df 93       	push	r29
   da:	8c 01       	movw	r16, r24
-  dc:	80 91 2f 01 	lds	r24, 0x012F	; 0x80012f <scheduler_tasks>
-  e0:	90 91 30 01 	lds	r25, 0x0130	; 0x800130 <scheduler_tasks+0x1>
+  dc:	80 91 3e 01 	lds	r24, 0x013E	; 0x80013e <scheduler_tasks>
+  e0:	90 91 3f 01 	lds	r25, 0x013F	; 0x80013f <scheduler_tasks+0x1>
   e4:	89 2b       	or	r24, r25
   e6:	81 f0       	breq	.+32     	; 0x108 <scheduler_add_task+0x36>
-  e8:	ef e2       	ldi	r30, 0x2F	; 47
+  e8:	ee e3       	ldi	r30, 0x3E	; 62
   ea:	f1 e0       	ldi	r31, 0x01	; 1
   ec:	21 e0       	ldi	r18, 0x01	; 1
   ee:	30 e0       	ldi	r19, 0x00	; 0
@@ -184,7 +184,7 @@ void scheduler_start(void)
  11a:	ff 1f       	adc	r31, r31
  11c:	ec 1b       	sub	r30, r28
  11e:	fd 0b       	sbc	r31, r29
- 120:	e1 5d       	subi	r30, 0xD1	; 209
+ 120:	e2 5c       	subi	r30, 0xC2	; 194
  122:	fe 4f       	sbci	r31, 0xFE	; 254
  124:	11 83       	std	Z+1, r17	; 0x01
  126:	00 83       	st	Z, r16
@@ -205,7 +205,7 @@ void scheduler_start(void)
  140:	c0 01       	movw	r24, r0
  142:	11 24       	eor	r1, r1
  144:	fc 01       	movw	r30, r24
- 146:	e1 5d       	subi	r30, 0xD1	; 209
+ 146:	e2 5c       	subi	r30, 0xC2	; 194
  148:	fe 4f       	sbci	r31, 0xFE	; 254
  14a:	11 82       	std	Z+1, r1	; 0x01
  14c:	10 82       	st	Z, r1
@@ -222,7 +222,7 @@ void scheduler_start(void)
  15e:	1f 93       	push	r17
  160:	cf 93       	push	r28
  162:	df 93       	push	r29
- 164:	cf e2       	ldi	r28, 0x2F	; 47
+ 164:	ce e3       	ldi	r28, 0x3E	; 62
  166:	d1 e0       	ldi	r29, 0x01	; 1
  168:	10 e0       	ldi	r17, 0x00	; 0
  16a:	8e 81       	ldd	r24, Y+6	; 0x06
@@ -264,18 +264,18 @@ void scheduler_start(void)
  1b2:	cf 91       	pop	r28
  1b4:	08 95       	ret
 
-000001b6 <check_if_down>:
- 1b6:	20 91 2a 01 	lds	r18, 0x012A	; 0x80012a <__data_end>
- 1ba:	30 91 2b 01 	lds	r19, 0x012B	; 0x80012b <__data_end+0x1>
- 1be:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <MAX_UITROL>
- 1c2:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <MAX_UITROL+0x1>
- 1c6:	82 17       	cp	r24, r18
- 1c8:	93 07       	cpc	r25, r19
- 1ca:	30 f1       	brcs	.+76     	; 0x218 <check_if_down+0x62>
- 1cc:	05 97       	sbiw	r24, 0x05	; 5
- 1ce:	82 17       	cp	r24, r18
- 1d0:	93 07       	cpc	r25, r19
- 1d2:	10 f5       	brcc	.+68     	; 0x218 <check_if_down+0x62>
+000001b6 <check_if_up>:
+ 1b6:	20 91 39 01 	lds	r18, 0x0139	; 0x800139 <distance>
+ 1ba:	30 91 3a 01 	lds	r19, 0x013A	; 0x80013a <distance+0x1>
+ 1be:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <MIN_UITROL>
+ 1c2:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <MIN_UITROL+0x1>
+ 1c6:	28 17       	cp	r18, r24
+ 1c8:	39 07       	cpc	r19, r25
+ 1ca:	30 f1       	brcs	.+76     	; 0x218 <check_if_up+0x62>
+ 1cc:	05 96       	adiw	r24, 0x05	; 5
+ 1ce:	28 17       	cp	r18, r24
+ 1d0:	39 07       	cpc	r19, r25
+ 1d2:	10 f5       	brcc	.+68     	; 0x218 <check_if_up+0x62>
  1d4:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
  1d8:	40 e0       	ldi	r20, 0x00	; 0
  1da:	50 e0       	ldi	r21, 0x00	; 0
@@ -295,947 +295,870 @@ void scheduler_start(void)
  1fa:	50 e0       	ldi	r21, 0x00	; 0
  1fc:	60 e0       	ldi	r22, 0x00	; 0
  1fe:	70 e0       	ldi	r23, 0x00	; 0
- 200:	86 e7       	ldi	r24, 0x76	; 118
- 202:	93 e0       	ldi	r25, 0x03	; 3
+ 200:	86 e0       	ldi	r24, 0x06	; 6
+ 202:	94 e0       	ldi	r25, 0x04	; 4
  204:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
  208:	44 e1       	ldi	r20, 0x14	; 20
  20a:	50 e0       	ldi	r21, 0x00	; 0
  20c:	6a e0       	ldi	r22, 0x0A	; 10
  20e:	70 e0       	ldi	r23, 0x00	; 0
- 210:	83 e4       	ldi	r24, 0x43	; 67
+ 210:	8c e6       	ldi	r24, 0x6C	; 108
  212:	92 e0       	ldi	r25, 0x02	; 2
  214:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
  218:	08 95       	ret
 
-0000021a <check_if_up>:
- 21a:	20 91 2a 01 	lds	r18, 0x012A	; 0x80012a <__data_end>
- 21e:	30 91 2b 01 	lds	r19, 0x012B	; 0x80012b <__data_end+0x1>
- 222:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <MIN_UITROL>
- 226:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <MIN_UITROL+0x1>
- 22a:	28 17       	cp	r18, r24
- 22c:	39 07       	cpc	r19, r25
- 22e:	30 f1       	brcs	.+76     	; 0x27c <check_if_up+0x62>
- 230:	05 96       	adiw	r24, 0x05	; 5
- 232:	28 17       	cp	r18, r24
- 234:	39 07       	cpc	r19, r25
- 236:	10 f5       	brcc	.+68     	; 0x27c <check_if_up+0x62>
- 238:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
- 23c:	40 e0       	ldi	r20, 0x00	; 0
- 23e:	50 e0       	ldi	r21, 0x00	; 0
- 240:	60 e0       	ldi	r22, 0x00	; 0
- 242:	70 e0       	ldi	r23, 0x00	; 0
- 244:	8d e5       	ldi	r24, 0x5D	; 93
- 246:	90 e0       	ldi	r25, 0x00	; 0
- 248:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
- 24c:	40 e0       	ldi	r20, 0x00	; 0
- 24e:	50 e0       	ldi	r21, 0x00	; 0
- 250:	60 e0       	ldi	r22, 0x00	; 0
- 252:	70 e0       	ldi	r23, 0x00	; 0
- 254:	85 e6       	ldi	r24, 0x65	; 101
- 256:	90 e0       	ldi	r25, 0x00	; 0
- 258:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
- 25c:	44 e1       	ldi	r20, 0x14	; 20
- 25e:	50 e0       	ldi	r21, 0x00	; 0
- 260:	60 e0       	ldi	r22, 0x00	; 0
- 262:	70 e0       	ldi	r23, 0x00	; 0
- 264:	86 e7       	ldi	r24, 0x76	; 118
- 266:	93 e0       	ldi	r25, 0x03	; 3
- 268:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
- 26c:	44 e1       	ldi	r20, 0x14	; 20
- 26e:	50 e0       	ldi	r21, 0x00	; 0
- 270:	6a e0       	ldi	r22, 0x0A	; 10
- 272:	70 e0       	ldi	r23, 0x00	; 0
- 274:	83 e4       	ldi	r24, 0x43	; 67
- 276:	92 e0       	ldi	r25, 0x02	; 2
- 278:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
- 27c:	08 95       	ret
+0000021a <scheduler_init_timer1>:
+ 21a:	cf 93       	push	r28
+ 21c:	c0 e0       	ldi	r28, 0x00	; 0
+ 21e:	8c 2f       	mov	r24, r28
+ 220:	0e 94 9e 00 	call	0x13c	; 0x13c <scheduler_delete_task>
+ 224:	cf 5f       	subi	r28, 0xFF	; 255
+ 226:	ca 30       	cpi	r28, 0x0A	; 10
+ 228:	d1 f7       	brne	.-12     	; 0x21e <scheduler_init_timer1+0x4>
+ 22a:	81 e7       	ldi	r24, 0x71	; 113
+ 22c:	92 e0       	ldi	r25, 0x02	; 2
+ 22e:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+ 232:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+ 236:	8c e0       	ldi	r24, 0x0C	; 12
+ 238:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 23c:	82 e0       	ldi	r24, 0x02	; 2
+ 23e:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
+ 242:	cf 91       	pop	r28
+ 244:	08 95       	ret
 
-0000027e <scheduler_init_timer1>:
- 27e:	cf 93       	push	r28
- 280:	c0 e0       	ldi	r28, 0x00	; 0
- 282:	8c 2f       	mov	r24, r28
- 284:	0e 94 9e 00 	call	0x13c	; 0x13c <scheduler_delete_task>
- 288:	cf 5f       	subi	r28, 0xFF	; 255
- 28a:	ca 30       	cpi	r28, 0x0A	; 10
- 28c:	d1 f7       	brne	.-12     	; 0x282 <scheduler_init_timer1+0x4>
- 28e:	81 e7       	ldi	r24, 0x71	; 113
- 290:	92 e0       	ldi	r25, 0x02	; 2
- 292:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
- 296:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
- 29a:	8c e0       	ldi	r24, 0x0C	; 12
- 29c:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
- 2a0:	82 e0       	ldi	r24, 0x02	; 2
- 2a2:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
- 2a6:	cf 91       	pop	r28
- 2a8:	08 95       	ret
+00000246 <__vector_11>:
+ 246:	1f 92       	push	r1
+ 248:	0f 92       	push	r0
+ 24a:	0f b6       	in	r0, 0x3f	; 63
+ 24c:	0f 92       	push	r0
+ 24e:	11 24       	eor	r1, r1
+ 250:	2f 93       	push	r18
+ 252:	3f 93       	push	r19
+ 254:	8f 93       	push	r24
+ 256:	9f 93       	push	r25
+ 258:	af 93       	push	r26
+ 25a:	bf 93       	push	r27
+ 25c:	ef 93       	push	r30
+ 25e:	ff 93       	push	r31
+ 260:	ee e3       	ldi	r30, 0x3E	; 62
+ 262:	f1 e0       	ldi	r31, 0x01	; 1
+ 264:	24 e8       	ldi	r18, 0x84	; 132
+ 266:	31 e0       	ldi	r19, 0x01	; 1
+ 268:	80 81       	ld	r24, Z
+ 26a:	91 81       	ldd	r25, Z+1	; 0x01
+ 26c:	89 2b       	or	r24, r25
+ 26e:	91 f0       	breq	.+36     	; 0x294 <__vector_11+0x4e>
+ 270:	82 81       	ldd	r24, Z+2	; 0x02
+ 272:	93 81       	ldd	r25, Z+3	; 0x03
+ 274:	00 97       	sbiw	r24, 0x00	; 0
+ 276:	59 f4       	brne	.+22     	; 0x28e <__vector_11+0x48>
+ 278:	86 81       	ldd	r24, Z+6	; 0x06
+ 27a:	8f 5f       	subi	r24, 0xFF	; 255
+ 27c:	86 83       	std	Z+6, r24	; 0x06
+ 27e:	84 81       	ldd	r24, Z+4	; 0x04
+ 280:	95 81       	ldd	r25, Z+5	; 0x05
+ 282:	00 97       	sbiw	r24, 0x00	; 0
+ 284:	39 f0       	breq	.+14     	; 0x294 <__vector_11+0x4e>
+ 286:	01 97       	sbiw	r24, 0x01	; 1
+ 288:	93 83       	std	Z+3, r25	; 0x03
+ 28a:	82 83       	std	Z+2, r24	; 0x02
+ 28c:	03 c0       	rjmp	.+6      	; 0x294 <__vector_11+0x4e>
+ 28e:	01 97       	sbiw	r24, 0x01	; 1
+ 290:	93 83       	std	Z+3, r25	; 0x03
+ 292:	82 83       	std	Z+2, r24	; 0x02
+ 294:	37 96       	adiw	r30, 0x07	; 7
+ 296:	e2 17       	cp	r30, r18
+ 298:	f3 07       	cpc	r31, r19
+ 29a:	31 f7       	brne	.-52     	; 0x268 <__vector_11+0x22>
+ 29c:	ff 91       	pop	r31
+ 29e:	ef 91       	pop	r30
+ 2a0:	bf 91       	pop	r27
+ 2a2:	af 91       	pop	r26
+ 2a4:	9f 91       	pop	r25
+ 2a6:	8f 91       	pop	r24
+ 2a8:	3f 91       	pop	r19
+ 2aa:	2f 91       	pop	r18
+ 2ac:	0f 90       	pop	r0
+ 2ae:	0f be       	out	0x3f, r0	; 63
+ 2b0:	0f 90       	pop	r0
+ 2b2:	1f 90       	pop	r1
+ 2b4:	18 95       	reti
 
-000002aa <__vector_11>:
-op basis van de instellingen in scheduler_init_timer1().
+000002b6 <init_ports>:
+ 2b6:	84 b1       	in	r24, 0x04	; 4
+ 2b8:	8c 61       	ori	r24, 0x1C	; 28
+ 2ba:	84 b9       	out	0x04, r24	; 4
+ 2bc:	84 b1       	in	r24, 0x04	; 4
+ 2be:	83 60       	ori	r24, 0x03	; 3
+ 2c0:	84 b9       	out	0x04, r24	; 4
+ 2c2:	54 9a       	sbi	0x0a, 4	; 10
+ 2c4:	53 98       	cbi	0x0a, 3	; 10
+ 2c6:	08 95       	ret
 
-*/
+000002c8 <init_ext_int1>:
+ 2c8:	84 e0       	ldi	r24, 0x04	; 4
+ 2ca:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <__TEXT_REGION_LENGTH__+0x7e0069>
+ 2ce:	82 e0       	ldi	r24, 0x02	; 2
+ 2d0:	8d bb       	out	0x1d, r24	; 29
+ 2d2:	08 95       	ret
 
-ISR(TIMER1_COMPA_vect)
-{
- 2aa:	1f 92       	push	r1
- 2ac:	0f 92       	push	r0
- 2ae:	0f b6       	in	r0, 0x3f	; 63
- 2b0:	0f 92       	push	r0
- 2b2:	11 24       	eor	r1, r1
- 2b4:	2f 93       	push	r18
- 2b6:	3f 93       	push	r19
- 2b8:	8f 93       	push	r24
- 2ba:	9f 93       	push	r25
- 2bc:	af 93       	push	r26
- 2be:	bf 93       	push	r27
- 2c0:	ef 93       	push	r30
- 2c2:	ff 93       	push	r31
- 2c4:	ef e2       	ldi	r30, 0x2F	; 47
- 2c6:	f1 e0       	ldi	r31, 0x01	; 1
- 2c8:	25 e7       	ldi	r18, 0x75	; 117
- 2ca:	31 e0       	ldi	r19, 0x01	; 1
-   unsigned char index;
-   for(index = 0; index < SCHEDULER_MAX_TASKS; index++)
-   {
-      // Controleert of een taak op index in array aanwezig is
-      if(scheduler_tasks[index].pTask)
- 2cc:	80 81       	ld	r24, Z
- 2ce:	91 81       	ldd	r25, Z+1	; 0x01
- 2d0:	89 2b       	or	r24, r25
- 2d2:	91 f0       	breq	.+36     	; 0x2f8 <__vector_11+0x4e>
-      {
-         if(scheduler_tasks[index].Delay == 0)
- 2d4:	82 81       	ldd	r24, Z+2	; 0x02
- 2d6:	93 81       	ldd	r25, Z+3	; 0x03
- 2d8:	00 97       	sbiw	r24, 0x00	; 0
- 2da:	59 f4       	brne	.+22     	; 0x2f2 <__vector_11+0x48>
-         {
-            // Taak is klaar om uitgevoerd te worden, inc 'RunMe' flag 
-            scheduler_tasks[index].RunMe += 1;
- 2dc:	86 81       	ldd	r24, Z+6	; 0x06
- 2de:	8f 5f       	subi	r24, 0xFF	; 255
- 2e0:	86 83       	std	Z+6, r24	; 0x06
+000002d4 <init_timer0>:
+ 2d4:	14 bc       	out	0x24, r1	; 36
+ 2d6:	15 bc       	out	0x25, r1	; 37
+ 2d8:	81 e0       	ldi	r24, 0x01	; 1
+ 2da:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7e006e>
+ 2de:	08 95       	ret
 
-            if(scheduler_tasks[index].Period)
- 2e2:	84 81       	ldd	r24, Z+4	; 0x04
- 2e4:	95 81       	ldd	r25, Z+5	; 0x05
- 2e6:	00 97       	sbiw	r24, 0x00	; 0
- 2e8:	39 f0       	breq	.+14     	; 0x2f8 <__vector_11+0x4e>
-            {
-               // periodieke taken opnieuw instellen
-               scheduler_tasks[index].Delay = scheduler_tasks[index].Period;
-               scheduler_tasks[index].Delay -= 1;
- 2ea:	01 97       	sbiw	r24, 0x01	; 1
- 2ec:	93 83       	std	Z+3, r25	; 0x03
- 2ee:	82 83       	std	Z+2, r24	; 0x02
- 2f0:	03 c0       	rjmp	.+6      	; 0x2f8 <__vector_11+0x4e>
-            }
-         }
-         else
-         {
-            // Verlaag Delay als taak niet klaar is om uitgevoerd te worden
-            scheduler_tasks[index].Delay -= 1;
- 2f2:	01 97       	sbiw	r24, 0x01	; 1
- 2f4:	93 83       	std	Z+3, r25	; 0x03
- 2f6:	82 83       	std	Z+2, r24	; 0x02
- 2f8:	37 96       	adiw	r30, 0x07	; 7
-*/
+000002e0 <init_timer2>:
+ 2e0:	e0 eb       	ldi	r30, 0xB0	; 176
+ 2e2:	f0 e0       	ldi	r31, 0x00	; 0
+ 2e4:	80 81       	ld	r24, Z
+ 2e6:	82 60       	ori	r24, 0x02	; 2
+ 2e8:	80 83       	st	Z, r24
+ 2ea:	e1 eb       	ldi	r30, 0xB1	; 177
+ 2ec:	f0 e0       	ldi	r31, 0x00	; 0
+ 2ee:	80 81       	ld	r24, Z
+ 2f0:	87 60       	ori	r24, 0x07	; 7
+ 2f2:	80 83       	st	Z, r24
+ 2f4:	8f ef       	ldi	r24, 0xFF	; 255
+ 2f6:	80 93 b3 00 	sts	0x00B3, r24	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7e00b3>
+ 2fa:	e0 e7       	ldi	r30, 0x70	; 112
+ 2fc:	f0 e0       	ldi	r31, 0x00	; 0
+ 2fe:	80 81       	ld	r24, Z
+ 300:	82 60       	ori	r24, 0x02	; 2
+ 302:	80 83       	st	Z, r24
+ 304:	08 95       	ret
 
-ISR(TIMER1_COMPA_vect)
-{
-   unsigned char index;
-   for(index = 0; index < SCHEDULER_MAX_TASKS; index++)
- 2fa:	e2 17       	cp	r30, r18
- 2fc:	f3 07       	cpc	r31, r19
- 2fe:	31 f7       	brne	.-52     	; 0x2cc <__vector_11+0x22>
-            // Verlaag Delay als taak niet klaar is om uitgevoerd te worden
-            scheduler_tasks[index].Delay -= 1;
-         }
-      }
-   }
-}
- 300:	ff 91       	pop	r31
- 302:	ef 91       	pop	r30
- 304:	bf 91       	pop	r27
- 306:	af 91       	pop	r26
- 308:	9f 91       	pop	r25
- 30a:	8f 91       	pop	r24
- 30c:	3f 91       	pop	r19
- 30e:	2f 91       	pop	r18
- 310:	0f 90       	pop	r0
- 312:	0f be       	out	0x3f, r0	; 63
- 314:	0f 90       	pop	r0
- 316:	1f 90       	pop	r1
- 318:	18 95       	reti
+00000306 <init_uart>:
+ 306:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
+ 30a:	83 e3       	ldi	r24, 0x33	; 51
+ 30c:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
+ 310:	10 92 c0 00 	sts	0x00C0, r1	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
+ 314:	88 e1       	ldi	r24, 0x18	; 24
+ 316:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+ 31a:	86 e0       	ldi	r24, 0x06	; 6
+ 31c:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
+ 320:	08 95       	ret
 
-0000031a <init_ports>:
-void init_ports(void)
-{
-    // set pin PB4 (arduino: 12) as output for GREEN LED
-    // set pin PB3 (arduino: 11) as output for RED LED
-    // set pin PB2 (arduino: 10) as output for YELLOW LED
-    DDRB |= 0b00011100;
- 31a:	84 b1       	in	r24, 0x04	; 4
- 31c:	8c 61       	ori	r24, 0x1C	; 28
- 31e:	84 b9       	out	0x04, r24	; 4
-    // set pin PB1 (arduino: 9) as output for motor (reversed)
-    // set pin PB0 (arduino: 8) as output for motor
-    DDRB |= 0b00000011;
- 320:	84 b1       	in	r24, 0x04	; 4
- 322:	83 60       	ori	r24, 0x03	; 3
- 324:	84 b9       	out	0x04, r24	; 4
-    // set pin PD4 (arduino: 4) as output for Trigger Ultrasoonsensor
-    DDRD |= 0b00010000;
- 326:	54 9a       	sbi	0x0a, 4	; 10
-    // set pin PD3 (arduino: 3) as input for Echo Ultrasoonsensor
-    DDRD &= 0b11110111;
- 328:	53 98       	cbi	0x0a, 3	; 10
- 32a:	08 95       	ret
+00000322 <transmit>:
+ 322:	e0 ec       	ldi	r30, 0xC0	; 192
+ 324:	f0 e0       	ldi	r31, 0x00	; 0
+ 326:	90 81       	ld	r25, Z
+ 328:	95 ff       	sbrs	r25, 5
+ 32a:	fd cf       	rjmp	.-6      	; 0x326 <transmit+0x4>
+ 32c:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+ 330:	08 95       	ret
 
-0000032c <init_ext_int1>:
+00000332 <check_if_down>:
+ 332:	8f e0       	ldi	r24, 0x0F	; 15
+ 334:	0e 94 91 01 	call	0x322	; 0x322 <transmit>
+ 338:	20 91 39 01 	lds	r18, 0x0139	; 0x800139 <distance>
+ 33c:	30 91 3a 01 	lds	r19, 0x013A	; 0x80013a <distance+0x1>
+ 340:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <MAX_UITROL>
+ 344:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <MAX_UITROL+0x1>
+ 348:	82 17       	cp	r24, r18
+ 34a:	93 07       	cpc	r25, r19
+ 34c:	30 f1       	brcs	.+76     	; 0x39a <check_if_down+0x68>
+ 34e:	05 97       	sbiw	r24, 0x05	; 5
+ 350:	82 17       	cp	r24, r18
+ 352:	93 07       	cpc	r25, r19
+ 354:	10 f5       	brcc	.+68     	; 0x39a <check_if_down+0x68>
+ 356:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
+ 35a:	40 e0       	ldi	r20, 0x00	; 0
+ 35c:	50 e0       	ldi	r21, 0x00	; 0
+ 35e:	60 e0       	ldi	r22, 0x00	; 0
+ 360:	70 e0       	ldi	r23, 0x00	; 0
+ 362:	8d e5       	ldi	r24, 0x5D	; 93
+ 364:	90 e0       	ldi	r25, 0x00	; 0
+ 366:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 36a:	40 e0       	ldi	r20, 0x00	; 0
+ 36c:	50 e0       	ldi	r21, 0x00	; 0
+ 36e:	60 e0       	ldi	r22, 0x00	; 0
+ 370:	70 e0       	ldi	r23, 0x00	; 0
+ 372:	85 e6       	ldi	r24, 0x65	; 101
+ 374:	90 e0       	ldi	r25, 0x00	; 0
+ 376:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 37a:	44 e1       	ldi	r20, 0x14	; 20
+ 37c:	50 e0       	ldi	r21, 0x00	; 0
+ 37e:	60 e0       	ldi	r22, 0x00	; 0
+ 380:	70 e0       	ldi	r23, 0x00	; 0
+ 382:	86 e0       	ldi	r24, 0x06	; 6
+ 384:	94 e0       	ldi	r25, 0x04	; 4
+ 386:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 38a:	44 e1       	ldi	r20, 0x14	; 20
+ 38c:	50 e0       	ldi	r21, 0x00	; 0
+ 38e:	6a e0       	ldi	r22, 0x0A	; 10
+ 390:	70 e0       	ldi	r23, 0x00	; 0
+ 392:	8c e6       	ldi	r24, 0x6C	; 108
+ 394:	92 e0       	ldi	r25, 0x02	; 2
+ 396:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 39a:	08 95       	ret
 
-void init_ext_int1(void)
-{
-    // Voor lezen Echo van Ultrasoonsensor
-    // any change triggers ext interrupt 1
-    EICRA = (1 << ISC10);
- 32c:	84 e0       	ldi	r24, 0x04	; 4
- 32e:	80 93 69 00 	sts	0x0069, r24	; 0x800069 <__TEXT_REGION_LENGTH__+0x7e0069>
-    EIMSK = (1 << INT1);
- 332:	82 e0       	ldi	r24, 0x02	; 2
- 334:	8d bb       	out	0x1d, r24	; 29
- 336:	08 95       	ret
-
-00000338 <init_timer0>:
-}
-
-void init_timer0()
-{
-    TCCR0A = 0;
- 338:	14 bc       	out	0x24, r1	; 36
-    TCCR0B = 0;
- 33a:	15 bc       	out	0x25, r1	; 37
-    // Enable Overflow Interrupt 
-    TIMSK0 = (1<<TOIE0);
- 33c:	81 e0       	ldi	r24, 0x01	; 1
- 33e:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7e006e>
- 342:	08 95       	ret
-
-00000344 <init_uart>:
-
-void init_uart(void)
-{
-	// baud rate
-    uint8_t UBBRVAL = 51;
-	UBRR0H = 0;
- 344:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
-	UBRR0L = UBBRVAL;
- 348:	83 e3       	ldi	r24, 0x33	; 51
- 34a:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
-	// disable U2X mode
-	UCSR0A = 0;
- 34e:	10 92 c0 00 	sts	0x00C0, r1	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
-	// set transmitter en receiver aan
-	UCSR0B = (1<<TXEN0) | (1<<RXEN0);
- 352:	88 e1       	ldi	r24, 0x18	; 24
- 354:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
-	// set frame format : asynchronous, 8 data bits, 1 stop bit, no parity
-	UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
- 358:	86 e0       	ldi	r24, 0x06	; 6
- 35a:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
- 35e:	08 95       	ret
-
-00000360 <transmit>:
-// uart functies 
-void transmit(uint8_t data)
-{
-	// wacht totdat transmit buffer leeg is
-	// UDRE wordt gezet wanneer de transmit buffer leeg is
-	loop_until_bit_is_set(UCSR0A, UDRE0);
- 360:	e0 ec       	ldi	r30, 0xC0	; 192
- 362:	f0 e0       	ldi	r31, 0x00	; 0
- 364:	90 81       	ld	r25, Z
- 366:	95 ff       	sbrs	r25, 5
- 368:	fd cf       	rjmp	.-6      	; 0x364 <transmit+0x4>
-	// zet dat in UDR
-	UDR0 = data;
- 36a:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
- 36e:	08 95       	ret
-
-00000370 <transmit_string>:
-}
-
-void transmit_string(char* data)
-{
- 370:	1f 93       	push	r17
- 372:	cf 93       	push	r28
- 374:	df 93       	push	r29
- 376:	ec 01       	movw	r28, r24
-	for (uint8_t i = 0; i < strlen(data); i++){
- 378:	10 e0       	ldi	r17, 0x00	; 0
- 37a:	07 c0       	rjmp	.+14     	; 0x38a <transmit_string+0x1a>
-		transmit(data[i]);
- 37c:	fe 01       	movw	r30, r28
- 37e:	e8 0f       	add	r30, r24
- 380:	f9 1f       	adc	r31, r25
- 382:	80 81       	ld	r24, Z
- 384:	0e 94 b0 01 	call	0x360	; 0x360 <transmit>
-	UDR0 = data;
-}
-
-void transmit_string(char* data)
-{
-	for (uint8_t i = 0; i < strlen(data); i++){
- 388:	1f 5f       	subi	r17, 0xFF	; 255
- 38a:	81 2f       	mov	r24, r17
- 38c:	90 e0       	ldi	r25, 0x00	; 0
- 38e:	fe 01       	movw	r30, r28
- 390:	01 90       	ld	r0, Z+
- 392:	00 20       	and	r0, r0
- 394:	e9 f7       	brne	.-6      	; 0x390 <transmit_string+0x20>
- 396:	31 97       	sbiw	r30, 0x01	; 1
- 398:	ec 1b       	sub	r30, r28
- 39a:	fd 0b       	sbc	r31, r29
- 39c:	8e 17       	cp	r24, r30
- 39e:	9f 07       	cpc	r25, r31
- 3a0:	68 f3       	brcs	.-38     	; 0x37c <transmit_string+0xc>
-		transmit(data[i]);
-	}
-}
- 3a2:	df 91       	pop	r29
- 3a4:	cf 91       	pop	r28
- 3a6:	1f 91       	pop	r17
- 3a8:	08 95       	ret
-
-000003aa <receive>:
-
-uint8_t receive(void)
-{
-	// wacht totdat er data op de recieve buffer wordt gezet 
-    // RXC0 wordt gezet wanneer de er data in de recieve buffer staat
-    loop_until_bit_is_set(UCSR0A, RXC0);
- 3aa:	e0 ec       	ldi	r30, 0xC0	; 192
- 3ac:	f0 e0       	ldi	r31, 0x00	; 0
+0000039c <transmit_string>:
+ 39c:	1f 93       	push	r17
+ 39e:	cf 93       	push	r28
+ 3a0:	df 93       	push	r29
+ 3a2:	ec 01       	movw	r28, r24
+ 3a4:	10 e0       	ldi	r17, 0x00	; 0
+ 3a6:	07 c0       	rjmp	.+14     	; 0x3b6 <transmit_string+0x1a>
+ 3a8:	fe 01       	movw	r30, r28
+ 3aa:	e8 0f       	add	r30, r24
+ 3ac:	f9 1f       	adc	r31, r25
  3ae:	80 81       	ld	r24, Z
- 3b0:	88 23       	and	r24, r24
- 3b2:	ec f7       	brge	.-6      	; 0x3ae <receive+0x4>
-	return UDR0;
- 3b4:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
-}
- 3b8:	08 95       	ret
+ 3b0:	0e 94 91 01 	call	0x322	; 0x322 <transmit>
+ 3b4:	1f 5f       	subi	r17, 0xFF	; 255
+ 3b6:	81 2f       	mov	r24, r17
+ 3b8:	90 e0       	ldi	r25, 0x00	; 0
+ 3ba:	fe 01       	movw	r30, r28
+ 3bc:	01 90       	ld	r0, Z+
+ 3be:	00 20       	and	r0, r0
+ 3c0:	e9 f7       	brne	.-6      	; 0x3bc <transmit_string+0x20>
+ 3c2:	31 97       	sbiw	r30, 0x01	; 1
+ 3c4:	ec 1b       	sub	r30, r28
+ 3c6:	fd 0b       	sbc	r31, r29
+ 3c8:	8e 17       	cp	r24, r30
+ 3ca:	9f 07       	cpc	r25, r31
+ 3cc:	68 f3       	brcs	.-38     	; 0x3a8 <transmit_string+0xc>
+ 3ce:	df 91       	pop	r29
+ 3d0:	cf 91       	pop	r28
+ 3d2:	1f 91       	pop	r17
+ 3d4:	08 95       	ret
 
-000003ba <receive_string>:
+000003d6 <receive>:
+ 3d6:	90 e0       	ldi	r25, 0x00	; 0
+ 3d8:	e0 ec       	ldi	r30, 0xC0	; 192
+ 3da:	f0 e0       	ldi	r31, 0x00	; 0
+ 3dc:	09 c0       	rjmp	.+18     	; 0x3f0 <receive+0x1a>
+ 3de:	80 91 38 01 	lds	r24, 0x0138	; 0x800138 <__data_end>
+ 3e2:	88 23       	and	r24, r24
+ 3e4:	19 f0       	breq	.+6      	; 0x3ec <receive+0x16>
+ 3e6:	10 92 38 01 	sts	0x0138, r1	; 0x800138 <__data_end>
+ 3ea:	9f 5f       	subi	r25, 0xFF	; 255
+ 3ec:	9a 30       	cpi	r25, 0x0A	; 10
+ 3ee:	30 f4       	brcc	.+12     	; 0x3fc <receive+0x26>
+ 3f0:	80 81       	ld	r24, Z
+ 3f2:	88 23       	and	r24, r24
+ 3f4:	a4 f7       	brge	.-24     	; 0x3de <receive+0x8>
+ 3f6:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+ 3fa:	08 95       	ret
+ 3fc:	8a e0       	ldi	r24, 0x0A	; 10
+ 3fe:	08 95       	ret
 
-void receive_string(char* data){
- 3ba:	0f 93       	push	r16
- 3bc:	1f 93       	push	r17
- 3be:	cf 93       	push	r28
- 3c0:	8c 01       	movw	r16, r24
-	uint8_t i = 0;
-	strcpy(data, "");
- 3c2:	fc 01       	movw	r30, r24
- 3c4:	10 82       	st	Z, r1
-	char c = receive();
- 3c6:	0e 94 d5 01 	call	0x3aa	; 0x3aa <receive>
-	while (c != '\n') {
- 3ca:	8a 30       	cpi	r24, 0x0A	; 10
- 3cc:	51 f0       	breq	.+20     	; 0x3e2 <receive_string+0x28>
- 3ce:	c0 e0       	ldi	r28, 0x00	; 0
-		data[i] = c;
- 3d0:	f8 01       	movw	r30, r16
- 3d2:	ec 0f       	add	r30, r28
- 3d4:	f1 1d       	adc	r31, r1
- 3d6:	80 83       	st	Z, r24
-		i++;
- 3d8:	cf 5f       	subi	r28, 0xFF	; 255
-		c = receive();
- 3da:	0e 94 d5 01 	call	0x3aa	; 0x3aa <receive>
+00000400 <receive_string>:
+ 400:	0f 93       	push	r16
+ 402:	1f 93       	push	r17
+ 404:	cf 93       	push	r28
+ 406:	df 93       	push	r29
+ 408:	8c 01       	movw	r16, r24
+ 40a:	fc 01       	movw	r30, r24
+ 40c:	10 82       	st	Z, r1
+ 40e:	0e 94 eb 01 	call	0x3d6	; 0x3d6 <receive>
+ 412:	c8 2f       	mov	r28, r24
+ 414:	8a 30       	cpi	r24, 0x0A	; 10
+ 416:	69 f0       	breq	.+26     	; 0x432 <receive_string+0x32>
+ 418:	d0 e0       	ldi	r29, 0x00	; 0
+ 41a:	f8 01       	movw	r30, r16
+ 41c:	ed 0f       	add	r30, r29
+ 41e:	f1 1d       	adc	r31, r1
+ 420:	c0 83       	st	Z, r28
+ 422:	df 5f       	subi	r29, 0xFF	; 255
+ 424:	0e 94 eb 01 	call	0x3d6	; 0x3d6 <receive>
+ 428:	c8 2f       	mov	r28, r24
+ 42a:	0e 94 91 01 	call	0x322	; 0x322 <transmit>
+ 42e:	ca 30       	cpi	r28, 0x0A	; 10
+ 430:	a1 f7       	brne	.-24     	; 0x41a <receive_string+0x1a>
+ 432:	df 91       	pop	r29
+ 434:	cf 91       	pop	r28
+ 436:	1f 91       	pop	r17
+ 438:	0f 91       	pop	r16
+ 43a:	08 95       	ret
 
-void receive_string(char* data){
-	uint8_t i = 0;
-	strcpy(data, "");
-	char c = receive();
-	while (c != '\n') {
- 3de:	8a 30       	cpi	r24, 0x0A	; 10
- 3e0:	b9 f7       	brne	.-18     	; 0x3d0 <receive_string+0x16>
-		data[i] = c;
-		i++;
-		c = receive();
-	}
-}
- 3e2:	cf 91       	pop	r28
- 3e4:	1f 91       	pop	r17
- 3e6:	0f 91       	pop	r16
- 3e8:	08 95       	ret
+0000043c <init_connection>:
+ 43c:	cf 93       	push	r28
+ 43e:	df 93       	push	r29
+ 440:	cd b7       	in	r28, 0x3d	; 61
+ 442:	de b7       	in	r29, 0x3e	; 62
+ 444:	a0 97       	sbiw	r28, 0x20	; 32
+ 446:	0f b6       	in	r0, 0x3f	; 63
+ 448:	f8 94       	cli
+ 44a:	de bf       	out	0x3e, r29	; 62
+ 44c:	0f be       	out	0x3f, r0	; 63
+ 44e:	cd bf       	out	0x3d, r28	; 61
+ 450:	86 e0       	ldi	r24, 0x06	; 6
+ 452:	e4 e0       	ldi	r30, 0x04	; 4
+ 454:	f1 e0       	ldi	r31, 0x01	; 1
+ 456:	de 01       	movw	r26, r28
+ 458:	11 96       	adiw	r26, 0x01	; 1
+ 45a:	01 90       	ld	r0, Z+
+ 45c:	0d 92       	st	X+, r0
+ 45e:	8a 95       	dec	r24
+ 460:	e1 f7       	brne	.-8      	; 0x45a <init_connection+0x1e>
+ 462:	fe 01       	movw	r30, r28
+ 464:	37 96       	adiw	r30, 0x07	; 7
+ 466:	8a e0       	ldi	r24, 0x0A	; 10
+ 468:	df 01       	movw	r26, r30
+ 46a:	1d 92       	st	X+, r1
+ 46c:	8a 95       	dec	r24
+ 46e:	e9 f7       	brne	.-6      	; 0x46a <init_connection+0x2e>
+ 470:	ce 01       	movw	r24, r28
+ 472:	01 96       	adiw	r24, 0x01	; 1
+ 474:	0e 94 ce 01 	call	0x39c	; 0x39c <transmit_string>
+ 478:	1a 8a       	std	Y+18, r1	; 0x12
+ 47a:	19 8a       	std	Y+17, r1	; 0x11
+ 47c:	fe 01       	movw	r30, r28
+ 47e:	73 96       	adiw	r30, 0x13	; 19
+ 480:	8e e0       	ldi	r24, 0x0E	; 14
+ 482:	df 01       	movw	r26, r30
+ 484:	1d 92       	st	X+, r1
+ 486:	8a 95       	dec	r24
+ 488:	e9 f7       	brne	.-6      	; 0x484 <init_connection+0x48>
+ 48a:	ce 01       	movw	r24, r28
+ 48c:	41 96       	adiw	r24, 0x11	; 17
+ 48e:	0e 94 00 02 	call	0x400	; 0x400 <receive_string>
+ 492:	6c e1       	ldi	r22, 0x1C	; 28
+ 494:	71 e0       	ldi	r23, 0x01	; 1
+ 496:	ce 01       	movw	r24, r28
+ 498:	41 96       	adiw	r24, 0x11	; 17
+ 49a:	0e 94 4a 04 	call	0x894	; 0x894 <strcmp>
+ 49e:	89 2b       	or	r24, r25
+ 4a0:	91 f4       	brne	.+36     	; 0x4c6 <init_connection+0x8a>
+ 4a2:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
+ 4a6:	44 e1       	ldi	r20, 0x14	; 20
+ 4a8:	50 e0       	ldi	r21, 0x00	; 0
+ 4aa:	60 e0       	ldi	r22, 0x00	; 0
+ 4ac:	70 e0       	ldi	r23, 0x00	; 0
+ 4ae:	86 e0       	ldi	r24, 0x06	; 6
+ 4b0:	94 e0       	ldi	r25, 0x04	; 4
+ 4b2:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 4b6:	44 e1       	ldi	r20, 0x14	; 20
+ 4b8:	50 e0       	ldi	r21, 0x00	; 0
+ 4ba:	6a e0       	ldi	r22, 0x0A	; 10
+ 4bc:	70 e0       	ldi	r23, 0x00	; 0
+ 4be:	8c e6       	ldi	r24, 0x6C	; 108
+ 4c0:	92 e0       	ldi	r25, 0x02	; 2
+ 4c2:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 4c6:	a0 96       	adiw	r28, 0x20	; 32
+ 4c8:	0f b6       	in	r0, 0x3f	; 63
+ 4ca:	f8 94       	cli
+ 4cc:	de bf       	out	0x3e, r29	; 62
+ 4ce:	0f be       	out	0x3f, r0	; 63
+ 4d0:	cd bf       	out	0x3d, r28	; 61
+ 4d2:	df 91       	pop	r29
+ 4d4:	cf 91       	pop	r28
+ 4d6:	08 95       	ret
 
-000003ea <init_connection>:
-		scheduler_add_task(refresh_distance, 0, 20);
-		scheduler_add_task(wait_for_task, 10, 20);
-	}
-}
+000004d8 <wait_for_task>:
+ 4d8:	cf 93       	push	r28
+ 4da:	df 93       	push	r29
+ 4dc:	cd b7       	in	r28, 0x3d	; 61
+ 4de:	de b7       	in	r29, 0x3e	; 62
+ 4e0:	68 97       	sbiw	r28, 0x18	; 24
+ 4e2:	0f b6       	in	r0, 0x3f	; 63
+ 4e4:	f8 94       	cli
+ 4e6:	de bf       	out	0x3e, r29	; 62
+ 4e8:	0f be       	out	0x3f, r0	; 63
+ 4ea:	cd bf       	out	0x3d, r28	; 61
+ 4ec:	1a 82       	std	Y+2, r1	; 0x02
+ 4ee:	19 82       	std	Y+1, r1	; 0x01
+ 4f0:	fe 01       	movw	r30, r28
+ 4f2:	33 96       	adiw	r30, 0x03	; 3
+ 4f4:	8e e0       	ldi	r24, 0x0E	; 14
+ 4f6:	df 01       	movw	r26, r30
+ 4f8:	1d 92       	st	X+, r1
+ 4fa:	8a 95       	dec	r24
+ 4fc:	e9 f7       	brne	.-6      	; 0x4f8 <wait_for_task+0x20>
+ 4fe:	ce 01       	movw	r24, r28
+ 500:	01 96       	adiw	r24, 0x01	; 1
+ 502:	0e 94 00 02 	call	0x400	; 0x400 <receive_string>
+ 506:	62 e2       	ldi	r22, 0x22	; 34
+ 508:	71 e0       	ldi	r23, 0x01	; 1
+ 50a:	ce 01       	movw	r24, r28
+ 50c:	01 96       	adiw	r24, 0x01	; 1
+ 50e:	0e 94 4a 04 	call	0x894	; 0x894 <strcmp>
+ 512:	89 2b       	or	r24, r25
+ 514:	59 f4       	brne	.+22     	; 0x52c <wait_for_task+0x54>
+ 516:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
+ 51a:	4a e0       	ldi	r20, 0x0A	; 10
+ 51c:	50 e0       	ldi	r21, 0x00	; 0
+ 51e:	60 e0       	ldi	r22, 0x00	; 0
+ 520:	70 e0       	ldi	r23, 0x00	; 0
+ 522:	8e e1       	ldi	r24, 0x1E	; 30
+ 524:	92 e0       	ldi	r25, 0x02	; 2
+ 526:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 52a:	dd c0       	rjmp	.+442    	; 0x6e6 <wait_for_task+0x20e>
+ 52c:	68 e2       	ldi	r22, 0x28	; 40
+ 52e:	71 e0       	ldi	r23, 0x01	; 1
+ 530:	ce 01       	movw	r24, r28
+ 532:	01 96       	adiw	r24, 0x01	; 1
+ 534:	0e 94 4a 04 	call	0x894	; 0x894 <strcmp>
+ 538:	89 2b       	or	r24, r25
+ 53a:	09 f0       	breq	.+2      	; 0x53e <wait_for_task+0x66>
+ 53c:	43 c0       	rjmp	.+134    	; 0x5c4 <wait_for_task+0xec>
+ 53e:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
+ 542:	44 e6       	ldi	r20, 0x64	; 100
+ 544:	50 e0       	ldi	r21, 0x00	; 0
+ 546:	60 e0       	ldi	r22, 0x00	; 0
+ 548:	70 e0       	ldi	r23, 0x00	; 0
+ 54a:	85 e5       	ldi	r24, 0x55	; 85
+ 54c:	90 e0       	ldi	r25, 0x00	; 0
+ 54e:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 552:	44 e6       	ldi	r20, 0x64	; 100
+ 554:	50 e0       	ldi	r21, 0x00	; 0
+ 556:	60 e0       	ldi	r22, 0x00	; 0
+ 558:	70 e0       	ldi	r23, 0x00	; 0
+ 55a:	87 e5       	ldi	r24, 0x57	; 87
+ 55c:	90 e0       	ldi	r25, 0x00	; 0
+ 55e:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 562:	42 e3       	ldi	r20, 0x32	; 50
+ 564:	50 e0       	ldi	r21, 0x00	; 0
+ 566:	60 e0       	ldi	r22, 0x00	; 0
+ 568:	70 e0       	ldi	r23, 0x00	; 0
+ 56a:	8b e5       	ldi	r24, 0x5B	; 91
+ 56c:	90 e0       	ldi	r25, 0x00	; 0
+ 56e:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 572:	42 e3       	ldi	r20, 0x32	; 50
+ 574:	50 e0       	ldi	r21, 0x00	; 0
+ 576:	69 e1       	ldi	r22, 0x19	; 25
+ 578:	70 e0       	ldi	r23, 0x00	; 0
+ 57a:	8d e5       	ldi	r24, 0x5D	; 93
+ 57c:	90 e0       	ldi	r25, 0x00	; 0
+ 57e:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 582:	40 e0       	ldi	r20, 0x00	; 0
+ 584:	50 e0       	ldi	r21, 0x00	; 0
+ 586:	60 e0       	ldi	r22, 0x00	; 0
+ 588:	70 e0       	ldi	r23, 0x00	; 0
+ 58a:	82 e6       	ldi	r24, 0x62	; 98
+ 58c:	90 e0       	ldi	r25, 0x00	; 0
+ 58e:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 592:	4e e1       	ldi	r20, 0x1E	; 30
+ 594:	50 e0       	ldi	r21, 0x00	; 0
+ 596:	60 e0       	ldi	r22, 0x00	; 0
+ 598:	70 e0       	ldi	r23, 0x00	; 0
+ 59a:	86 e0       	ldi	r24, 0x06	; 6
+ 59c:	94 e0       	ldi	r25, 0x04	; 4
+ 59e:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 5a2:	4e e1       	ldi	r20, 0x1E	; 30
+ 5a4:	50 e0       	ldi	r21, 0x00	; 0
+ 5a6:	6a e0       	ldi	r22, 0x0A	; 10
+ 5a8:	70 e0       	ldi	r23, 0x00	; 0
+ 5aa:	89 e9       	ldi	r24, 0x99	; 153
+ 5ac:	91 e0       	ldi	r25, 0x01	; 1
+ 5ae:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 5b2:	4e e1       	ldi	r20, 0x1E	; 30
+ 5b4:	50 e0       	ldi	r21, 0x00	; 0
+ 5b6:	64 e1       	ldi	r22, 0x14	; 20
+ 5b8:	70 e0       	ldi	r23, 0x00	; 0
+ 5ba:	8c e6       	ldi	r24, 0x6C	; 108
+ 5bc:	92 e0       	ldi	r25, 0x02	; 2
+ 5be:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 5c2:	91 c0       	rjmp	.+290    	; 0x6e6 <wait_for_task+0x20e>
+ 5c4:	6d e2       	ldi	r22, 0x2D	; 45
+ 5c6:	71 e0       	ldi	r23, 0x01	; 1
+ 5c8:	ce 01       	movw	r24, r28
+ 5ca:	01 96       	adiw	r24, 0x01	; 1
+ 5cc:	0e 94 4a 04 	call	0x894	; 0x894 <strcmp>
+ 5d0:	89 2b       	or	r24, r25
+ 5d2:	09 f0       	breq	.+2      	; 0x5d6 <wait_for_task+0xfe>
+ 5d4:	43 c0       	rjmp	.+134    	; 0x65c <wait_for_task+0x184>
+ 5d6:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
+ 5da:	44 e6       	ldi	r20, 0x64	; 100
+ 5dc:	50 e0       	ldi	r21, 0x00	; 0
+ 5de:	60 e0       	ldi	r22, 0x00	; 0
+ 5e0:	70 e0       	ldi	r23, 0x00	; 0
+ 5e2:	89 e5       	ldi	r24, 0x59	; 89
+ 5e4:	90 e0       	ldi	r25, 0x00	; 0
+ 5e6:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 5ea:	44 e6       	ldi	r20, 0x64	; 100
+ 5ec:	50 e0       	ldi	r21, 0x00	; 0
+ 5ee:	60 e0       	ldi	r22, 0x00	; 0
+ 5f0:	70 e0       	ldi	r23, 0x00	; 0
+ 5f2:	83 e5       	ldi	r24, 0x53	; 83
+ 5f4:	90 e0       	ldi	r25, 0x00	; 0
+ 5f6:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 5fa:	42 e3       	ldi	r20, 0x32	; 50
+ 5fc:	50 e0       	ldi	r21, 0x00	; 0
+ 5fe:	60 e0       	ldi	r22, 0x00	; 0
+ 600:	70 e0       	ldi	r23, 0x00	; 0
+ 602:	8b e5       	ldi	r24, 0x5B	; 91
+ 604:	90 e0       	ldi	r25, 0x00	; 0
+ 606:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 60a:	42 e3       	ldi	r20, 0x32	; 50
+ 60c:	50 e0       	ldi	r21, 0x00	; 0
+ 60e:	69 e1       	ldi	r22, 0x19	; 25
+ 610:	70 e0       	ldi	r23, 0x00	; 0
+ 612:	8d e5       	ldi	r24, 0x5D	; 93
+ 614:	90 e0       	ldi	r25, 0x00	; 0
+ 616:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 61a:	40 e0       	ldi	r20, 0x00	; 0
+ 61c:	50 e0       	ldi	r21, 0x00	; 0
+ 61e:	60 e0       	ldi	r22, 0x00	; 0
+ 620:	70 e0       	ldi	r23, 0x00	; 0
+ 622:	8f e5       	ldi	r24, 0x5F	; 95
+ 624:	90 e0       	ldi	r25, 0x00	; 0
+ 626:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 62a:	4e e1       	ldi	r20, 0x1E	; 30
+ 62c:	50 e0       	ldi	r21, 0x00	; 0
+ 62e:	60 e0       	ldi	r22, 0x00	; 0
+ 630:	70 e0       	ldi	r23, 0x00	; 0
+ 632:	86 e0       	ldi	r24, 0x06	; 6
+ 634:	94 e0       	ldi	r25, 0x04	; 4
+ 636:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 63a:	4e e1       	ldi	r20, 0x1E	; 30
+ 63c:	50 e0       	ldi	r21, 0x00	; 0
+ 63e:	6a e0       	ldi	r22, 0x0A	; 10
+ 640:	70 e0       	ldi	r23, 0x00	; 0
+ 642:	8b ed       	ldi	r24, 0xDB	; 219
+ 644:	90 e0       	ldi	r25, 0x00	; 0
+ 646:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 64a:	4e e1       	ldi	r20, 0x1E	; 30
+ 64c:	50 e0       	ldi	r21, 0x00	; 0
+ 64e:	64 e1       	ldi	r22, 0x14	; 20
+ 650:	70 e0       	ldi	r23, 0x00	; 0
+ 652:	8c e6       	ldi	r24, 0x6C	; 108
+ 654:	92 e0       	ldi	r25, 0x02	; 2
+ 656:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 65a:	45 c0       	rjmp	.+138    	; 0x6e6 <wait_for_task+0x20e>
+ 65c:	61 e3       	ldi	r22, 0x31	; 49
+ 65e:	71 e0       	ldi	r23, 0x01	; 1
+ 660:	ce 01       	movw	r24, r28
+ 662:	01 96       	adiw	r24, 0x01	; 1
+ 664:	0e 94 4a 04 	call	0x894	; 0x894 <strcmp>
+ 668:	89 2b       	or	r24, r25
+ 66a:	59 f5       	brne	.+86     	; 0x6c2 <wait_for_task+0x1ea>
+ 66c:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
+ 670:	40 e0       	ldi	r20, 0x00	; 0
+ 672:	50 e0       	ldi	r21, 0x00	; 0
+ 674:	60 e0       	ldi	r22, 0x00	; 0
+ 676:	70 e0       	ldi	r23, 0x00	; 0
+ 678:	8b e5       	ldi	r24, 0x5B	; 91
+ 67a:	90 e0       	ldi	r25, 0x00	; 0
+ 67c:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 680:	40 e0       	ldi	r20, 0x00	; 0
+ 682:	50 e0       	ldi	r21, 0x00	; 0
+ 684:	60 e0       	ldi	r22, 0x00	; 0
+ 686:	70 e0       	ldi	r23, 0x00	; 0
+ 688:	85 e5       	ldi	r24, 0x55	; 85
+ 68a:	90 e0       	ldi	r25, 0x00	; 0
+ 68c:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 690:	40 e0       	ldi	r20, 0x00	; 0
+ 692:	50 e0       	ldi	r21, 0x00	; 0
+ 694:	60 e0       	ldi	r22, 0x00	; 0
+ 696:	70 e0       	ldi	r23, 0x00	; 0
+ 698:	89 e5       	ldi	r24, 0x59	; 89
+ 69a:	90 e0       	ldi	r25, 0x00	; 0
+ 69c:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 6a0:	44 e1       	ldi	r20, 0x14	; 20
+ 6a2:	50 e0       	ldi	r21, 0x00	; 0
+ 6a4:	60 e0       	ldi	r22, 0x00	; 0
+ 6a6:	70 e0       	ldi	r23, 0x00	; 0
+ 6a8:	86 e0       	ldi	r24, 0x06	; 6
+ 6aa:	94 e0       	ldi	r25, 0x04	; 4
+ 6ac:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 6b0:	44 e1       	ldi	r20, 0x14	; 20
+ 6b2:	50 e0       	ldi	r21, 0x00	; 0
+ 6b4:	6a e0       	ldi	r22, 0x0A	; 10
+ 6b6:	70 e0       	ldi	r23, 0x00	; 0
+ 6b8:	8c e6       	ldi	r24, 0x6C	; 108
+ 6ba:	92 e0       	ldi	r25, 0x02	; 2
+ 6bc:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 6c0:	12 c0       	rjmp	.+36     	; 0x6e6 <wait_for_task+0x20e>
+ 6c2:	89 81       	ldd	r24, Y+1	; 0x01
+ 6c4:	88 23       	and	r24, r24
+ 6c6:	79 f0       	breq	.+30     	; 0x6e6 <wait_for_task+0x20e>
+ 6c8:	86 e0       	ldi	r24, 0x06	; 6
+ 6ca:	e4 e1       	ldi	r30, 0x14	; 20
+ 6cc:	f1 e0       	ldi	r31, 0x01	; 1
+ 6ce:	de 01       	movw	r26, r28
+ 6d0:	51 96       	adiw	r26, 0x11	; 17
+ 6d2:	01 90       	ld	r0, Z+
+ 6d4:	0d 92       	st	X+, r0
+ 6d6:	8a 95       	dec	r24
+ 6d8:	e1 f7       	brne	.-8      	; 0x6d2 <wait_for_task+0x1fa>
+ 6da:	18 8e       	std	Y+24, r1	; 0x18
+ 6dc:	1f 8a       	std	Y+23, r1	; 0x17
+ 6de:	ce 01       	movw	r24, r28
+ 6e0:	41 96       	adiw	r24, 0x11	; 17
+ 6e2:	0e 94 ce 01 	call	0x39c	; 0x39c <transmit_string>
+ 6e6:	68 96       	adiw	r28, 0x18	; 24
+ 6e8:	0f b6       	in	r0, 0x3f	; 63
+ 6ea:	f8 94       	cli
+ 6ec:	de bf       	out	0x3e, r29	; 62
+ 6ee:	0f be       	out	0x3f, r0	; 63
+ 6f0:	cd bf       	out	0x3d, r28	; 61
+ 6f2:	df 91       	pop	r29
+ 6f4:	cf 91       	pop	r28
+ 6f6:	08 95       	ret
 
-void init_connection(void) {
- 3ea:	cf 93       	push	r28
- 3ec:	df 93       	push	r29
- 3ee:	cd b7       	in	r28, 0x3d	; 61
- 3f0:	de b7       	in	r29, 0x3e	; 62
- 3f2:	a0 97       	sbiw	r28, 0x20	; 32
- 3f4:	0f b6       	in	r0, 0x3f	; 63
- 3f6:	f8 94       	cli
- 3f8:	de bf       	out	0x3e, r29	; 62
- 3fa:	0f be       	out	0x3f, r0	; 63
- 3fc:	cd bf       	out	0x3d, r28	; 61
-    char type[16] = "_MTR\n";
- 3fe:	86 e0       	ldi	r24, 0x06	; 6
- 400:	e4 e0       	ldi	r30, 0x04	; 4
- 402:	f1 e0       	ldi	r31, 0x01	; 1
- 404:	de 01       	movw	r26, r28
- 406:	11 96       	adiw	r26, 0x01	; 1
- 408:	01 90       	ld	r0, Z+
- 40a:	0d 92       	st	X+, r0
- 40c:	8a 95       	dec	r24
- 40e:	e1 f7       	brne	.-8      	; 0x408 <__LOCK_REGION_LENGTH__+0x8>
- 410:	fe 01       	movw	r30, r28
- 412:	37 96       	adiw	r30, 0x07	; 7
- 414:	8a e0       	ldi	r24, 0x0A	; 10
- 416:	df 01       	movw	r26, r30
- 418:	1d 92       	st	X+, r1
- 41a:	8a 95       	dec	r24
- 41c:	e9 f7       	brne	.-6      	; 0x418 <__LOCK_REGION_LENGTH__+0x18>
-	transmit_string(type);
- 41e:	ce 01       	movw	r24, r28
- 420:	01 96       	adiw	r24, 0x01	; 1
- 422:	0e 94 b8 01 	call	0x370	; 0x370 <transmit_string>
-    char response[16] = "";
- 426:	1a 8a       	std	Y+18, r1	; 0x12
- 428:	19 8a       	std	Y+17, r1	; 0x11
- 42a:	fe 01       	movw	r30, r28
- 42c:	73 96       	adiw	r30, 0x13	; 19
- 42e:	8e e0       	ldi	r24, 0x0E	; 14
- 430:	df 01       	movw	r26, r30
- 432:	1d 92       	st	X+, r1
- 434:	8a 95       	dec	r24
- 436:	e9 f7       	brne	.-6      	; 0x432 <__LOCK_REGION_LENGTH__+0x32>
-    receive_string(response);
- 438:	ce 01       	movw	r24, r28
- 43a:	41 96       	adiw	r24, 0x11	; 17
- 43c:	0e 94 dd 01 	call	0x3ba	; 0x3ba <receive_string>
-    if (strcmp(response, "_CONN") == 0) {
- 440:	64 e1       	ldi	r22, 0x14	; 20
- 442:	71 e0       	ldi	r23, 0x01	; 1
- 444:	ce 01       	movw	r24, r28
- 446:	41 96       	adiw	r24, 0x11	; 17
- 448:	0e 94 b8 03 	call	0x770	; 0x770 <strcmp>
- 44c:	89 2b       	or	r24, r25
- 44e:	91 f4       	brne	.+36     	; 0x474 <__LOCK_REGION_LENGTH__+0x74>
-        scheduler_delete_all_tasks();
- 450:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
-        scheduler_add_task(refresh_distance, 0, 20);
- 454:	44 e1       	ldi	r20, 0x14	; 20
- 456:	50 e0       	ldi	r21, 0x00	; 0
- 458:	60 e0       	ldi	r22, 0x00	; 0
- 45a:	70 e0       	ldi	r23, 0x00	; 0
- 45c:	86 e7       	ldi	r24, 0x76	; 118
- 45e:	93 e0       	ldi	r25, 0x03	; 3
- 460:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-        scheduler_add_task(wait_for_task, 10, 20);
- 464:	44 e1       	ldi	r20, 0x14	; 20
- 466:	50 e0       	ldi	r21, 0x00	; 0
- 468:	6a e0       	ldi	r22, 0x0A	; 10
- 46a:	70 e0       	ldi	r23, 0x00	; 0
- 46c:	83 e4       	ldi	r24, 0x43	; 67
- 46e:	92 e0       	ldi	r25, 0x02	; 2
- 470:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-    } 
-}
- 474:	a0 96       	adiw	r28, 0x20	; 32
- 476:	0f b6       	in	r0, 0x3f	; 63
- 478:	f8 94       	cli
- 47a:	de bf       	out	0x3e, r29	; 62
- 47c:	0f be       	out	0x3f, r0	; 63
- 47e:	cd bf       	out	0x3d, r28	; 61
- 480:	df 91       	pop	r29
- 482:	cf 91       	pop	r28
- 484:	08 95       	ret
+000006f8 <__vector_16>:
+ 6f8:	1f 92       	push	r1
+ 6fa:	0f 92       	push	r0
+ 6fc:	0f b6       	in	r0, 0x3f	; 63
+ 6fe:	0f 92       	push	r0
+ 700:	11 24       	eor	r1, r1
+ 702:	8f 93       	push	r24
+ 704:	9f 93       	push	r25
+ 706:	80 91 3c 01 	lds	r24, 0x013C	; 0x80013c <counter>
+ 70a:	90 91 3d 01 	lds	r25, 0x013D	; 0x80013d <counter+0x1>
+ 70e:	01 96       	adiw	r24, 0x01	; 1
+ 710:	90 93 3d 01 	sts	0x013D, r25	; 0x80013d <counter+0x1>
+ 714:	80 93 3c 01 	sts	0x013C, r24	; 0x80013c <counter>
+ 718:	9f 91       	pop	r25
+ 71a:	8f 91       	pop	r24
+ 71c:	0f 90       	pop	r0
+ 71e:	0f be       	out	0x3f, r0	; 63
+ 720:	0f 90       	pop	r0
+ 722:	1f 90       	pop	r1
+ 724:	18 95       	reti
 
-00000486 <wait_for_task>:
+00000726 <__vector_7>:
+ 726:	1f 92       	push	r1
+ 728:	0f 92       	push	r0
+ 72a:	0f b6       	in	r0, 0x3f	; 63
+ 72c:	0f 92       	push	r0
+ 72e:	11 24       	eor	r1, r1
+ 730:	8f 93       	push	r24
+ 732:	81 e0       	ldi	r24, 0x01	; 1
+ 734:	80 93 38 01 	sts	0x0138, r24	; 0x800138 <__data_end>
+ 738:	8f 91       	pop	r24
+ 73a:	0f 90       	pop	r0
+ 73c:	0f be       	out	0x3f, r0	; 63
+ 73e:	0f 90       	pop	r0
+ 740:	1f 90       	pop	r1
+ 742:	18 95       	reti
 
-void wait_for_task(void)
-{
- 486:	cf 93       	push	r28
- 488:	df 93       	push	r29
- 48a:	cd b7       	in	r28, 0x3d	; 61
- 48c:	de b7       	in	r29, 0x3e	; 62
- 48e:	60 97       	sbiw	r28, 0x10	; 16
- 490:	0f b6       	in	r0, 0x3f	; 63
- 492:	f8 94       	cli
- 494:	de bf       	out	0x3e, r29	; 62
- 496:	0f be       	out	0x3f, r0	; 63
- 498:	cd bf       	out	0x3d, r28	; 61
-	char task[16] = "";
- 49a:	1a 82       	std	Y+2, r1	; 0x02
- 49c:	19 82       	std	Y+1, r1	; 0x01
- 49e:	fe 01       	movw	r30, r28
- 4a0:	33 96       	adiw	r30, 0x03	; 3
- 4a2:	8e e0       	ldi	r24, 0x0E	; 14
- 4a4:	df 01       	movw	r26, r30
- 4a6:	1d 92       	st	X+, r1
- 4a8:	8a 95       	dec	r24
- 4aa:	e9 f7       	brne	.-6      	; 0x4a6 <wait_for_task+0x20>
-	receive_string(task);
- 4ac:	ce 01       	movw	r24, r28
- 4ae:	01 96       	adiw	r24, 0x01	; 1
- 4b0:	0e 94 dd 01 	call	0x3ba	; 0x3ba <receive_string>
-    // init
-    if (strcmp(task, "_INIT") == 0) {
- 4b4:	6a e1       	ldi	r22, 0x1A	; 26
- 4b6:	71 e0       	ldi	r23, 0x01	; 1
- 4b8:	ce 01       	movw	r24, r28
- 4ba:	01 96       	adiw	r24, 0x01	; 1
- 4bc:	0e 94 b8 03 	call	0x770	; 0x770 <strcmp>
- 4c0:	89 2b       	or	r24, r25
- 4c2:	59 f4       	brne	.+22     	; 0x4da <wait_for_task+0x54>
-		scheduler_delete_all_tasks();
- 4c4:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
-        scheduler_add_task(init_connection, 0, 10);
- 4c8:	4a e0       	ldi	r20, 0x0A	; 10
- 4ca:	50 e0       	ldi	r21, 0x00	; 0
- 4cc:	60 e0       	ldi	r22, 0x00	; 0
- 4ce:	70 e0       	ldi	r23, 0x00	; 0
- 4d0:	85 ef       	ldi	r24, 0xF5	; 245
- 4d2:	91 e0       	ldi	r25, 0x01	; 1
- 4d4:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
- 4d8:	85 c0       	rjmp	.+266    	; 0x5e4 <wait_for_task+0x15e>
-	}
-	// uitrollen
-	else if (strcmp(task, "_DWN") == 0) {
- 4da:	60 e2       	ldi	r22, 0x20	; 32
- 4dc:	71 e0       	ldi	r23, 0x01	; 1
- 4de:	ce 01       	movw	r24, r28
- 4e0:	01 96       	adiw	r24, 0x01	; 1
- 4e2:	0e 94 b8 03 	call	0x770	; 0x770 <strcmp>
- 4e6:	89 2b       	or	r24, r25
- 4e8:	d9 f5       	brne	.+118    	; 0x560 <wait_for_task+0xda>
-		scheduler_delete_all_tasks();
- 4ea:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
-		scheduler_add_task(turn_off_green_led, 0, 100);
- 4ee:	44 e6       	ldi	r20, 0x64	; 100
- 4f0:	50 e0       	ldi	r21, 0x00	; 0
- 4f2:	60 e0       	ldi	r22, 0x00	; 0
- 4f4:	70 e0       	ldi	r23, 0x00	; 0
- 4f6:	85 e5       	ldi	r24, 0x55	; 85
- 4f8:	90 e0       	ldi	r25, 0x00	; 0
- 4fa:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(turn_on_red_led, 0, 100);
- 4fe:	44 e6       	ldi	r20, 0x64	; 100
- 500:	50 e0       	ldi	r21, 0x00	; 0
- 502:	60 e0       	ldi	r22, 0x00	; 0
- 504:	70 e0       	ldi	r23, 0x00	; 0
- 506:	87 e5       	ldi	r24, 0x57	; 87
- 508:	90 e0       	ldi	r25, 0x00	; 0
- 50a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(turn_on_yellow_led, 0, 50);
- 50e:	42 e3       	ldi	r20, 0x32	; 50
- 510:	50 e0       	ldi	r21, 0x00	; 0
- 512:	60 e0       	ldi	r22, 0x00	; 0
- 514:	70 e0       	ldi	r23, 0x00	; 0
- 516:	8b e5       	ldi	r24, 0x5B	; 91
- 518:	90 e0       	ldi	r25, 0x00	; 0
- 51a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(turn_off_yellow_led, 25, 50);
- 51e:	42 e3       	ldi	r20, 0x32	; 50
- 520:	50 e0       	ldi	r21, 0x00	; 0
- 522:	69 e1       	ldi	r22, 0x19	; 25
- 524:	70 e0       	ldi	r23, 0x00	; 0
- 526:	8d e5       	ldi	r24, 0x5D	; 93
- 528:	90 e0       	ldi	r25, 0x00	; 0
- 52a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(start_motor_reversed, 0, 0);
- 52e:	40 e0       	ldi	r20, 0x00	; 0
- 530:	50 e0       	ldi	r21, 0x00	; 0
- 532:	60 e0       	ldi	r22, 0x00	; 0
- 534:	70 e0       	ldi	r23, 0x00	; 0
- 536:	82 e6       	ldi	r24, 0x62	; 98
- 538:	90 e0       	ldi	r25, 0x00	; 0
- 53a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(refresh_distance, 0, 20);
- 53e:	44 e1       	ldi	r20, 0x14	; 20
- 540:	50 e0       	ldi	r21, 0x00	; 0
- 542:	60 e0       	ldi	r22, 0x00	; 0
- 544:	70 e0       	ldi	r23, 0x00	; 0
- 546:	86 e7       	ldi	r24, 0x76	; 118
- 548:	93 e0       	ldi	r25, 0x03	; 3
- 54a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(check_if_down, 10, 20);
- 54e:	44 e1       	ldi	r20, 0x14	; 20
- 550:	50 e0       	ldi	r21, 0x00	; 0
- 552:	6a e0       	ldi	r22, 0x0A	; 10
- 554:	70 e0       	ldi	r23, 0x00	; 0
- 556:	8b ed       	ldi	r24, 0xDB	; 219
- 558:	90 e0       	ldi	r25, 0x00	; 0
- 55a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
- 55e:	42 c0       	rjmp	.+132    	; 0x5e4 <wait_for_task+0x15e>
-	}
-	// inrollen
-	else if (strcmp(task, "_UP") == 0) {
- 560:	65 e2       	ldi	r22, 0x25	; 37
- 562:	71 e0       	ldi	r23, 0x01	; 1
- 564:	ce 01       	movw	r24, r28
- 566:	01 96       	adiw	r24, 0x01	; 1
- 568:	0e 94 b8 03 	call	0x770	; 0x770 <strcmp>
- 56c:	89 2b       	or	r24, r25
- 56e:	d1 f5       	brne	.+116    	; 0x5e4 <wait_for_task+0x15e>
-		scheduler_delete_all_tasks();
- 570:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <scheduler_delete_all_tasks>
-		scheduler_add_task(turn_off_red_led, 0, 100);
- 574:	44 e6       	ldi	r20, 0x64	; 100
- 576:	50 e0       	ldi	r21, 0x00	; 0
- 578:	60 e0       	ldi	r22, 0x00	; 0
- 57a:	70 e0       	ldi	r23, 0x00	; 0
- 57c:	89 e5       	ldi	r24, 0x59	; 89
- 57e:	90 e0       	ldi	r25, 0x00	; 0
- 580:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(turn_on_green_led, 0, 100);
- 584:	44 e6       	ldi	r20, 0x64	; 100
- 586:	50 e0       	ldi	r21, 0x00	; 0
- 588:	60 e0       	ldi	r22, 0x00	; 0
- 58a:	70 e0       	ldi	r23, 0x00	; 0
- 58c:	83 e5       	ldi	r24, 0x53	; 83
- 58e:	90 e0       	ldi	r25, 0x00	; 0
- 590:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(turn_on_yellow_led, 0, 50);
- 594:	42 e3       	ldi	r20, 0x32	; 50
- 596:	50 e0       	ldi	r21, 0x00	; 0
- 598:	60 e0       	ldi	r22, 0x00	; 0
- 59a:	70 e0       	ldi	r23, 0x00	; 0
- 59c:	8b e5       	ldi	r24, 0x5B	; 91
- 59e:	90 e0       	ldi	r25, 0x00	; 0
- 5a0:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(turn_off_yellow_led, 25, 50);
- 5a4:	42 e3       	ldi	r20, 0x32	; 50
- 5a6:	50 e0       	ldi	r21, 0x00	; 0
- 5a8:	69 e1       	ldi	r22, 0x19	; 25
- 5aa:	70 e0       	ldi	r23, 0x00	; 0
- 5ac:	8d e5       	ldi	r24, 0x5D	; 93
- 5ae:	90 e0       	ldi	r25, 0x00	; 0
- 5b0:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(start_motor, 0, 0);
- 5b4:	40 e0       	ldi	r20, 0x00	; 0
- 5b6:	50 e0       	ldi	r21, 0x00	; 0
- 5b8:	60 e0       	ldi	r22, 0x00	; 0
- 5ba:	70 e0       	ldi	r23, 0x00	; 0
- 5bc:	8f e5       	ldi	r24, 0x5F	; 95
- 5be:	90 e0       	ldi	r25, 0x00	; 0
- 5c0:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(refresh_distance, 0, 20);
- 5c4:	44 e1       	ldi	r20, 0x14	; 20
- 5c6:	50 e0       	ldi	r21, 0x00	; 0
- 5c8:	60 e0       	ldi	r22, 0x00	; 0
- 5ca:	70 e0       	ldi	r23, 0x00	; 0
- 5cc:	86 e7       	ldi	r24, 0x76	; 118
- 5ce:	93 e0       	ldi	r25, 0x03	; 3
- 5d0:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-		scheduler_add_task(check_if_up, 10, 20);
- 5d4:	44 e1       	ldi	r20, 0x14	; 20
- 5d6:	50 e0       	ldi	r21, 0x00	; 0
- 5d8:	6a e0       	ldi	r22, 0x0A	; 10
- 5da:	70 e0       	ldi	r23, 0x00	; 0
- 5dc:	8d e0       	ldi	r24, 0x0D	; 13
- 5de:	91 e0       	ldi	r25, 0x01	; 1
- 5e0:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
-	}
-}
- 5e4:	60 96       	adiw	r28, 0x10	; 16
- 5e6:	0f b6       	in	r0, 0x3f	; 63
- 5e8:	f8 94       	cli
- 5ea:	de bf       	out	0x3e, r29	; 62
- 5ec:	0f be       	out	0x3f, r0	; 63
- 5ee:	cd bf       	out	0x3d, r28	; 61
- 5f0:	df 91       	pop	r29
- 5f2:	cf 91       	pop	r28
- 5f4:	08 95       	ret
+00000744 <start_timer0>:
+ 744:	16 bc       	out	0x26, r1	; 38
+ 746:	10 92 3d 01 	sts	0x013D, r1	; 0x80013d <counter+0x1>
+ 74a:	10 92 3c 01 	sts	0x013C, r1	; 0x80013c <counter>
+ 74e:	83 e0       	ldi	r24, 0x03	; 3
+ 750:	85 bd       	out	0x25, r24	; 37
+ 752:	08 95       	ret
 
-000005f6 <__vector_16>:
-		init_timer0();
-	}
-}
+00000754 <__vector_2>:
+ 754:	1f 92       	push	r1
+ 756:	0f 92       	push	r0
+ 758:	0f b6       	in	r0, 0x3f	; 63
+ 75a:	0f 92       	push	r0
+ 75c:	11 24       	eor	r1, r1
+ 75e:	2f 93       	push	r18
+ 760:	3f 93       	push	r19
+ 762:	4f 93       	push	r20
+ 764:	5f 93       	push	r21
+ 766:	6f 93       	push	r22
+ 768:	7f 93       	push	r23
+ 76a:	8f 93       	push	r24
+ 76c:	9f 93       	push	r25
+ 76e:	af 93       	push	r26
+ 770:	bf 93       	push	r27
+ 772:	ef 93       	push	r30
+ 774:	ff 93       	push	r31
+ 776:	80 91 3b 01 	lds	r24, 0x013B	; 0x80013b <echo>
+ 77a:	91 e0       	ldi	r25, 0x01	; 1
+ 77c:	28 2f       	mov	r18, r24
+ 77e:	21 70       	andi	r18, 0x01	; 1
+ 780:	80 fd       	sbrc	r24, 0
+ 782:	90 e0       	ldi	r25, 0x00	; 0
+ 784:	90 93 3b 01 	sts	0x013B, r25	; 0x80013b <echo>
+ 788:	21 11       	cpse	r18, r1
+ 78a:	03 c0       	rjmp	.+6      	; 0x792 <__vector_2+0x3e>
+ 78c:	0e 94 a2 03 	call	0x744	; 0x744 <start_timer0>
+ 790:	02 c0       	rjmp	.+4      	; 0x796 <__vector_2+0x42>
+ 792:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <init_timer0>
+ 796:	ff 91       	pop	r31
+ 798:	ef 91       	pop	r30
+ 79a:	bf 91       	pop	r27
+ 79c:	af 91       	pop	r26
+ 79e:	9f 91       	pop	r25
+ 7a0:	8f 91       	pop	r24
+ 7a2:	7f 91       	pop	r23
+ 7a4:	6f 91       	pop	r22
+ 7a6:	5f 91       	pop	r21
+ 7a8:	4f 91       	pop	r20
+ 7aa:	3f 91       	pop	r19
+ 7ac:	2f 91       	pop	r18
+ 7ae:	0f 90       	pop	r0
+ 7b0:	0f be       	out	0x3f, r0	; 63
+ 7b2:	0f 90       	pop	r0
+ 7b4:	1f 90       	pop	r1
+ 7b6:	18 95       	reti
 
-ISR (TIMER0_OVF_vect)
-{
- 5f6:	1f 92       	push	r1
- 5f8:	0f 92       	push	r0
- 5fa:	0f b6       	in	r0, 0x3f	; 63
- 5fc:	0f 92       	push	r0
- 5fe:	11 24       	eor	r1, r1
- 600:	8f 93       	push	r24
- 602:	9f 93       	push	r25
-    // Verhoog counter bij overflow interrupt timer 1
-    counter++;
- 604:	80 91 2d 01 	lds	r24, 0x012D	; 0x80012d <counter>
- 608:	90 91 2e 01 	lds	r25, 0x012E	; 0x80012e <counter+0x1>
- 60c:	01 96       	adiw	r24, 0x01	; 1
- 60e:	90 93 2e 01 	sts	0x012E, r25	; 0x80012e <counter+0x1>
- 612:	80 93 2d 01 	sts	0x012D, r24	; 0x80012d <counter>
-}
- 616:	9f 91       	pop	r25
- 618:	8f 91       	pop	r24
- 61a:	0f 90       	pop	r0
- 61c:	0f be       	out	0x3f, r0	; 63
- 61e:	0f 90       	pop	r0
- 620:	1f 90       	pop	r1
- 622:	18 95       	reti
-
-00000624 <start_timer0>:
-
-void start_timer0(void)
-{
-    // Reset counter van Timer en counter
-    TCNT0 = 0;
- 624:	16 bc       	out	0x26, r1	; 38
-    counter = 0;
- 626:	10 92 2e 01 	sts	0x012E, r1	; 0x80012e <counter+0x1>
- 62a:	10 92 2d 01 	sts	0x012D, r1	; 0x80012d <counter>
-    // start timer0 met prescaler 64
-    TCCR0B = (1<<CS01) | (1<<CS00);
- 62e:	83 e0       	ldi	r24, 0x03	; 3
- 630:	85 bd       	out	0x25, r24	; 37
- 632:	08 95       	ret
-
-00000634 <__vector_2>:
-
-// Ultrasoon functies
-void start_timer0(void);
-
-ISR (INT1_vect)
-{
- 634:	1f 92       	push	r1
- 636:	0f 92       	push	r0
- 638:	0f b6       	in	r0, 0x3f	; 63
- 63a:	0f 92       	push	r0
- 63c:	11 24       	eor	r1, r1
- 63e:	2f 93       	push	r18
- 640:	3f 93       	push	r19
- 642:	4f 93       	push	r20
- 644:	5f 93       	push	r21
- 646:	6f 93       	push	r22
- 648:	7f 93       	push	r23
- 64a:	8f 93       	push	r24
- 64c:	9f 93       	push	r25
- 64e:	af 93       	push	r26
- 650:	bf 93       	push	r27
- 652:	ef 93       	push	r30
- 654:	ff 93       	push	r31
- 656:	80 91 2c 01 	lds	r24, 0x012C	; 0x80012c <echo>
-    echo = (~echo) & 1; //invert echo flag
- 65a:	91 e0       	ldi	r25, 0x01	; 1
- 65c:	28 2f       	mov	r18, r24
- 65e:	21 70       	andi	r18, 0x01	; 1
- 660:	80 fd       	sbrc	r24, 0
- 662:	90 e0       	ldi	r25, 0x00	; 0
- 664:	90 93 2c 01 	sts	0x012C, r25	; 0x80012c <echo>
-	if (echo){
- 668:	21 11       	cpse	r18, r1
- 66a:	03 c0       	rjmp	.+6      	; 0x672 <__vector_2+0x3e>
-		start_timer0();
- 66c:	0e 94 12 03 	call	0x624	; 0x624 <start_timer0>
- 670:	02 c0       	rjmp	.+4      	; 0x676 <__vector_2+0x42>
-	} else {
-		init_timer0();
- 672:	0e 94 9c 01 	call	0x338	; 0x338 <init_timer0>
-	}
-}
- 676:	ff 91       	pop	r31
- 678:	ef 91       	pop	r30
- 67a:	bf 91       	pop	r27
- 67c:	af 91       	pop	r26
- 67e:	9f 91       	pop	r25
- 680:	8f 91       	pop	r24
- 682:	7f 91       	pop	r23
- 684:	6f 91       	pop	r22
- 686:	5f 91       	pop	r21
- 688:	4f 91       	pop	r20
- 68a:	3f 91       	pop	r19
- 68c:	2f 91       	pop	r18
- 68e:	0f 90       	pop	r0
- 690:	0f be       	out	0x3f, r0	; 63
- 692:	0f 90       	pop	r0
- 694:	1f 90       	pop	r1
- 696:	18 95       	reti
-
-00000698 <send_trigger>:
+000007b8 <send_trigger>:
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 698:	2f ef       	ldi	r18, 0xFF	; 255
- 69a:	80 e7       	ldi	r24, 0x70	; 112
- 69c:	92 e0       	ldi	r25, 0x02	; 2
- 69e:	21 50       	subi	r18, 0x01	; 1
- 6a0:	80 40       	sbci	r24, 0x00	; 0
- 6a2:	90 40       	sbci	r25, 0x00	; 0
- 6a4:	e1 f7       	brne	.-8      	; 0x69e <send_trigger+0x6>
- 6a6:	00 c0       	rjmp	.+0      	; 0x6a8 <send_trigger+0x10>
- 6a8:	00 00       	nop
+ 7b8:	2f ef       	ldi	r18, 0xFF	; 255
+ 7ba:	80 e7       	ldi	r24, 0x70	; 112
+ 7bc:	92 e0       	ldi	r25, 0x02	; 2
+ 7be:	21 50       	subi	r18, 0x01	; 1
+ 7c0:	80 40       	sbci	r24, 0x00	; 0
+ 7c2:	90 40       	sbci	r25, 0x00	; 0
+ 7c4:	e1 f7       	brne	.-8      	; 0x7be <send_trigger+0x6>
+ 7c6:	00 c0       	rjmp	.+0      	; 0x7c8 <send_trigger+0x10>
+ 7c8:	00 00       	nop
 }
 
 void send_trigger(void)
 {
 	_delay_ms(50);		//Restart HC-SR04
 	PORTD &=~ (1 << PIND4);
- 6aa:	5c 98       	cbi	0x0b, 4	; 11
+ 7ca:	5c 98       	cbi	0x0b, 4	; 11
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 6ac:	25 e0       	ldi	r18, 0x05	; 5
- 6ae:	2a 95       	dec	r18
- 6b0:	f1 f7       	brne	.-4      	; 0x6ae <send_trigger+0x16>
- 6b2:	00 00       	nop
+ 7cc:	25 e0       	ldi	r18, 0x05	; 5
+ 7ce:	2a 95       	dec	r18
+ 7d0:	f1 f7       	brne	.-4      	; 0x7ce <send_trigger+0x16>
+ 7d2:	00 00       	nop
 	_delay_us(1);
 	PORTD |= (1 << PIND4); //Send 10us second pulse
- 6b4:	5c 9a       	sbi	0x0b, 4	; 11
- 6b6:	85 e3       	ldi	r24, 0x35	; 53
- 6b8:	8a 95       	dec	r24
- 6ba:	f1 f7       	brne	.-4      	; 0x6b8 <send_trigger+0x20>
- 6bc:	00 00       	nop
+ 7d4:	5c 9a       	sbi	0x0b, 4	; 11
+ 7d6:	85 e3       	ldi	r24, 0x35	; 53
+ 7d8:	8a 95       	dec	r24
+ 7da:	f1 f7       	brne	.-4      	; 0x7d8 <send_trigger+0x20>
+ 7dc:	00 00       	nop
 	_delay_us(10);
 	PORTD &=~ (1 << PIND4);
- 6be:	5c 98       	cbi	0x0b, 4	; 11
- 6c0:	08 95       	ret
+ 7de:	5c 98       	cbi	0x0b, 4	; 11
+ 7e0:	08 95       	ret
 
-000006c2 <calc_cm>:
+000007e2 <calc_cm>:
 }
 
 uint16_t calc_cm(uint16_t counter)
 {
     uint16_t result = (counter * 256 + TCNT0) * 4 / 58;
- 6c2:	96 b5       	in	r25, 0x26	; 38
+ 7e2:	96 b5       	in	r25, 0x26	; 38
 	return result;
- 6c4:	20 e0       	ldi	r18, 0x00	; 0
- 6c6:	30 e0       	ldi	r19, 0x00	; 0
- 6c8:	38 2f       	mov	r19, r24
- 6ca:	29 0f       	add	r18, r25
- 6cc:	31 1d       	adc	r19, r1
- 6ce:	22 0f       	add	r18, r18
- 6d0:	33 1f       	adc	r19, r19
- 6d2:	22 0f       	add	r18, r18
- 6d4:	33 1f       	adc	r19, r19
- 6d6:	af e9       	ldi	r26, 0x9F	; 159
- 6d8:	b6 e4       	ldi	r27, 0x46	; 70
- 6da:	0e 94 a9 03 	call	0x752	; 0x752 <__umulhisi3>
+ 7e4:	20 e0       	ldi	r18, 0x00	; 0
+ 7e6:	30 e0       	ldi	r19, 0x00	; 0
+ 7e8:	38 2f       	mov	r19, r24
+ 7ea:	29 0f       	add	r18, r25
+ 7ec:	31 1d       	adc	r19, r1
+ 7ee:	22 0f       	add	r18, r18
+ 7f0:	33 1f       	adc	r19, r19
+ 7f2:	22 0f       	add	r18, r18
+ 7f4:	33 1f       	adc	r19, r19
+ 7f6:	af e9       	ldi	r26, 0x9F	; 159
+ 7f8:	b6 e4       	ldi	r27, 0x46	; 70
+ 7fa:	0e 94 3b 04 	call	0x876	; 0x876 <__umulhisi3>
 }
- 6de:	92 95       	swap	r25
- 6e0:	82 95       	swap	r24
- 6e2:	8f 70       	andi	r24, 0x0F	; 15
- 6e4:	89 27       	eor	r24, r25
- 6e6:	9f 70       	andi	r25, 0x0F	; 15
- 6e8:	89 27       	eor	r24, r25
- 6ea:	08 95       	ret
+ 7fe:	92 95       	swap	r25
+ 800:	82 95       	swap	r24
+ 802:	8f 70       	andi	r24, 0x0F	; 15
+ 804:	89 27       	eor	r24, r25
+ 806:	9f 70       	andi	r25, 0x0F	; 15
+ 808:	89 27       	eor	r24, r25
+ 80a:	08 95       	ret
 
-000006ec <refresh_distance>:
+0000080c <refresh_distance>:
 
 void refresh_distance(void)
 {
-    send_trigger();
- 6ec:	0e 94 4c 03 	call	0x698	; 0x698 <send_trigger>
+	send_trigger();
+ 80c:	0e 94 dc 03 	call	0x7b8	; 0x7b8 <send_trigger>
 	distance = calc_cm(counter);
- 6f0:	80 91 2d 01 	lds	r24, 0x012D	; 0x80012d <counter>
- 6f4:	90 91 2e 01 	lds	r25, 0x012E	; 0x80012e <counter+0x1>
- 6f8:	0e 94 61 03 	call	0x6c2	; 0x6c2 <calc_cm>
- 6fc:	90 93 2b 01 	sts	0x012B, r25	; 0x80012b <__data_end+0x1>
- 700:	80 93 2a 01 	sts	0x012A, r24	; 0x80012a <__data_end>
- 704:	08 95       	ret
+ 810:	80 91 3c 01 	lds	r24, 0x013C	; 0x80013c <counter>
+ 814:	90 91 3d 01 	lds	r25, 0x013D	; 0x80013d <counter+0x1>
+ 818:	0e 94 f1 03 	call	0x7e2	; 0x7e2 <calc_cm>
+ 81c:	90 93 3a 01 	sts	0x013A, r25	; 0x80013a <distance+0x1>
+ 820:	80 93 39 01 	sts	0x0139, r24	; 0x800139 <distance>
+ 824:	08 95       	ret
 
-00000706 <main>:
+00000826 <main>:
 }
 
 int main()
 { 
 	//init
     init_ports();
- 706:	0e 94 8d 01 	call	0x31a	; 0x31a <init_ports>
+ 826:	0e 94 5b 01 	call	0x2b6	; 0x2b6 <init_ports>
     init_uart();
- 70a:	0e 94 a2 01 	call	0x344	; 0x344 <init_uart>
+ 82a:	0e 94 83 01 	call	0x306	; 0x306 <init_uart>
     init_ext_int1();
- 70e:	0e 94 96 01 	call	0x32c	; 0x32c <init_ext_int1>
+ 82e:	0e 94 64 01 	call	0x2c8	; 0x2c8 <init_ext_int1>
     init_timer0();
- 712:	0e 94 9c 01 	call	0x338	; 0x338 <init_timer0>
+ 832:	0e 94 6a 01 	call	0x2d4	; 0x2d4 <init_timer0>
+	init_timer2();
+ 836:	0e 94 70 01 	call	0x2e0	; 0x2e0 <init_timer2>
 	scheduler_init_timer1();
- 716:	0e 94 3f 01 	call	0x27e	; 0x27e <scheduler_init_timer1>
+ 83a:	0e 94 0d 01 	call	0x21a	; 0x21a <scheduler_init_timer1>
     // tasks
 	scheduler_add_task(turn_on_yellow_led, 0, 0);
- 71a:	40 e0       	ldi	r20, 0x00	; 0
- 71c:	50 e0       	ldi	r21, 0x00	; 0
- 71e:	60 e0       	ldi	r22, 0x00	; 0
- 720:	70 e0       	ldi	r23, 0x00	; 0
- 722:	8b e5       	ldi	r24, 0x5B	; 91
- 724:	90 e0       	ldi	r25, 0x00	; 0
- 726:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 83e:	40 e0       	ldi	r20, 0x00	; 0
+ 840:	50 e0       	ldi	r21, 0x00	; 0
+ 842:	60 e0       	ldi	r22, 0x00	; 0
+ 844:	70 e0       	ldi	r23, 0x00	; 0
+ 846:	8b e5       	ldi	r24, 0x5B	; 91
+ 848:	90 e0       	ldi	r25, 0x00	; 0
+ 84a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
 	scheduler_add_task(refresh_distance, 0, 20);
- 72a:	44 e1       	ldi	r20, 0x14	; 20
- 72c:	50 e0       	ldi	r21, 0x00	; 0
- 72e:	60 e0       	ldi	r22, 0x00	; 0
- 730:	70 e0       	ldi	r23, 0x00	; 0
- 732:	86 e7       	ldi	r24, 0x76	; 118
- 734:	93 e0       	ldi	r25, 0x03	; 3
- 736:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 84e:	44 e1       	ldi	r20, 0x14	; 20
+ 850:	50 e0       	ldi	r21, 0x00	; 0
+ 852:	60 e0       	ldi	r22, 0x00	; 0
+ 854:	70 e0       	ldi	r23, 0x00	; 0
+ 856:	86 e0       	ldi	r24, 0x06	; 6
+ 858:	94 e0       	ldi	r25, 0x04	; 4
+ 85a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
 	scheduler_add_task(wait_for_task, 10, 20);
- 73a:	44 e1       	ldi	r20, 0x14	; 20
- 73c:	50 e0       	ldi	r21, 0x00	; 0
- 73e:	6a e0       	ldi	r22, 0x0A	; 10
- 740:	70 e0       	ldi	r23, 0x00	; 0
- 742:	83 e4       	ldi	r24, 0x43	; 67
- 744:	92 e0       	ldi	r25, 0x02	; 2
- 746:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
+ 85e:	44 e1       	ldi	r20, 0x14	; 20
+ 860:	50 e0       	ldi	r21, 0x00	; 0
+ 862:	6a e0       	ldi	r22, 0x0A	; 10
+ 864:	70 e0       	ldi	r23, 0x00	; 0
+ 866:	8c e6       	ldi	r24, 0x6C	; 108
+ 868:	92 e0       	ldi	r25, 0x02	; 2
+ 86a:	0e 94 69 00 	call	0xd2	; 0xd2 <scheduler_add_task>
 
 */
 
 void scheduler_start(void)
 {
       sei();
- 74a:	78 94       	sei
+ 86e:	78 94       	sei
 	scheduler_add_task(refresh_distance, 0, 20);
 	scheduler_add_task(wait_for_task, 10, 20);
     // start de scheduler
 	scheduler_start();
 	while (1) {
 		scheduler_dispatch_tasks();
- 74c:	0e 94 ad 00 	call	0x15a	; 0x15a <scheduler_dispatch_tasks>
- 750:	fd cf       	rjmp	.-6      	; 0x74c <main+0x46>
+ 870:	0e 94 ad 00 	call	0x15a	; 0x15a <scheduler_dispatch_tasks>
+ 874:	fd cf       	rjmp	.-6      	; 0x870 <main+0x4a>
 
-00000752 <__umulhisi3>:
- 752:	a2 9f       	mul	r26, r18
- 754:	b0 01       	movw	r22, r0
- 756:	b3 9f       	mul	r27, r19
- 758:	c0 01       	movw	r24, r0
- 75a:	a3 9f       	mul	r26, r19
- 75c:	70 0d       	add	r23, r0
- 75e:	81 1d       	adc	r24, r1
- 760:	11 24       	eor	r1, r1
- 762:	91 1d       	adc	r25, r1
- 764:	b2 9f       	mul	r27, r18
- 766:	70 0d       	add	r23, r0
- 768:	81 1d       	adc	r24, r1
- 76a:	11 24       	eor	r1, r1
- 76c:	91 1d       	adc	r25, r1
- 76e:	08 95       	ret
+00000876 <__umulhisi3>:
+ 876:	a2 9f       	mul	r26, r18
+ 878:	b0 01       	movw	r22, r0
+ 87a:	b3 9f       	mul	r27, r19
+ 87c:	c0 01       	movw	r24, r0
+ 87e:	a3 9f       	mul	r26, r19
+ 880:	70 0d       	add	r23, r0
+ 882:	81 1d       	adc	r24, r1
+ 884:	11 24       	eor	r1, r1
+ 886:	91 1d       	adc	r25, r1
+ 888:	b2 9f       	mul	r27, r18
+ 88a:	70 0d       	add	r23, r0
+ 88c:	81 1d       	adc	r24, r1
+ 88e:	11 24       	eor	r1, r1
+ 890:	91 1d       	adc	r25, r1
+ 892:	08 95       	ret
 
-00000770 <strcmp>:
- 770:	fb 01       	movw	r30, r22
- 772:	dc 01       	movw	r26, r24
- 774:	8d 91       	ld	r24, X+
- 776:	01 90       	ld	r0, Z+
- 778:	80 19       	sub	r24, r0
- 77a:	01 10       	cpse	r0, r1
- 77c:	d9 f3       	breq	.-10     	; 0x774 <strcmp+0x4>
- 77e:	99 0b       	sbc	r25, r25
- 780:	08 95       	ret
+00000894 <strcmp>:
+ 894:	fb 01       	movw	r30, r22
+ 896:	dc 01       	movw	r26, r24
+ 898:	8d 91       	ld	r24, X+
+ 89a:	01 90       	ld	r0, Z+
+ 89c:	80 19       	sub	r24, r0
+ 89e:	01 10       	cpse	r0, r1
+ 8a0:	d9 f3       	breq	.-10     	; 0x898 <strcmp+0x4>
+ 8a2:	99 0b       	sbc	r25, r25
+ 8a4:	08 95       	ret
 
-00000782 <_exit>:
- 782:	f8 94       	cli
+000008a6 <_exit>:
+ 8a6:	f8 94       	cli
 
-00000784 <__stop_program>:
- 784:	ff cf       	rjmp	.-2      	; 0x784 <__stop_program>
+000008a8 <__stop_program>:
+ 8a8:	ff cf       	rjmp	.-2      	; 0x8a8 <__stop_program>
