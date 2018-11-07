@@ -50,6 +50,10 @@ class Application(Tk):
         while True:
             try:
                 self.update()
+                try:
+                    self.frames['Properties'].update(self.aansturingen, self.sensors)
+                except KeyError:
+                    pass
                 self.frames['Home'].update(self.aansturingen)
                 for sensor in self.sensorsWithoutGraph:
                     self.frames[sensor.name] = Graph(sensor, self.nb)
@@ -78,7 +82,7 @@ class Application(Tk):
         if self.frames['Login'].loggedin == 'I':
             self.loggedin = True
             self.frames['Login'].loggedin = ''
-            self.frames['Properties'] = Properties(self.sensors, self.nb)
+            self.frames['Properties'] = Properties(self.sensors, self.aansturingen, self.nb)
             for sensor in self.sensors:
                 self.frames[sensor.name] = Graph(sensor, self.nb)
         elif self.frames['Login'].loggedin == 'U':
@@ -136,7 +140,8 @@ class Application(Tk):
                 ser.write(b"_CONN\n")
             else:
                 self.other_com_ports.append(comport)
-        except SerialException:
+        except SerialException as E:
+            print (E)
             self.other_com_ports.append(comport)
 
 if __name__ == '__main__':

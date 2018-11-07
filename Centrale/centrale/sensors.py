@@ -14,6 +14,11 @@ class Sensor():
         self.name = self.get_name(existing_sensors)
         self.current_log_file_date = datetime.now().strftime("%d-%m-%Y")
         self.log_file_path = "Centrale/logs/" + self.name + "_" + self.current_log_file_date + ".txt"
+        try:
+            f = open(self.log_file_path)
+            f.close()
+        except FileNotFoundError:
+            self.create_log_file()
         self.alive = True
         self.thread = threading.Thread(target=self.log, name=self.name + "Thread")
         self.thread.start()
@@ -58,11 +63,6 @@ class Sensor():
                 if sensor_type == self.type:
                     if self.current_log_file_date != datetime.now().strftime("%d-%m-%Y"):
                          self.create_log_file()
-                    try:
-                        f = open(self.log_file_path)
-                        f.close()
-                    except FileNotFoundError:
-                        self.create_log_file()
                     with open (self.log_file_path, "a") as f:
                         f.write(datetime.now().strftime("%H:%M:%S") + "," + str(value) + '\n')
             except:
