@@ -1,5 +1,6 @@
 from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu
 from myframe import MyFrame
+from tkinter.filedialog import askopenfilename
 import os
 import os.path
 
@@ -81,4 +82,6 @@ class Properties(MyFrame):
             s7box.grid(row = 61, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
 
     def OpenLog(self):
-        os.startfile('C:/Users/bernt/OneDrive/Jaar2/ProjectCS/Centrale/logs')
+        path = os.path.dirname(os.path.abspath(__file__))
+        file = askopenfilename(initialdir = path + "/../logs", title = "Select Log File", filetypes=[("Text files","*.txt")])
+        print(file)
