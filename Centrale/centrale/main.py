@@ -1,5 +1,5 @@
 import sys
-from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError
+from tkinter import Tk, Label, Entry, Button, Checkbutton, TclError 
 from tkinter import ttk
 from serial import Serial, SerialException
 from serial.tools import list_ports
@@ -48,6 +48,10 @@ class Application(Tk):
             try:
                 self.update()
                 self.check_for_devices()
+                try:
+                    self.frames['Properties'].update(self.aansturingen, self.sensors)
+                except KeyError:
+                    pass
                 for sensor in self.sensorsWithoutGraph:
                     self.frames[sensor.name] = Graph(sensor, self.nb)
                     self.sensorsWithoutGraph.remove(sensor)
