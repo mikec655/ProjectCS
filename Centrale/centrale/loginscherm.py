@@ -33,14 +33,14 @@ class Login(MyFrame):
         Logo.image = Photo
         Logo.grid(columnspan=2, pady=15) 
 
-        instruction = Label(self.subFrame, fg= 'black',bg='white', text='Please login: ')
-        instruction.grid(row=2, sticky=W)
+        self.instruction = Label(self.subFrame, fg= 'black',bg='white', text='Please login: ')
+        self.instruction.grid(row=2, sticky=W)
 
-        name = Label(self.subFrame,fg='black',bg='white', text = 'Username:')
-        passw = Label(self.subFrame, fg='black',bg='white', text='Password:')
+        self.name = Label(self.subFrame,fg='black',bg='white', text = 'Username:')
+        self.passw = Label(self.subFrame, fg='black',bg='white', text='Password:')
 
-        name.grid(row=3,sticky=W)
-        passw.grid(row=4,sticky=W)
+        self.name.grid(row=3,sticky=W)
+        self.passw.grid(row=4,sticky=W)
 
         self.nameE = Entry(self.subFrame)
         self.pwordE = Entry(self.subFrame, show='*')
@@ -70,8 +70,39 @@ class Login(MyFrame):
             self.inlogError['text'] = ""
             self.loginB['text'] = "Logout"
             self.loginB['command'] = self.logout
+            self.instruction.destroy()
+            self.name.destroy()
+            self.passw.destroy()
+            self.nameE.destroy()
+            self.pwordE.destroy()
+            self.inlogError.destroy()
+            self.loginB.destroy()
+            self.loginB = Button(self.subFrame, text='Logout',command=self.logout)
+            self.loginB.grid(row=7, columnspan=3, pady=15, sticky="EW")
+            self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER) 
 
     def logout(self):
         self.loggedin = "U"
-        self.loginB['text'] = "Login"
-        self.loginB['command'] = self.CheckLogin
+        self.instruction = Label(self.subFrame, fg= 'black',bg='white', text='Please login: ')
+        self.instruction.grid(row=2, sticky=W)
+
+        self.name = Label(self.subFrame,fg='black',bg='white', text = 'Username:')
+        self.passw = Label(self.subFrame, fg='black',bg='white', text='Password:')
+
+        self.name.grid(row=3,sticky=W)
+        self.passw.grid(row=4,sticky=W)
+
+        self.nameE = Entry(self.subFrame)
+        self.pwordE = Entry(self.subFrame, show='*')
+        self.nameE.bind('<Return>', lambda _: self.CheckLogin())
+        self.pwordE.bind('<Return>', lambda _: self.CheckLogin())
+        self.nameE.grid(row=3, column=1, sticky="EW")
+        self.pwordE.grid(row=4, column=1, sticky="EW")
+        
+        self.loginB.destroy()
+        self.loginB = Button(self.subFrame, text='Login',command=self.CheckLogin)
+        self.loginB.grid(row=7, column=1, columnspan=2, pady=15, sticky="EW")
+
+        self.inlogError = Label(self.subFrame, text='',background='white', foreground="red")
+        self.inlogError.grid(row=7, sticky=W)
+        self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER) 
