@@ -126,12 +126,19 @@ class Application(Tk):
         try:
             ser = Serial(comport, 19200, timeout=5)
             sleep(2)
-            ser.write(b"_INIT\n")
-            device_type = ser.readline().decode("UTF-8").strip('\n')
+            while True:
+                ser.write(b"_INIT\n")
+                device_type = ser.readline().decode("UTF-8").strip('\n')
+                if device_type != "_ERR":
+                    break
             if device_type == "_MTR":
+                while True:
+                    ser.write(b"_CONN\n")
+                    device_type = ser.readline().decode("UTF-8").strip('\n')
+                    if device_type != "_ERR":
+                        break
                 a = Aansturing(ser, id)
                 self.aansturingen.append(a)
-                ser.write(b"_CONN\n")
             elif device_type == "_TEMP" or device_type == "_LGHT":
                 sensor = Sensor(ser, device_type, id, self.sensors)
                 if (self.loggedin):

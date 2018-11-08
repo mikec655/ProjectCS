@@ -17,6 +17,8 @@ class Home(MyFrame):
         inrol_button.pack(fill=X) 
         uitrol_button = Button(subFrame, text="Uitrollen", command=self.uitrollen)
         uitrol_button.pack(fill=X) 
+        stop_button = Button(subFrame, text="Onderbreek", command=self.stop)
+        stop_button.pack(fill=X) 
         subFrame.pack(padx=5, side=LEFT)
         self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER)
 
@@ -33,6 +35,8 @@ class Home(MyFrame):
             inrol_button.pack(fill=X)
             uitrol_button = Button(subFrame,  text="Uitrollen", command=aansturing.uitrollen)
             uitrol_button.pack(fill=X)
+            stop_button = Button(subFrame, text="Onderbreek", command=aansturing.stop)
+            stop_button.pack(fill=X) 
             self.widgets.append(subFrame)
             subFrame.pack(padx=5, side=LEFT)
         self.aansturingen = aansturingen.copy()
@@ -45,3 +49,7 @@ class Home(MyFrame):
     def inrollen(self):
         for aansturing in self.aansturingen:
             aansturing.inrollen()
+
+    def stop(self):
+        for aansturing in self.aansturingen:
+            aansturing.stop()

@@ -298,7 +298,6 @@ void receive_string(char* data){
 		data[i] = c;
 		i++;
 		c = receive();
-		transmit(c);
 	}
 }
 
@@ -421,7 +420,6 @@ void wait_for_task(void);
 
 void check_if_down(void)
 {
-	transmit(15);
 	if (distance <= MAX_UITROL && distance > MAX_UITROL - 5)
 	{
 		scheduler_delete_all_tasks();
@@ -468,34 +466,38 @@ void wait_for_task(void)
 	// uitrollen
 	else if (strcmp(task, "_DWN") == 0) {
 		scheduler_delete_all_tasks();
-		scheduler_add_task(turn_off_green_led, 0, 100);
 		scheduler_add_task(turn_on_red_led, 0, 100);
-		scheduler_add_task(turn_on_yellow_led, 0, 50);
-		scheduler_add_task(turn_off_yellow_led, 25, 50);
-		scheduler_add_task(start_motor_reversed, 0, 0);
-		scheduler_add_task(refresh_distance, 0, 30);
-		scheduler_add_task(check_if_down, 10, 30);
-		scheduler_add_task(wait_for_task, 20, 30);
+		scheduler_add_task(turn_off_green_led, 0, 100);
+		scheduler_add_task(turn_on_yellow_led, 0, 100);
+		scheduler_add_task(turn_off_yellow_led, 33, 100);
+		scheduler_add_task(start_motor, 0, 0);
+		scheduler_add_task(refresh_distance, 10, 20);
+		scheduler_add_task(check_if_down, 0, 20);
+		scheduler_add_task(wait_for_task, 10, 20);
+		char message[8] = "_DWN\n";
+		transmit_string(message);
 	}
 	// inrollen
 	else if (strcmp(task, "_UP") == 0) {
 		scheduler_delete_all_tasks();
 		scheduler_add_task(turn_off_red_led, 0, 100);
 		scheduler_add_task(turn_on_green_led, 0, 100);
-		scheduler_add_task(turn_on_yellow_led, 0, 50);
-		scheduler_add_task(turn_off_yellow_led, 25, 50);
+		scheduler_add_task(turn_on_yellow_led, 0, 100);
+		scheduler_add_task(turn_off_yellow_led, 33, 100);
 		scheduler_add_task(start_motor, 0, 0);
-		scheduler_add_task(refresh_distance, 0, 30);
-		scheduler_add_task(check_if_up, 10, 30);
-		scheduler_add_task(wait_for_task, 20, 30);
+		scheduler_add_task(refresh_distance, 10, 20);
+		scheduler_add_task(check_if_up, 0, 20);
+		scheduler_add_task(wait_for_task, 10, 20);
+		char message[8] = "_UP\n";
+		transmit_string(message);
 	} 
 	else if (strcmp(task, "_STOP") == 0) {
 		scheduler_delete_all_tasks();
-		scheduler_add_task(turn_on_yellow_led, 0, 0);
-		scheduler_add_task(turn_off_green_led, 0, 0);
-		scheduler_add_task(turn_off_red_led, 0, 0);
+		scheduler_add_task(turn_off_yellow_led, 0, 0);
 		scheduler_add_task(refresh_distance, 0, 20);
 		scheduler_add_task(wait_for_task, 10, 20);
+		char message[8] = "_STOP\n";
+		transmit_string(message);
 	}
 	else if (strcmp(task, "") == 0) {
 		//do nothing
