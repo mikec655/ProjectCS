@@ -1,4 +1,4 @@
-from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu, ANCHOR, IntVar
+from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu, ANCHOR, IntVar, messagebox
 from myframe import MyFrame
 import settings_editor
 
@@ -101,8 +101,12 @@ class Properties(MyFrame):
                     settings['aansturingen'][self.aansturing_id]['name'] = self.hernoemen.get()
                     settings_editor.writeSettings(settings) 
         
-        if not self.aansturing_id:
-            print('geen aansturing om sensor mee te geven')
+        if not self.aansturing_id and len(self.knoplijst)== 0:
+            messagebox.showinfo("error", "Sluit een motormodule en sensormodule aan.")
+        elif len(self.knoplijst)== 0 and self.aansturing_id:
+            messagebox.showinfo("error", "Sluit een sensormodule aan.")
+        else:
+            messagebox.showinfo("error", "Sluit een motormodule aan.")
 ####################
             #self.error = Label( self.frame, text= "Geen motor aangesloten")
             #self.error.grid(row = 300, column = 60, columnspan = 1, padx = 1, pady = 5)

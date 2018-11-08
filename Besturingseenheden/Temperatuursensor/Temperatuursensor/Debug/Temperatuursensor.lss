@@ -228,12 +228,6 @@ Disassembly of section .text:
      19c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000001a0 <scheduler_add_task>:
-
-*/
-
-void scheduler_start(void)
-{
-      sei();
      1a0:	0f 93       	push	r16
      1a2:	1f 93       	push	r17
      1a4:	cf 93       	push	r28
@@ -360,12 +354,6 @@ void scheduler_start(void)
      29a:	08 95       	ret
 
 0000029c <__vector_11>:
-op basis van de instellingen in scheduler_init_timer1().
-
-*/
-
-ISR(TIMER1_COMPA_vect)
-{
      29c:	1f 92       	push	r1
      29e:	0f 92       	push	r0
      2a0:	0f b6       	in	r0, 0x3f	; 63
@@ -383,66 +371,32 @@ ISR(TIMER1_COMPA_vect)
      2b8:	f1 e0       	ldi	r31, 0x01	; 1
      2ba:	20 e6       	ldi	r18, 0x60	; 96
      2bc:	31 e0       	ldi	r19, 0x01	; 1
-   unsigned char index;
-   for(index = 0; index < SCHEDULER_MAX_TASKS; index++)
-   {
-      // Controleert of een taak op index in array aanwezig is
-      if(scheduler_tasks[index].pTask)
      2be:	80 81       	ld	r24, Z
      2c0:	91 81       	ldd	r25, Z+1	; 0x01
      2c2:	89 2b       	or	r24, r25
      2c4:	91 f0       	breq	.+36     	; 0x2ea <__vector_11+0x4e>
-      {
-         if(scheduler_tasks[index].Delay == 0)
      2c6:	82 81       	ldd	r24, Z+2	; 0x02
      2c8:	93 81       	ldd	r25, Z+3	; 0x03
      2ca:	00 97       	sbiw	r24, 0x00	; 0
      2cc:	59 f4       	brne	.+22     	; 0x2e4 <__vector_11+0x48>
-         {
-            // Taak is klaar om uitgevoerd te worden, inc 'RunMe' flag 
-            scheduler_tasks[index].RunMe += 1;
      2ce:	86 81       	ldd	r24, Z+6	; 0x06
      2d0:	8f 5f       	subi	r24, 0xFF	; 255
      2d2:	86 83       	std	Z+6, r24	; 0x06
-
-            if(scheduler_tasks[index].Period)
      2d4:	84 81       	ldd	r24, Z+4	; 0x04
      2d6:	95 81       	ldd	r25, Z+5	; 0x05
      2d8:	00 97       	sbiw	r24, 0x00	; 0
      2da:	39 f0       	breq	.+14     	; 0x2ea <__vector_11+0x4e>
-            {
-               // periodieke taken opnieuw instellen
-               scheduler_tasks[index].Delay = scheduler_tasks[index].Period;
-               scheduler_tasks[index].Delay -= 1;
      2dc:	01 97       	sbiw	r24, 0x01	; 1
      2de:	93 83       	std	Z+3, r25	; 0x03
      2e0:	82 83       	std	Z+2, r24	; 0x02
      2e2:	03 c0       	rjmp	.+6      	; 0x2ea <__vector_11+0x4e>
-            }
-         }
-         else
-         {
-            // Verlaag Delay als taak niet klaar is om uitgevoerd te worden
-            scheduler_tasks[index].Delay -= 1;
      2e4:	01 97       	sbiw	r24, 0x01	; 1
      2e6:	93 83       	std	Z+3, r25	; 0x03
      2e8:	82 83       	std	Z+2, r24	; 0x02
      2ea:	37 96       	adiw	r30, 0x07	; 7
-*/
-
-ISR(TIMER1_COMPA_vect)
-{
-   unsigned char index;
-   for(index = 0; index < SCHEDULER_MAX_TASKS; index++)
      2ec:	e2 17       	cp	r30, r18
      2ee:	f3 07       	cpc	r31, r19
      2f0:	31 f7       	brne	.-52     	; 0x2be <__vector_11+0x22>
-            // Verlaag Delay als taak niet klaar is om uitgevoerd te worden
-            scheduler_tasks[index].Delay -= 1;
-         }
-      }
-   }
-}
      2f2:	ff 91       	pop	r31
      2f4:	ef 91       	pop	r30
      2f6:	bf 91       	pop	r27
@@ -458,95 +412,48 @@ ISR(TIMER1_COMPA_vect)
      30a:	18 95       	reti
 
 0000030c <init_ports>:
-
-// init functies
-void init_ports()
-{
-    // set pin C0 (arduino: A0) as input for TMP 36
-    DDRC &= 0b11111110;
      30c:	38 98       	cbi	0x07, 0	; 7
      30e:	08 95       	ret
 
 00000310 <init_uart>:
-
-void init_uart()
-{
-	// baud rate
-    uint8_t UBBRVAL = 51;
-	UBRR0H = 0;
      310:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
-	UBRR0L = UBBRVAL;
      314:	83 e3       	ldi	r24, 0x33	; 51
      316:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
-	// disable U2X mode
-	UCSR0A = 0;
      31a:	10 92 c0 00 	sts	0x00C0, r1	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
-	// set transmitter en receiver aan
-	UCSR0B = (1<<TXEN0) | (1<<RXEN0);
      31e:	88 e1       	ldi	r24, 0x18	; 24
      320:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
-	// set frame format : asynchronous, 8 data bits, 1 stop bit, no parity
-	UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
      324:	86 e0       	ldi	r24, 0x06	; 6
      326:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
      32a:	08 95       	ret
 
 0000032c <init_adc>:
-
-void init_adc()
-{
-	// ref=Vcc, left adjust the result (8 bit resolution),
-	// select channel 0 (PC0 = input)
-	ADMUX = (1<<REFS0) | (1<<ADLAR);
      32c:	80 e6       	ldi	r24, 0x60	; 96
      32e:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__TEXT_REGION_LENGTH__+0x7e007c>
-	// enable the ADC & prescale = 128
-	ADCSRA = (1<<ADEN) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
      332:	87 e8       	ldi	r24, 0x87	; 135
      334:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__TEXT_REGION_LENGTH__+0x7e007a>
      338:	08 95       	ret
 
 0000033a <transmit>:
-// uart functies 
-void transmit(uint8_t data)
-{
-	// wacht totdat transmit buffer leeg is
-	// UDRE wordt gezet wanneer de transmit buffer leeg is
-	loop_until_bit_is_set(UCSR0A, UDRE0);
      33a:	e0 ec       	ldi	r30, 0xC0	; 192
      33c:	f0 e0       	ldi	r31, 0x00	; 0
      33e:	90 81       	ld	r25, Z
      340:	95 ff       	sbrs	r25, 5
      342:	fd cf       	rjmp	.-6      	; 0x33e <transmit+0x4>
-	// zet dat in UDR
-	UDR0 = data;
      344:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
      348:	08 95       	ret
 
 0000034a <transmit_string>:
-}
-
-void transmit_string(char* data)
-{
      34a:	1f 93       	push	r17
      34c:	cf 93       	push	r28
      34e:	df 93       	push	r29
      350:	ec 01       	movw	r28, r24
-	for (uint8_t i = 0; i < strlen(data); i++){
      352:	10 e0       	ldi	r17, 0x00	; 0
      354:	07 c0       	rjmp	.+14     	; 0x364 <transmit_string+0x1a>
-		transmit(data[i]);
      356:	fe 01       	movw	r30, r28
      358:	e8 0f       	add	r30, r24
      35a:	f9 1f       	adc	r31, r25
      35c:	80 81       	ld	r24, Z
      35e:	0e 94 9d 01 	call	0x33a	; 0x33a <transmit>
-	UDR0 = data;
-}
-
-void transmit_string(char* data)
-{
-	for (uint8_t i = 0; i < strlen(data); i++){
      362:	1f 5f       	subi	r17, 0xFF	; 255
      364:	81 2f       	mov	r24, r17
      366:	90 e0       	ldi	r25, 0x00	; 0
@@ -560,21 +467,12 @@ void transmit_string(char* data)
      376:	8e 17       	cp	r24, r30
      378:	9f 07       	cpc	r25, r31
      37a:	68 f3       	brcs	.-38     	; 0x356 <transmit_string+0xc>
-		transmit(data[i]);
-	}
-}
      37c:	df 91       	pop	r29
      37e:	cf 91       	pop	r28
      380:	1f 91       	pop	r17
      382:	08 95       	ret
 
 00000384 <transmit_sensor_value>:
-	sensor_value_index += 1;
-	sensor_value_index %= AMOUNT_OF_SENSOR_VALUES;
-}
-
-void transmit_sensor_value()
-{
      384:	8f 92       	push	r8
      386:	9f 92       	push	r9
      388:	af 92       	push	r10
@@ -599,9 +497,6 @@ void transmit_sensor_value()
      3ae:	f1 e0       	ldi	r31, 0x01	; 1
      3b0:	ad e3       	ldi	r26, 0x3D	; 61
      3b2:	b1 e0       	ldi	r27, 0x01	; 1
-	//transmit(12);
-    // rekent waarde om naar graden celsius
-	int64_t sum = 0;
      3b4:	a1 2c       	mov	r10, r1
      3b6:	b1 2c       	mov	r11, r1
      3b8:	c1 2c       	mov	r12, r1
@@ -610,8 +505,6 @@ void transmit_sensor_value()
      3be:	f1 2c       	mov	r15, r1
      3c0:	00 e0       	ldi	r16, 0x00	; 0
      3c2:	10 e0       	ldi	r17, 0x00	; 0
-    for (uint8_t i = 0; i < AMOUNT_OF_SENSOR_VALUES; i++){
-		sum += sensor_values[i];
      3c4:	21 91       	ld	r18, Z+
      3c6:	92 2f       	mov	r25, r18
      3c8:	99 0f       	add	r25, r25
@@ -631,21 +524,9 @@ void transmit_sensor_value()
      3e6:	f7 2e       	mov	r15, r23
      3e8:	08 2f       	mov	r16, r24
      3ea:	19 2f       	mov	r17, r25
-void transmit_sensor_value()
-{
-	//transmit(12);
-    // rekent waarde om naar graden celsius
-	int64_t sum = 0;
-    for (uint8_t i = 0; i < AMOUNT_OF_SENSOR_VALUES; i++){
      3ec:	ea 17       	cp	r30, r26
      3ee:	fb 07       	cpc	r31, r27
      3f0:	49 f7       	brne	.-46     	; 0x3c4 <transmit_sensor_value+0x40>
-	}
-	float result = (float) sum / (float) AMOUNT_OF_SENSOR_VALUES; 
-    // verstuurt waarde over serial
-    char data[16];
-	char formatted_result[8];
-	dtostrf(result, 3, 1, formatted_result);
      3f2:	4e 01       	movw	r8, r28
      3f4:	81 e1       	ldi	r24, 0x11	; 17
      3f6:	88 0e       	add	r8, r24
@@ -668,7 +549,6 @@ void transmit_sensor_value()
      41c:	21 e0       	ldi	r18, 0x01	; 1
      41e:	43 e0       	ldi	r20, 0x03	; 3
      420:	0e 94 ba 05 	call	0xb74	; 0xb74 <dtostrf>
-	sprintf(data, "_TEMP: %s\n", formatted_result);
      424:	9f 92       	push	r9
      426:	8f 92       	push	r8
      428:	80 e1       	ldi	r24, 0x10	; 16
@@ -680,11 +560,8 @@ void transmit_sensor_value()
      434:	1f 93       	push	r17
      436:	0f 93       	push	r16
      438:	0e 94 e3 05 	call	0xbc6	; 0xbc6 <sprintf>
-	//transmit
-	transmit_string(data);
      43c:	c8 01       	movw	r24, r16
      43e:	0e 94 a5 01 	call	0x34a	; 0x34a <transmit_string>
-}
      442:	0f 90       	pop	r0
      444:	0f 90       	pop	r0
      446:	0f 90       	pop	r0
@@ -712,72 +589,39 @@ void transmit_sensor_value()
      472:	08 95       	ret
 
 00000474 <receive>:
-
-uint8_t receive(void)
-{
-	// wacht totdat er data op de recieve buffer wordt gezet 
-    // RXC0 wordt gezet wanneer de er data in de recieve buffer staat
-    loop_until_bit_is_set(UCSR0A, RXC0);
      474:	e0 ec       	ldi	r30, 0xC0	; 192
      476:	f0 e0       	ldi	r31, 0x00	; 0
      478:	80 81       	ld	r24, Z
      47a:	88 23       	and	r24, r24
      47c:	ec f7       	brge	.-6      	; 0x478 <receive+0x4>
-	return UDR0;
      47e:	80 91 c6 00 	lds	r24, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
-}
      482:	08 95       	ret
 
 00000484 <receive_string>:
-
-void receive_string(char* data){
      484:	0f 93       	push	r16
      486:	1f 93       	push	r17
      488:	cf 93       	push	r28
      48a:	8c 01       	movw	r16, r24
-	uint8_t i = 0;
-	strcpy(data, "");
      48c:	fc 01       	movw	r30, r24
      48e:	10 82       	st	Z, r1
-	char c = receive();
      490:	0e 94 3a 02 	call	0x474	; 0x474 <receive>
-	while (c != '\n') {
      494:	8a 30       	cpi	r24, 0x0A	; 10
      496:	51 f0       	breq	.+20     	; 0x4ac <receive_string+0x28>
      498:	c0 e0       	ldi	r28, 0x00	; 0
-		data[i] = c;
      49a:	f8 01       	movw	r30, r16
      49c:	ec 0f       	add	r30, r28
      49e:	f1 1d       	adc	r31, r1
      4a0:	80 83       	st	Z, r24
-		i++;
      4a2:	cf 5f       	subi	r28, 0xFF	; 255
-		c = receive();
      4a4:	0e 94 3a 02 	call	0x474	; 0x474 <receive>
-
-void receive_string(char* data){
-	uint8_t i = 0;
-	strcpy(data, "");
-	char c = receive();
-	while (c != '\n') {
      4a8:	8a 30       	cpi	r24, 0x0A	; 10
      4aa:	b9 f7       	brne	.-18     	; 0x49a <receive_string+0x16>
-		data[i] = c;
-		i++;
-		c = receive();
-	}
-}
      4ac:	cf 91       	pop	r28
      4ae:	1f 91       	pop	r17
      4b0:	0f 91       	pop	r16
      4b2:	08 95       	ret
 
 000004b4 <init_connection>:
-
-void transmit_sensor_value(void);
-void save_sensor_value(void);
-
-void init_connection(void) {
      4b4:	cf 93       	push	r28
      4b6:	df 93       	push	r29
      4b8:	cd b7       	in	r28, 0x3d	; 61
@@ -788,8 +632,6 @@ void init_connection(void) {
      4c2:	de bf       	out	0x3e, r29	; 62
      4c4:	0f be       	out	0x3f, r0	; 63
      4c6:	cd bf       	out	0x3d, r28	; 61
-	//transmit(3);
-    char type[16] = "_TEMP\n";
      4c8:	87 e0       	ldi	r24, 0x07	; 7
      4ca:	e0 e0       	ldi	r30, 0x00	; 0
      4cc:	f1 e0       	ldi	r31, 0x01	; 1
@@ -806,11 +648,9 @@ void init_connection(void) {
      4e2:	1d 92       	st	X+, r1
      4e4:	8a 95       	dec	r24
      4e6:	e9 f7       	brne	.-6      	; 0x4e2 <init_connection+0x2e>
-	transmit_string(type);
      4e8:	ce 01       	movw	r24, r28
      4ea:	01 96       	adiw	r24, 0x01	; 1
      4ec:	0e 94 a5 01 	call	0x34a	; 0x34a <transmit_string>
-    char response[16] = "";
      4f0:	1a 8a       	std	Y+18, r1	; 0x12
      4f2:	19 8a       	std	Y+17, r1	; 0x11
      4f4:	fe 01       	movw	r30, r28
@@ -820,11 +660,9 @@ void init_connection(void) {
      4fc:	1d 92       	st	X+, r1
      4fe:	8a 95       	dec	r24
      500:	e9 f7       	brne	.-6      	; 0x4fc <init_connection+0x48>
-    receive_string(response);
      502:	ce 01       	movw	r24, r28
      504:	41 96       	adiw	r24, 0x11	; 17
      506:	0e 94 42 02 	call	0x484	; 0x484 <receive_string>
-    if (strcmp(response, "_CONN") == 0) {
      50a:	6b e1       	ldi	r22, 0x1B	; 27
      50c:	71 e0       	ldi	r23, 0x01	; 1
      50e:	ce 01       	movw	r24, r28
@@ -832,8 +670,6 @@ void init_connection(void) {
      512:	0e 94 da 05 	call	0xbb4	; 0xbb4 <strcmp>
      516:	89 2b       	or	r24, r25
      518:	89 f4       	brne	.+34     	; 0x53c <init_connection+0x88>
-		//transmit(4);
-		scheduler_add_task(save_sensor_value, 0, 50);
      51a:	42 e3       	ldi	r20, 0x32	; 50
      51c:	50 e0       	ldi	r21, 0x00	; 0
      51e:	60 e0       	ldi	r22, 0x00	; 0
@@ -841,7 +677,6 @@ void init_connection(void) {
      522:	8f ef       	ldi	r24, 0xFF	; 255
      524:	92 e0       	ldi	r25, 0x02	; 2
      526:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <scheduler_add_task>
-        scheduler_add_task(transmit_sensor_value, 1000, 1000);
      52a:	48 ee       	ldi	r20, 0xE8	; 232
      52c:	53 e0       	ldi	r21, 0x03	; 3
      52e:	68 ee       	ldi	r22, 0xE8	; 232
@@ -850,8 +685,6 @@ void init_connection(void) {
      534:	91 e0       	ldi	r25, 0x01	; 1
      536:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <scheduler_add_task>
      53a:	08 c0       	rjmp	.+16     	; 0x54c <init_connection+0x98>
-    } else {
-		scheduler_add_task(init_connection, 0, 0);
      53c:	40 e0       	ldi	r20, 0x00	; 0
      53e:	50 e0       	ldi	r21, 0x00	; 0
      540:	60 e0       	ldi	r22, 0x00	; 0
@@ -859,8 +692,6 @@ void init_connection(void) {
      544:	8a e5       	ldi	r24, 0x5A	; 90
      546:	92 e0       	ldi	r25, 0x02	; 2
      548:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <scheduler_add_task>
-	}
-}
      54c:	a0 96       	adiw	r28, 0x20	; 32
      54e:	0f b6       	in	r0, 0x3f	; 63
      550:	f8 94       	cli
@@ -872,12 +703,6 @@ void init_connection(void) {
      55c:	08 95       	ret
 
 0000055e <wait_for_task>:
-	//transmit
-	transmit_string(data);
-}
-
-void wait_for_task(void)
-{
      55e:	cf 93       	push	r28
      560:	df 93       	push	r29
      562:	cd b7       	in	r28, 0x3d	; 61
@@ -888,8 +713,6 @@ void wait_for_task(void)
      56c:	de bf       	out	0x3e, r29	; 62
      56e:	0f be       	out	0x3f, r0	; 63
      570:	cd bf       	out	0x3d, r28	; 61
-	//transmit(1);
-	char task[16] = "";
      572:	1a 82       	std	Y+2, r1	; 0x02
      574:	19 82       	std	Y+1, r1	; 0x01
      576:	fe 01       	movw	r30, r28
@@ -899,12 +722,9 @@ void wait_for_task(void)
      57e:	1d 92       	st	X+, r1
      580:	8a 95       	dec	r24
      582:	e9 f7       	brne	.-6      	; 0x57e <wait_for_task+0x20>
-	receive_string(task);
      584:	ce 01       	movw	r24, r28
      586:	01 96       	adiw	r24, 0x01	; 1
      588:	0e 94 42 02 	call	0x484	; 0x484 <receive_string>
-    // init
-    if (strcmp(task, "_INIT") == 0) {
      58c:	61 e2       	ldi	r22, 0x21	; 33
      58e:	71 e0       	ldi	r23, 0x01	; 1
      590:	ce 01       	movw	r24, r28
@@ -912,8 +732,6 @@ void wait_for_task(void)
      594:	0e 94 da 05 	call	0xbb4	; 0xbb4 <strcmp>
      598:	89 2b       	or	r24, r25
      59a:	49 f4       	brne	.+18     	; 0x5ae <wait_for_task+0x50>
-		//transmit(2);
-        scheduler_add_task(init_connection, 0, 0);
      59c:	40 e0       	ldi	r20, 0x00	; 0
      59e:	50 e0       	ldi	r21, 0x00	; 0
      5a0:	60 e0       	ldi	r22, 0x00	; 0
@@ -922,8 +740,6 @@ void wait_for_task(void)
      5a6:	92 e0       	ldi	r25, 0x02	; 2
      5a8:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <scheduler_add_task>
      5ac:	08 c0       	rjmp	.+16     	; 0x5be <wait_for_task+0x60>
-	} else {
-		scheduler_add_task(wait_for_task, 0, 0);
      5ae:	40 e0       	ldi	r20, 0x00	; 0
      5b0:	50 e0       	ldi	r21, 0x00	; 0
      5b2:	60 e0       	ldi	r22, 0x00	; 0
@@ -931,9 +747,6 @@ void wait_for_task(void)
      5b6:	8f ea       	ldi	r24, 0xAF	; 175
      5b8:	92 e0       	ldi	r25, 0x02	; 2
      5ba:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <scheduler_add_task>
-		//transmit(5);
-	}
-}
      5be:	60 96       	adiw	r28, 0x10	; 16
      5c0:	0f b6       	in	r0, 0x3f	; 63
      5c2:	f8 94       	cli
@@ -945,23 +758,14 @@ void wait_for_task(void)
      5ce:	08 95       	ret
 
 000005d0 <get_adc_value>:
-}
-
-//sensor functies
-uint16_t get_adc_value()
-{
-	ADCSRA |= (1<<ADSC); // start conversion
      5d0:	ea e7       	ldi	r30, 0x7A	; 122
      5d2:	f0 e0       	ldi	r31, 0x00	; 0
      5d4:	80 81       	ld	r24, Z
      5d6:	80 64       	ori	r24, 0x40	; 64
      5d8:	80 83       	st	Z, r24
-	loop_until_bit_is_clear(ADCSRA, ADSC);
      5da:	80 81       	ld	r24, Z
      5dc:	86 fd       	sbrc	r24, 6
      5de:	fd cf       	rjmp	.-6      	; 0x5da <get_adc_value+0xa>
-	// 10-bit resolution, left adjusted
-	return ADCL / 64 + ADCH * 4; //ADCL has to be first!
      5e0:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <__TEXT_REGION_LENGTH__+0x7e0078>
      5e4:	20 91 79 00 	lds	r18, 0x0079	; 0x800079 <__TEXT_REGION_LENGTH__+0x7e0079>
      5e8:	82 95       	swap	r24
@@ -969,8 +773,6 @@ uint16_t get_adc_value()
      5ec:	86 95       	lsr	r24
      5ee:	83 70       	andi	r24, 0x03	; 3
      5f0:	90 e0       	ldi	r25, 0x00	; 0
-	//transmit(13);
-}
      5f2:	34 e0       	ldi	r19, 0x04	; 4
      5f4:	23 9f       	mul	r18, r19
      5f6:	80 0d       	add	r24, r0
@@ -979,17 +781,10 @@ uint16_t get_adc_value()
      5fc:	08 95       	ret
 
 000005fe <save_sensor_value>:
-
-void save_sensor_value()
-{
      5fe:	0f 93       	push	r16
      600:	1f 93       	push	r17
      602:	cf 93       	push	r28
-	uint16_t value = get_adc_value();
      604:	0e 94 e8 02 	call	0x5d0	; 0x5d0 <get_adc_value>
-	float v_out = (float) value * (5.0 / 1024.0);
-	int8_t celsius = (int8_t) ((v_out - 0.5) * 100.0);
-	sensor_values[sensor_value_index] = celsius;
      608:	c0 91 28 01 	lds	r28, 0x0128	; 0x800128 <__data_end>
      60c:	0c 2f       	mov	r16, r28
      60e:	10 e0       	ldi	r17, 0x00	; 0
@@ -1017,8 +812,6 @@ void save_sensor_value()
      642:	0e 94 2c 04 	call	0x858	; 0x858 <__fixsfsi>
      646:	f8 01       	movw	r30, r16
      648:	60 83       	st	Z, r22
-	sensor_value_index += 1;
-	sensor_value_index %= AMOUNT_OF_SENSOR_VALUES;
      64a:	cf 5f       	subi	r28, 0xFF	; 255
      64c:	8d ec       	ldi	r24, 0xCD	; 205
      64e:	c8 9f       	mul	r28, r24
@@ -1034,28 +827,16 @@ void save_sensor_value()
      662:	89 0f       	add	r24, r25
      664:	c8 1b       	sub	r28, r24
      666:	c0 93 28 01 	sts	0x0128, r28	; 0x800128 <__data_end>
-}
      66a:	cf 91       	pop	r28
      66c:	1f 91       	pop	r17
      66e:	0f 91       	pop	r16
      670:	08 95       	ret
 
 00000672 <main>:
-}
-
-int main()
-{
-	//init
-    init_ports();
      672:	0e 94 86 01 	call	0x30c	; 0x30c <init_ports>
-    init_uart();
      676:	0e 94 88 01 	call	0x310	; 0x310 <init_uart>
-    init_adc();
      67a:	0e 94 96 01 	call	0x32c	; 0x32c <init_adc>
-	scheduler_init_timer1();
      67e:	0e 94 38 01 	call	0x270	; 0x270 <scheduler_init_timer1>
-    // tasks
-    scheduler_add_task(wait_for_task,10,0);
      682:	40 e0       	ldi	r20, 0x00	; 0
      684:	50 e0       	ldi	r21, 0x00	; 0
      686:	6a e0       	ldi	r22, 0x0A	; 10
@@ -1063,19 +844,7 @@ int main()
      68a:	8f ea       	ldi	r24, 0xAF	; 175
      68c:	92 e0       	ldi	r25, 0x02	; 2
      68e:	0e 94 d0 00 	call	0x1a0	; 0x1a0 <scheduler_add_task>
-
-*/
-
-void scheduler_start(void)
-{
-      sei();
      692:	78 94       	sei
-    // tasks
-    scheduler_add_task(wait_for_task,10,0);
-    // start de scheduler
-	scheduler_start();
-	while (1) {
-		scheduler_dispatch_tasks();
      694:	0e 94 14 01 	call	0x228	; 0x228 <scheduler_dispatch_tasks>
      698:	fd cf       	rjmp	.-6      	; 0x694 <main+0x22>
 
