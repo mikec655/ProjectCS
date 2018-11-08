@@ -14,8 +14,6 @@ class Properties(MyFrame):
         hernoemtitel = Label(self, text="hernoem de module:")
         hernoemtitel.grid(row = 2, column = 0, columnspan = 25, padx = 1, pady = 5, sticky = 'w')
         hernoemtitel.config(font=("Times new roman", 12))
-        logfile = Button(self, text="LogFileTemp", command=self.OpenLog)
-        logfile.grid()
         
         self.var = StringVar(self)
         self.var.set("Selecteer motor module")
@@ -80,8 +78,3 @@ class Properties(MyFrame):
             s6box.grid(row = 60, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
             s7box = Checkbutton(self)
             s7box.grid(row = 61, column=280 , columnspan = 40, padx = 1, pady = 1, sticky = 'n')
-
-    def OpenLog(self):
-        path = os.path.dirname(os.path.abspath(__file__))
-        file = askopenfilename(initialdir = path + "/../logs", title = "Select Log File", filetypes=[("Text files","*.txt")])
-        print(file)
