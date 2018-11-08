@@ -69,5 +69,7 @@ class Sensor():
                 pass
         
     def stop(self):
+        with open (self.log_file_path, "a") as f:
+            f.write("<<break>>" + '\n')
         self.serial.close()
         self.alive = False

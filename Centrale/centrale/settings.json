@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-{
-    "aansturingen": {
-        "55731323136351A04150": {
-            "name": "Aansturing1",
-            "sensor_value": {}
-        }
-    },
-    "sensor_name": {
-        "5": {
-            "name": "Lichtsensor1",
-            "type": "_LGHT"
-        },
-        "75435353138351F08050": {
-            "name": "Temperatuursensor1",
-            "type": "_TEMP"
-        },
-        "55735323535351705011": {
-            "name": "Lichtsensor2",
-            "type": "_LGHT"
-        }
-    }
-=======
 {
     "aansturingen": {
         "55731323136351A04150": {
@@ -34,5 +11,4 @@
             "type": "_LGHT"
         }
     }
->>>>>>> log_file
 }

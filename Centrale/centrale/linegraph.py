@@ -37,16 +37,18 @@ class Graph(MyFrame):
         lines = graph_data.split('\n')  #split de data uit het log bestand per lijn
         xs = []
         ys = []
-        xx = 0
         for line in lines:  #voor iedere lijn in het bestand
-            if len(line) > 1 and line[0] != '#':    #zolang de lengte groter is dan 1
+            if line == "<<break>>":
+                self.ax.plot(xs, ys, color='blue') 
+                xs = []
+                ys = [] 
+            elif len(line) > 1 and line[0] != '#':    #zolang de lengte groter is dan 1
                 x, y = line.split(',')  #split de waardes op de komma
                 xs.append(datetime.strptime(x, "%H:%M:%S")) #geeft de huidige tijd weer op de x-as 
                 ys.append(float(y)) #voegt de y as toe
-                xx += 1
         # xs = xs[-10:]
         # ys = ys[-10:]
-        self.ax.plot(xs, ys)        
+        self.ax.plot(xs, ys, color='blue')        
     
     def redraw_animation(self, i):
         ani = animation.FuncAnimation(self.fig, self.redraw, interval=5000) #zorgt voor een interval
