@@ -15,11 +15,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000148  00000000  00000000  00000a28  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000173d  00000000  00000000  00000b70  2**0
+  6 .debug_info   0000173f  00000000  00000000  00000b70  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000911  00000000  00000000  000022ad  2**0
+  7 .debug_abbrev 00000911  00000000  00000000  000022af  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000a18  00000000  00000000  00002bbe  2**0
+  8 .debug_line   00000a18  00000000  00000000  00002bc0  2**0
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  00000394  00000000  00000000  000035d8  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -683,14 +683,14 @@ void start_motor_reversed(void)
  522:	09 f0       	breq	.+2      	; 0x526 <wait_for_task+0x66>
  524:	52 c0       	rjmp	.+164    	; 0x5ca <wait_for_task+0x10a>
  526:	0e 94 ce 00 	call	0x19c	; 0x19c <scheduler_delete_all_tasks>
- 52a:	44 e6       	ldi	r20, 0x64	; 100
+ 52a:	4a e0       	ldi	r20, 0x0A	; 10
  52c:	50 e0       	ldi	r21, 0x00	; 0
  52e:	60 e0       	ldi	r22, 0x00	; 0
  530:	70 e0       	ldi	r23, 0x00	; 0
  532:	87 e5       	ldi	r24, 0x57	; 87
  534:	90 e0       	ldi	r25, 0x00	; 0
  536:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
- 53a:	44 e6       	ldi	r20, 0x64	; 100
+ 53a:	4a e0       	ldi	r20, 0x0A	; 10
  53c:	50 e0       	ldi	r21, 0x00	; 0
  53e:	60 e0       	ldi	r22, 0x00	; 0
  540:	70 e0       	ldi	r23, 0x00	; 0
@@ -706,7 +706,7 @@ void start_motor_reversed(void)
  556:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
  55a:	44 e6       	ldi	r20, 0x64	; 100
  55c:	50 e0       	ldi	r21, 0x00	; 0
- 55e:	61 e2       	ldi	r22, 0x21	; 33
+ 55e:	62 e3       	ldi	r22, 0x32	; 50
  560:	70 e0       	ldi	r23, 0x00	; 0
  562:	8d e5       	ldi	r24, 0x5D	; 93
  564:	90 e0       	ldi	r25, 0x00	; 0
@@ -720,21 +720,21 @@ void start_motor_reversed(void)
  576:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
  57a:	44 e1       	ldi	r20, 0x14	; 20
  57c:	50 e0       	ldi	r21, 0x00	; 0
- 57e:	6a e0       	ldi	r22, 0x0A	; 10
+ 57e:	62 e3       	ldi	r22, 0x32	; 50
  580:	70 e0       	ldi	r23, 0x00	; 0
  582:	8b e1       	ldi	r24, 0x1B	; 27
  584:	94 e0       	ldi	r25, 0x04	; 4
  586:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
  58a:	44 e1       	ldi	r20, 0x14	; 20
  58c:	50 e0       	ldi	r21, 0x00	; 0
- 58e:	60 e0       	ldi	r22, 0x00	; 0
+ 58e:	68 e2       	ldi	r22, 0x28	; 40
  590:	70 e0       	ldi	r23, 0x00	; 0
  592:	88 ed       	ldi	r24, 0xD8	; 216
  594:	90 e0       	ldi	r25, 0x00	; 0
  596:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
  59a:	44 e1       	ldi	r20, 0x14	; 20
  59c:	50 e0       	ldi	r21, 0x00	; 0
- 59e:	6a e0       	ldi	r22, 0x0A	; 10
+ 59e:	62 e3       	ldi	r22, 0x32	; 50
  5a0:	70 e0       	ldi	r23, 0x00	; 0
  5a2:	80 e6       	ldi	r24, 0x60	; 96
  5a4:	92 e0       	ldi	r25, 0x02	; 2
@@ -763,14 +763,14 @@ void start_motor_reversed(void)
  5d8:	09 f0       	breq	.+2      	; 0x5dc <wait_for_task+0x11c>
  5da:	57 c0       	rjmp	.+174    	; 0x68a <wait_for_task+0x1ca>
  5dc:	0e 94 ce 00 	call	0x19c	; 0x19c <scheduler_delete_all_tasks>
- 5e0:	44 e6       	ldi	r20, 0x64	; 100
+ 5e0:	4a e0       	ldi	r20, 0x0A	; 10
  5e2:	50 e0       	ldi	r21, 0x00	; 0
  5e4:	60 e0       	ldi	r22, 0x00	; 0
  5e6:	70 e0       	ldi	r23, 0x00	; 0
  5e8:	89 e5       	ldi	r24, 0x59	; 89
  5ea:	90 e0       	ldi	r25, 0x00	; 0
  5ec:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
- 5f0:	44 e6       	ldi	r20, 0x64	; 100
+ 5f0:	4a e0       	ldi	r20, 0x0A	; 10
  5f2:	50 e0       	ldi	r21, 0x00	; 0
  5f4:	60 e0       	ldi	r22, 0x00	; 0
  5f6:	70 e0       	ldi	r23, 0x00	; 0
@@ -786,7 +786,7 @@ void start_motor_reversed(void)
  60c:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
  610:	44 e6       	ldi	r20, 0x64	; 100
  612:	50 e0       	ldi	r21, 0x00	; 0
- 614:	61 e2       	ldi	r22, 0x21	; 33
+ 614:	62 e3       	ldi	r22, 0x32	; 50
  616:	70 e0       	ldi	r23, 0x00	; 0
  618:	8d e5       	ldi	r24, 0x5D	; 93
  61a:	90 e0       	ldi	r25, 0x00	; 0
@@ -800,21 +800,21 @@ void start_motor_reversed(void)
  62c:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
  630:	44 e1       	ldi	r20, 0x14	; 20
  632:	50 e0       	ldi	r21, 0x00	; 0
- 634:	6a e0       	ldi	r22, 0x0A	; 10
+ 634:	62 e3       	ldi	r22, 0x32	; 50
  636:	70 e0       	ldi	r23, 0x00	; 0
  638:	8b e1       	ldi	r24, 0x1B	; 27
  63a:	94 e0       	ldi	r25, 0x04	; 4
  63c:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
  640:	44 e1       	ldi	r20, 0x14	; 20
  642:	50 e0       	ldi	r21, 0x00	; 0
- 644:	60 e0       	ldi	r22, 0x00	; 0
+ 644:	6c e3       	ldi	r22, 0x3C	; 60
  646:	70 e0       	ldi	r23, 0x00	; 0
  648:	8a e0       	ldi	r24, 0x0A	; 10
  64a:	91 e0       	ldi	r25, 0x01	; 1
  64c:	0e 94 66 00 	call	0xcc	; 0xcc <scheduler_add_task>
  650:	44 e1       	ldi	r20, 0x14	; 20
  652:	50 e0       	ldi	r21, 0x00	; 0
- 654:	6a e0       	ldi	r22, 0x0A	; 10
+ 654:	62 e3       	ldi	r22, 0x32	; 50
  656:	70 e0       	ldi	r23, 0x00	; 0
  658:	80 e6       	ldi	r24, 0x60	; 96
  65a:	92 e0       	ldi	r25, 0x02	; 2

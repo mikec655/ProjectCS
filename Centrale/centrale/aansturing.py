@@ -11,7 +11,7 @@ class Aansturing():
         self.port = my_serial.port
         self.id = id
         self.name = self.get_name()
-        self.thread = threading.Thread()
+        self.thread = threading.Thread(name="CommandThread")
 
     def get_name(self):
         name = "Aansturing"
@@ -28,14 +28,14 @@ class Aansturing():
         return name
 
     def send_command(self, commands):
-        sleep(1)
+        sleep(0.5)
         if len(commands) == 0:
             return
         command = commands[0]
-        print(command)
+        print("COMMAND:" + command)
         self.serial.write(command.encode("UTF-8") + b"\n")
         response = self.serial.readline().decode("UTF-8").strip('\n')
-        print(response)
+        print("RESPONSE: " + response)
         if response == command:
             commands.remove(command)
             self.send_command(commands)
@@ -45,16 +45,19 @@ class Aansturing():
 
     def uitrollen(self):
         if not self.thread.isAlive():
-            threading.Thread(target=self.send_command, args=(["_STOP", "_DWN"],)).start()
+            self.thread = threading.Thread(target=self.send_command, args=(["_STOP", "_DWN"],))
+            self.thread.start()
 
 
     def inrollen(self):
         if not self.thread.isAlive():
-            threading.Thread(target=self.send_command, args=(["_STOP", "_UP"],)).start()
+            self.thread = threading.Thread(target=self.send_command, args=(["_STOP", "_UP"],))
+            self.thread.start()
 
     def stop(self):
         if not self.thread.isAlive():
-            threading.Thread(target=self.send_command, args=(["_STOP"],)).start()
+            self.thread = threading.Thread(target=self.send_command, args=(["_STOP"],))
+            self.thread.start()
    
     def disconnect(self):
         self.serial.close()

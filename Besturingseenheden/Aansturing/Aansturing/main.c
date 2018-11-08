@@ -466,28 +466,28 @@ void wait_for_task(void)
 	// uitrollen
 	else if (strcmp(task, "_DWN") == 0) {
 		scheduler_delete_all_tasks();
-		scheduler_add_task(turn_on_red_led, 0, 100);
-		scheduler_add_task(turn_off_green_led, 0, 100);
+		scheduler_add_task(turn_on_red_led, 0, 10);
+		scheduler_add_task(turn_off_green_led, 0, 10);
 		scheduler_add_task(turn_on_yellow_led, 0, 100);
-		scheduler_add_task(turn_off_yellow_led, 33, 100);
+		scheduler_add_task(turn_off_yellow_led, 50, 100);
 		scheduler_add_task(start_motor, 0, 0);
-		scheduler_add_task(refresh_distance, 10, 20);
-		scheduler_add_task(check_if_down, 0, 20);
-		scheduler_add_task(wait_for_task, 10, 20);
+		scheduler_add_task(refresh_distance, 50, 20);
+		scheduler_add_task(check_if_down, 40, 20);
+		scheduler_add_task(wait_for_task, 50, 20);
 		char message[8] = "_DWN\n";
 		transmit_string(message);
 	}
 	// inrollen
 	else if (strcmp(task, "_UP") == 0) {
 		scheduler_delete_all_tasks();
-		scheduler_add_task(turn_off_red_led, 0, 100);
-		scheduler_add_task(turn_on_green_led, 0, 100);
+		scheduler_add_task(turn_off_red_led, 0, 10);
+		scheduler_add_task(turn_on_green_led, 0, 10);
 		scheduler_add_task(turn_on_yellow_led, 0, 100);
-		scheduler_add_task(turn_off_yellow_led, 33, 100);
+		scheduler_add_task(turn_off_yellow_led, 50, 100);
 		scheduler_add_task(start_motor, 0, 0);
-		scheduler_add_task(refresh_distance, 10, 20);
-		scheduler_add_task(check_if_up, 0, 20);
-		scheduler_add_task(wait_for_task, 10, 20);
+		scheduler_add_task(refresh_distance, 50, 20);
+		scheduler_add_task(check_if_up, 60, 20);
+		scheduler_add_task(wait_for_task, 50, 20);
 		char message[8] = "_UP\n";
 		transmit_string(message);
 	} 
