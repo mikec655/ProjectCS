@@ -11,6 +11,7 @@ import settings_editor
 from loginscherm import Login
 from home import Home
 from properties import Properties
+from logfileframe import LogFileReader
 from linegraph import Graph
 import time
 import threading
@@ -83,6 +84,7 @@ class Application(Tk):
             self.loggedin = True
             self.frames['Login'].loggedin = ''
             self.frames['Properties'] = Properties(self.sensors, self.aansturingen, self.nb)
+            self.frames['LogFileReader'] = LogFileReader(self.nb)
             for sensor in self.sensors:
                 self.frames[sensor.name] = Graph(sensor, self.nb)
         elif self.frames['Login'].loggedin == 'U':

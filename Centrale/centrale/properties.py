@@ -1,9 +1,6 @@
 from tkinter import Entry, Label, Checkbutton, Button, StringVar, OptionMenu, ANCHOR, IntVar
 from myframe import MyFrame
 import settings_editor
-#voor mainloop 
-#self.frames['Properties'].update(self.aansturingen,self.sensors)
-
 
 class Properties(MyFrame):
 
@@ -160,4 +157,3 @@ class sensorblok():
     def deletewidgets(self):
         for widget in self.widget:
             widget.destroy()
-
