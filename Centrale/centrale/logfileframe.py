@@ -5,16 +5,23 @@ import tkinter.scrolledtext as tkst
 import os
 import os.path
 
+
 class LogFileReader(MyFrame):
-    def __init__(self, nb):
-        super().__init__(nb, "Log Files")
-        self.textBox = tkst.ScrolledText(master=self)
-        self.textBox.pack(padx=10, pady=10, fill=BOTH, expand=True)
-        self.textBox.config(state=DISABLED)
+    def __init__(self, nb): 
+
+#Hier wordt een textbox aangemaakt gezamenlijk met een knop. Hier worden ook direct de dimensies en positie meegegeven.
+
+        super().__init__(nb, "Log Files") 
+        self.textBox = tkst.ScrolledText(master=self) 
+        self.textBox.pack(padx=10, pady=10, fill=BOTH, expand=True) 
+        self.textBox.config(state=DISABLED) #
         openButton = Button(self, text="Open Log File", command=self.openLogFile)
         openButton.pack(padx=25, pady=5, side=RIGHT)
 
     def openLogFile(self):
+        
+        #hier wordt het pad naar de logfiles gedefinieerd. Hier staat ook hoe het logbestand geimporteerd wordt.
+
         path = os.path.dirname(os.path.abspath(__file__))
         path = askopenfilename(initialdir = path + "/../logs", title = "Select Log File", filetypes=[("Text files","*.txt")])
         with open(path, "r") as log_file:
