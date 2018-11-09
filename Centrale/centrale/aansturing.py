@@ -12,7 +12,7 @@ class Aansturing():
         self.id = id
         self.name = self.get_name()
         self.status = ""
-        self.thread = threading.Thread(name="CommandThread")
+        self.thread = threading.Thread(name=self.name + "CommandThread")
 
     def get_name(self):
         name = "Aansturing"
@@ -45,20 +45,20 @@ class Aansturing():
 
     def uitrollen(self):
         if not self.thread.isAlive():
-            self.thread = threading.Thread(target=self.send_command, args=(["_STOP", "_DWN"],))
+            self.thread = threading.Thread(name=self.name + "CommandThread", target=self.send_command, args=(["_STOP", "_DWN"],))
             self.thread.start()
             self.status = "uitgerold"
 
 
     def inrollen(self):
         if not self.thread.isAlive():
-            self.thread = threading.Thread(target=self.send_command, args=(["_STOP", "_UP"],))
+            self.thread = threading.Thread(name=self.name + "CommandThread", target=self.send_command, args=(["_STOP", "_UP"],))
             self.thread.start()
             self.status = "ingerold"
 
     def stop(self):
         if not self.thread.isAlive():
-            self.thread = threading.Thread(target=self.send_command, args=(["_STOP"],))
+            self.thread = threading.Thread(name=self.name + "CommandThread", target=self.send_command, args=(["_STOP"],))
             self.thread.start()
             self.status = "onderbroken"
    

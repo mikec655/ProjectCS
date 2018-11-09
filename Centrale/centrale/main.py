@@ -13,6 +13,7 @@ from properties import Properties
 from logfileframe import LogFileReader
 from linegraph import Graph
 import time
+from datetime import datetime
 import threading
 
 
@@ -47,25 +48,34 @@ class Application(Tk):
         self.applicationLoop()
 
     def stuur_aan(self):
-        print([sensor.current_value for sensor in self.sensors])
+        # print([sensor.current_value for sensor in self.sensors])
         settings = settings_editor.readSettings()
+        command = "inrollen"
         for aansturing in self.aansturingen:
-            for sensor in self.sensors:
-                if sensor.current_value == None:
-                    # Als de sensor nog geen waarde heeft doe niks
-                    continue
-                try:
-                    if sensor.current_value > settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id] \
-                    and not aansturing.status == "uitgerold":
-                        print("Actie: Uitrollen")
-                        aansturing.uitrollen()
-                    elif sensor.current_value < settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id] \
-                    and not aansturing.status == "ingerold": 
-                        print("Actie: Inrollen")
-                        aansturing.inrollen()
-                except KeyError:
-                    # Als de voor de sensor geen waarde staat opgeslagen, doe niks
-                    pass
+            current_date = datetime.now().strftime("%d-%m-%Y")
+            up_time = datetime.strptime(current_date + " " + settings['aansturingen'][aansturing.id]['up'], "%d-%m-%Y %H:%M")
+            down_time = datetime.strptime(current_date + " " + settings['aansturingen'][aansturing.id]['down'], "%d-%m-%Y %H:%M")
+            if datetime.now() < up_time and datetime.now() > down_time:
+                for sensor in self.sensors:
+                    if sensor.current_value == None:
+                        # Als de sensor nog geen waarde heeft doe niks
+                        command = ""
+                        continue
+                    try:
+                        value = settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id]
+                        if value[0] == ">":
+                            if sensor.current_value > float(value[1:]):
+                                command = "uitrollen"
+                        elif value[0] == "<":
+                            if sensor.current_value < float(value[1:]):
+                                command = "uitrollen"
+                    except KeyError:
+                        # Als voor de sensor geen waarde staat opgeslagen, doe niks
+                        pass
+            if command == "uitrollen" and aansturing.status != "uitgerold":
+                aansturing.uitrollen()
+            elif command == "inrollen" and aansturing.status != "ingerold":
+                aansturing.inrollen()
 
     def applicationLoop(self):
         while True:
@@ -138,8 +148,8 @@ class Application(Tk):
                         del self.frames[sensor.name]
                     except KeyError:
                         pass
-                sensor.stop()
-                self.sensors.remove(sensor)
+                    sensor.stop()
+                    self.sensors.remove(sensor)
             for aansturing in self.aansturingen:
                 # Als aansturing niet meer aangesloten staat verwijder aansturing
                 if aansturing.port not in [port.device for port in available_ports]:
