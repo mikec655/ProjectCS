@@ -11,6 +11,7 @@ import threading
 
 class Graph(MyFrame):
     def __init__(self, sensor, master=None):
+        #hier wordt het canvas voor de grafiek aangemaakt
         super().__init__(master, sensor.name)
         self.sensor = sensor
         self.log_file_path = self.sensor.log_file_path      #zet de variabele voor het pad van de logfile
@@ -25,6 +26,7 @@ class Graph(MyFrame):
         threading.Thread(target=self.redraw_animation, args=(1,), name=sensor.name + "GraphThread").start()  
 
     def redraw(self, i):
+        # hier wordt de grafiek gemaakt en het logfile ingelezen.
         self.ax.clear()
         self.ax.set_title(self.sensor.name) #geeft de titel mee voor de grafiek
         self.ax.set_xlabel('Tijd')  #geeft de x-as label mee
@@ -51,14 +53,17 @@ class Graph(MyFrame):
         self.ax.plot(xs, ys, color='blue')        
     
     def redraw_animation(self, i):
-        ani = animation.FuncAnimation(self.fig, self.redraw, interval=5000) #zorgt voor een interval
+        #zorgt voor een interval
+        ani = animation.FuncAnimation(self.fig, self.redraw, interval=5000)
         while self.alive:
-            sleep(4)    #zorgt voor een interval
+            sleep(4)
 
     def stop(self):
-        self.alive = False  #zodra het programma niet meer nodig is , stopt de thread met draaien
+        #zodra het programma niet meer nodig is , stopt de thread met draaien
+        self.alive = False  
 
     def deleteFrame(self):
+        #hier wordt het frame verwijdert
         super().deleteFrame()
         self.stop()
         

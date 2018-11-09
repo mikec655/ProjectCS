@@ -4,6 +4,7 @@ from myframe import MyFrame
 
 class Home(MyFrame):
     def __init__(self, nb, aansturingen):
+        #hier wordt het homeframe gemaakt met de verschillende functionele knoppen voor het startscherm
         super().__init__(nb, "Home")
         self.aansturingen = aansturingen.copy()
         self.widgets = []
@@ -23,6 +24,7 @@ class Home(MyFrame):
         self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER)
 
     def update(self, aansturingen):
+        #wanneer er nieuwe aansturingen worden aangesloten wordt hier het frame geupdate.
         if aansturingen == self.aansturingen:
             return
         for widget in self.widgets:
@@ -43,13 +45,16 @@ class Home(MyFrame):
         
 
     def uitrollen(self):
+        #definiteert de aansturing voor het uitrollen.
         for aansturing in self.aansturingen:
             aansturing.uitrollen()
 
     def inrollen(self):
+        #definiteert de aansturing voor het inrollen.
         for aansturing in self.aansturingen:
             aansturing.inrollen()
 
     def stop(self):
+        #definiteert de aansturing voor het stoppen.
         for aansturing in self.aansturingen:
             aansturing.stop()
