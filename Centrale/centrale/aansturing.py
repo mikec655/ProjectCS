@@ -23,6 +23,8 @@ class Aansturing():
             name += str(sensor_number)
             settings["aansturingen"][self.id] = {}
             settings["aansturingen"][self.id]["name"] = name
+            settings["aansturingen"][self.id]["up"] = ""
+            settings["aansturingen"][self.id]["down"] = ""
             settings["aansturingen"][self.id]["sensor_value"] = {}
             settings_editor.writeSettings(settings)
         return name

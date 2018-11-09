@@ -2,6 +2,8 @@
     "aansturingen": {
         "55731323136351A04150": {
             "name": "Aansturing1",
+            "up": "",
+            "down": "",
             "sensor_value": {}
         }
     },
