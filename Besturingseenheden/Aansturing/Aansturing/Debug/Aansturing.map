@@ -25,6 +25,10 @@ Discarded input sections
  .bss           0x00000000        0x0 main.o
  .text.scheduler_start
                 0x00000000        0x4 main.o
+ .text.start_timer2
+                0x00000000       0x10 main.o
+ .text.start_motor_reversed
+                0x00000000        0x6 main.o
  .rodata.strobe
                 0x00000000        0x1 main.o
  .rodata.clock  0x00000000        0x1 main.o
@@ -219,7 +223,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x786
+.text           0x00000000      0x8d4
  *(.vectors)
  .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -290,7 +294,6 @@ END GROUP
                 0x000000a2                __vector_13
                 0x000000a2                __vector_17
                 0x000000a2                __vector_19
-                0x000000a2                __vector_7
                 0x000000a2                __vector_5
                 0x000000a2                __vector_4
                 0x000000a2                __vector_9
@@ -324,95 +327,98 @@ END GROUP
  .text.start_motor
                 0x000000be        0x6 main.o
                 0x000000be                start_motor
- .text.start_motor_reversed
-                0x000000c4        0x6 main.o
-                0x000000c4                start_motor_reversed
  .text.stop_motor
-                0x000000ca        0x8 main.o
-                0x000000ca                stop_motor
+                0x000000c4        0x8 main.o
+                0x000000c4                stop_motor
  .text.scheduler_add_task
-                0x000000d2       0x6a main.o
-                0x000000d2                scheduler_add_task
+                0x000000cc       0x6a main.o
+                0x000000cc                scheduler_add_task
  .text.scheduler_delete_task
-                0x0000013c       0x1e main.o
-                0x0000013c                scheduler_delete_task
+                0x00000136       0x1e main.o
+                0x00000136                scheduler_delete_task
  .text.scheduler_dispatch_tasks
-                0x0000015a       0x48 main.o
-                0x0000015a                scheduler_dispatch_tasks
+                0x00000154       0x48 main.o
+                0x00000154                scheduler_dispatch_tasks
  .text.scheduler_delete_all_tasks
-                0x000001a2       0x14 main.o
-                0x000001a2                scheduler_delete_all_tasks
+                0x0000019c       0x14 main.o
+                0x0000019c                scheduler_delete_all_tasks
  .text.check_if_down
-                0x000001b6       0x64 main.o
-                0x000001b6                check_if_down
+                0x000001b0       0x64 main.o
+                0x000001b0                check_if_down
  .text.check_if_up
-                0x0000021a       0x64 main.o
-                0x0000021a                check_if_up
+                0x00000214       0x64 main.o
+                0x00000214                check_if_up
  .text.scheduler_init_timer1
-                0x0000027e       0x2c main.o
-                0x0000027e                scheduler_init_timer1
+                0x00000278       0x2c main.o
+                0x00000278                scheduler_init_timer1
  .text.__vector_11
-                0x000002aa       0x70 main.o
-                0x000002aa                __vector_11
+                0x000002a4       0x70 main.o
+                0x000002a4                __vector_11
  .text.init_ports
-                0x0000031a       0x12 main.o
-                0x0000031a                init_ports
+                0x00000314       0x12 main.o
+                0x00000314                init_ports
  .text.init_ext_int1
-                0x0000032c        0xc main.o
-                0x0000032c                init_ext_int1
+                0x00000326        0xc main.o
+                0x00000326                init_ext_int1
  .text.init_timer0
-                0x00000338        0xc main.o
-                0x00000338                init_timer0
+                0x00000332        0xc main.o
+                0x00000332                init_timer0
+ .text.init_timer2
+                0x0000033e       0x26 main.o
+                0x0000033e                init_timer2
  .text.init_uart
-                0x00000344       0x1c main.o
-                0x00000344                init_uart
+                0x00000364       0x1c main.o
+                0x00000364                init_uart
  .text.transmit
-                0x00000360       0x10 main.o
-                0x00000360                transmit
+                0x00000380       0x10 main.o
+                0x00000380                transmit
  .text.transmit_string
-                0x00000370       0x3a main.o
-                0x00000370                transmit_string
- .text.receive  0x000003aa       0x10 main.o
-                0x000003aa                receive
+                0x00000390       0x3a main.o
+                0x00000390                transmit_string
+ .text.receive  0x000003ca       0x2a main.o
+                0x000003ca                receive
  .text.receive_string
-                0x000003ba       0x30 main.o
-                0x000003ba                receive_string
+                0x000003f4       0x30 main.o
+                0x000003f4                receive_string
  .text.init_connection
-                0x000003ea       0x9c main.o
-                0x000003ea                init_connection
+                0x00000424       0x9c main.o
+                0x00000424                init_connection
  .text.wait_for_task
-                0x00000486      0x170 main.o
-                0x00000486                wait_for_task
+                0x000004c0      0x262 main.o
+                0x000004c0                wait_for_task
  .text.__vector_16
-                0x000005f6       0x2e main.o
-                0x000005f6                __vector_16
+                0x00000722       0x2e main.o
+                0x00000722                __vector_16
+ .text.__vector_7
+                0x00000750       0x1e main.o
+                0x00000750                __vector_7
  .text.start_timer0
-                0x00000624       0x10 main.o
-                0x00000624                start_timer0
+                0x0000076e       0x10 main.o
+                0x0000076e                start_timer0
  .text.__vector_2
-                0x00000634       0x64 main.o
-                0x00000634                __vector_2
+                0x0000077e       0x64 main.o
+                0x0000077e                __vector_2
  .text.send_trigger
-                0x00000698       0x2a main.o
-                0x00000698                send_trigger
- .text.calc_cm  0x000006c2       0x2a main.o
-                0x000006c2                calc_cm
+                0x000007e2       0x2a main.o
+                0x000007e2                send_trigger
+ .text.calc_cm  0x0000080c       0x2a main.o
+                0x0000080c                calc_cm
  .text.refresh_distance
-                0x000006ec       0x1a main.o
-                0x000006ec                refresh_distance
- .text.main     0x00000706       0x4c main.o
-                0x00000706                main
+                0x00000836       0x1a main.o
+                0x00000836                refresh_distance
+ .text.main     0x00000850       0x50 main.o
+                0x00000850                main
  .text.libgcc.mul
-                0x00000752       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
-                0x00000752                __umulhisi3
+                0x000008a0       0x1e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_umulhisi3.o)
+                0x000008a0                __umulhisi3
  .text.avr-libc
-                0x00000770       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcmp.o)
-                0x00000770                strcmp
-                0x00000782                . = ALIGN (0x2)
+                0x000008be       0x12 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(strcmp.o)
+                0x000008be                strcmp
+                0x000008d0                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000782        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000782                _exit
-                0x00000782                exit
+ .fini9         0x000008d0        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x000008d0                _exit
+                0x000008d0                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -431,11 +437,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000782        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x000008d0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000786                _etext = .
+                0x000008d4                _etext = .
 
-.data           0x00800100       0x2a load address 0x00000786
+.data           0x00800100       0x50 load address 0x000008d4
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -447,38 +453,41 @@ END GROUP
                 0x00800102                MAX_UITROL
  *(.gnu.linkonce.d*)
  *(.rodata)
- .rodata        0x00800104       0x10 main.o
+ .rodata        0x00800104       0x30 main.o
  *(.rodata*)
  .rodata.str1.1
-                0x00800114       0x15 main.o
+                0x00800134       0x1b main.o
  *(.gnu.linkonce.r*)
-                0x0080012a                . = ALIGN (0x2)
- *fill*         0x00800129        0x1 
-                0x0080012a                _edata = .
-                0x0080012a                PROVIDE (__data_end, .)
+                0x00800150                . = ALIGN (0x2)
+ *fill*         0x0080014f        0x1 
+                0x00800150                _edata = .
+                0x00800150                PROVIDE (__data_end, .)
 
-.bss            0x0080012a       0x4b
-                0x0080012a                PROVIDE (__bss_start, .)
+.bss            0x00800150       0x4c
+                0x00800150                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.distance  0x0080012a        0x2 main.o
-                0x0080012a                distance
- .bss.echo      0x0080012c        0x1 main.o
-                0x0080012c                echo
- .bss.counter   0x0080012d        0x2 main.o
-                0x0080012d                counter
+ .bss.receiveInterrupt
+                0x00800150        0x1 main.o
+                0x00800150                receiveInterrupt
+ .bss.distance  0x00800151        0x2 main.o
+                0x00800151                distance
+ .bss.echo      0x00800153        0x1 main.o
+                0x00800153                echo
+ .bss.counter   0x00800154        0x2 main.o
+                0x00800154                counter
  *(COMMON)
- COMMON         0x0080012f       0x46 main.o
-                0x0080012f                scheduler_tasks
-                0x00800175                PROVIDE (__bss_end, .)
-                0x00000786                __data_load_start = LOADADDR (.data)
-                0x000007b0                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00800156       0x46 main.o
+                0x00800156                scheduler_tasks
+                0x0080019c                PROVIDE (__bss_end, .)
+                0x000008d4                __data_load_start = LOADADDR (.data)
+                0x00000924                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800175        0x0
+.noinit         0x0080019c        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800175                _end = .
+                0x0080019c                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -543,42 +552,42 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x130
+.debug_aranges  0x00000000      0x148
  *(.debug_aranges)
  .debug_aranges
-                0x00000000      0x130 main.o
+                0x00000000      0x148 main.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x14d0
+.debug_info     0x00000000     0x173f
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4      0xedc main.o
+ .debug_info    0x000005f4     0x114b main.o
 
 .debug_abbrev   0x00000000      0x911
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2      0x36f main.o
 
-.debug_line     0x00000000      0x8e1
+.debug_line     0x00000000      0xa18
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x133 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000133      0x7ae main.o
+ .debug_line    0x00000133      0x8e5 main.o
 
-.debug_frame    0x00000000      0x354
+.debug_frame    0x00000000      0x394
  *(.debug_frame)
- .debug_frame   0x00000000      0x354 main.o
+ .debug_frame   0x00000000      0x394 main.o
 
-.debug_str      0x00000000      0x66d
+.debug_str      0x00000000      0x6b0
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x465 main.o
-                                0x4b1 (size before relaxing)
+ .debug_str     0x00000208      0x4a8 main.o
+                                0x4fc (size before relaxing)
 
-.debug_loc      0x00000000      0x669
+.debug_loc      0x00000000      0x6c4
  *(.debug_loc)
- .debug_loc     0x00000000      0x669 main.o
+ .debug_loc     0x00000000      0x6c4 main.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -598,9 +607,9 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x120
+.debug_ranges   0x00000000      0x138
  *(.debug_ranges)
- .debug_ranges  0x00000000      0x120 main.o
+ .debug_ranges  0x00000000      0x138 main.o
 
 .debug_macro
  *(.debug_macro)
