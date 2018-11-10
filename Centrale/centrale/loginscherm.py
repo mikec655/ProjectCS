@@ -5,24 +5,21 @@ from PIL import Image, ImageTk
 
 class Login(MyFrame):
 
-
     def __init__(self, nb):
         super().__init__(nb, "Login")
         self.creds = 'Centrale/centrale/tempfile.temp'
-        #'C:\\Users\\gerben\\Desktop\\school\\jaar 2\\Per 1\\project\\ProjectCS\\Centrale\\centrale\\tempfile.temp'
-
         self.loggedin = ""
         self.loggedout = ""
-
+        # Here opens a password file.
         with open(self.creds, 'w+') as f:
             f.write('Admin')
             f.write('\n')
             f.write('Admin1') 
-       
+        # Define style for tabs
         style = ttk.Style()
         style.configure('My.TFrame', background='white')
         self.subFrame = ttk.Frame(self, style='My.TFrame')
-
+        #try to open a image
         try:  
             self.path = Image.open("Centrale/centrale/zeng_logo.png")
         except IOError: 
@@ -32,7 +29,7 @@ class Login(MyFrame):
         Logo = Label(self.subFrame, background="white", image=Photo)
         Logo.image = Photo
         Logo.grid(columnspan=2, pady=15) 
-
+        #Set labels and entry's
         self.instruction = Label(self.subFrame, fg= 'black',bg='white', text='Please login: ')
         self.instruction.grid(row=2, sticky=W)
 
@@ -57,6 +54,7 @@ class Login(MyFrame):
         self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER) 
 
     def CheckLogin(self):
+        # check of the username and password is correct
         with open(self.creds) as f:
             data = f.readlines()
             username = data[0].rstrip()
@@ -82,6 +80,7 @@ class Login(MyFrame):
             self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER) 
 
     def logout(self):
+        # logout and go back to normal.
         self.loggedin = "U"
         self.instruction = Label(self.subFrame, fg= 'black',bg='white', text='Please login: ')
         self.instruction.grid(row=2, sticky=W)
