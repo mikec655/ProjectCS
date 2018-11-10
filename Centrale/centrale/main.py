@@ -154,5 +154,5 @@ class Application(Tk):
             self.other_com_ports.append(comport)
 
 if __name__ == '__main__':
-#>>>>>>> home_frame
     app = Application()
+

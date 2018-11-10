@@ -24,6 +24,7 @@ class Aansturing():
             settings["aansturingen"][self.id] = {}
             settings["aansturingen"][self.id]["name"] = name
             settings["aansturingen"][self.id]["sensor_value"] = {}
+            
             settings_editor.writeSettings(settings)
         return name
 

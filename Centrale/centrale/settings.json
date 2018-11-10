@@ -2,11 +2,15 @@
     "aansturingen": {
         "55731323136351A04150": {
             "name": "Aansturing1",
+            "up": "",
+            "down": "",
             "sensor_value": {}
         },
         "75435353138351F08050": {
-            "name": "Aansturing2",
-            "sensor_value": {}
+            "name": "joo nieuwe naam",
+            "sensor_value": {},
+            "down": "12:23",
+            "up": "12:44"
         }
     },
     "sensor_name": {
