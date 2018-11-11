@@ -95,7 +95,6 @@ class Centrale(Tk):
                                     command = "uitrollen"
                         except KeyError:
                             # Als voor de sensor geen waarde staat opgeslagen, doe niks
-                            print("X")
                             pass
                 else:
                     command = ""

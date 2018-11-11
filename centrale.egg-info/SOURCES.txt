@@ -1,6 +1,0 @@
-README.md
-centrale.egg-info/PKG-INFO
-centrale.egg-info/SOURCES.txt
-centrale.egg-info/dependency_links.txt
-centrale.egg-info/requires.txt
-centrale.egg-info/top_level.txt
