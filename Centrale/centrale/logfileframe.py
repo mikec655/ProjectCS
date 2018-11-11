@@ -8,9 +8,7 @@ import os.path
 
 class LogFileReader(MyFrame):
     def __init__(self, nb): 
-
-#Hier wordt een textbox aangemaakt gezamenlijk met een knop. Hier worden ook direct de dimensies en positie meegegeven.
-
+        # Hier wordt een textbox aangemaakt gezamenlijk met een knop.
         super().__init__(nb, "Log Files") 
         self.textBox = tkst.ScrolledText(master=self) 
         self.textBox.pack(padx=10, pady=10, fill=BOTH, expand=True) 
@@ -19,9 +17,7 @@ class LogFileReader(MyFrame):
         openButton.pack(padx=25, pady=5, side=RIGHT)
 
     def openLogFile(self):
-        
-        #hier wordt het pad naar de logfiles gedefinieerd. Hier staat ook hoe het logbestand geimporteerd wordt.
-
+        # Open van een log bestand die vervolgens wordt ingelezen in een textbox
         path = os.path.dirname(os.path.abspath(__file__))
         path = askopenfilename(initialdir = path + "/../logs", title = "Select Log File", filetypes=[("Text files","*.txt")])
         with open(path, "r") as log_file:
