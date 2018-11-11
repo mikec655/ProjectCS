@@ -73,6 +73,8 @@ class Application(Tk):
                     self.alive = False
                     for sensor in self.sensors:
                         sensor.stop()
+                    for aansturing in self.aansturingen:
+                        aansturing.disconnect()
                     for frame in self.frames.keys():
                         if "sensor" in frame:
                             self.frames[frame].stop() 

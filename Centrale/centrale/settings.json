@@ -3,18 +3,13 @@
         "55731323136351A04150": {
             "name": "Aansturing1",
             "up": "",
-            "down": "",
-            "sensor_value": {}
-        },
-        "75435353138351F08050": {
-            "name": "Aansturing2",
-            "up": "",
-            "down": "",
+            "down": "18:00",
+            "timeout": "18:00",
             "sensor_value": {}
         }
     },
     "sensor_name": {
-        "5": {
+        "6": {
             "name": "Lichtsensor1",
             "type": "_LGHT"
         }
