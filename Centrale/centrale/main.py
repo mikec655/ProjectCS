@@ -6,7 +6,6 @@ from serial.tools import list_ports
 from aansturing import Aansturing
 from time import sleep
 from sensors import Sensor, SerialException, list_ports
-
 import settings_editor
 from loginscherm import Login
 from home import Home
@@ -14,6 +13,7 @@ from properties import Properties
 from logfileframe import LogFileReader
 from linegraph import Graph
 import time
+from datetime import datetime
 import threading
 
 
@@ -47,10 +47,52 @@ class Application(Tk):
         
         self.applicationLoop()
 
+    def stuur_aan(self):
+        # print([sensor.current_value for sensor in self.sensors])
+        settings = settings_editor.readSettings()
+        command = "inrollen"
+        for aansturing in self.aansturingen:
+            current_date = datetime.now().strftime("%d-%m-%Y")
+            time = ""
+            if settings['aansturingen'][aansturing.id]['up'] != "":
+                time = settings['aansturingen'][aansturing.id]['up']
+            else:
+                time = "00:00"
+            up_time = datetime.strptime(current_date + " " + time, "%d-%m-%Y %H:%M")
+            time = ""
+            if settings['aansturingen'][aansturing.id]['down'] != "":
+                time = settings['aansturingen'][aansturing.id]['down']
+            else:
+                time = "23:59"
+            if settings['aansturingen'][aansturing.id]['down'] != "":
+                down_time = datetime.strptime(current_date + " " + settings['aansturingen'][aansturing.id]['down'], "%d-%m-%Y %H:%M")
+            if datetime.now() < up_time and datetime.now() > down_time:
+                for sensor in self.sensors:
+                    if sensor.current_value == None:
+                        # Als de sensor nog geen waarde heeft doe niks
+                        command = ""
+                        continue
+                    try:
+                        value = settings['aansturingen'][aansturing.id]['sensor_value'][sensor.id]
+                        if value[0] == ">":
+                            if sensor.current_value > float(value[1:]):
+                                command = "uitrollen"
+                        elif value[0] == "<":
+                            if sensor.current_value < float(value[1:]):
+                                command = "uitrollen"
+                    except KeyError:
+                        # Als voor de sensor geen waarde staat opgeslagen, doe niks
+                        pass
+            if command == "uitrollen" and aansturing.status != "uitgerold":
+                aansturing.uitrollen()
+            elif command == "inrollen" and aansturing.status != "ingerold":
+                aansturing.inrollen()
+
     def applicationLoop(self):
         while True:
             try:
                 self.update()
+                self.stuur_aan()
                 try:
                     self.frames['Properties'].update(self.aansturingen, self.sensors)
                 except KeyError:
@@ -114,7 +156,11 @@ class Application(Tk):
             for sensor in self.sensors:
                 # Als sensor niet meer aangesloten staat verwijder van sensor
                 if sensor.port not in [port.device for port in available_ports]:
-                    self.framesToDelete.append(sensor.name)
+                    try:
+                        self.frames[sensor.name].deleteFrame()
+                        del self.frames[sensor.name]
+                    except KeyError:
+                        pass
                     sensor.stop()
                     self.sensors.remove(sensor)
             for aansturing in self.aansturingen:
@@ -124,7 +170,7 @@ class Application(Tk):
             for other_port in self.other_com_ports:
                 if other_port not in [port.device for port in available_ports]:
                     self.other_com_ports.remove(other_port)
-                
+      
     def init_device(self, comport, id):
         sleep(1)
         try:
@@ -156,5 +202,4 @@ class Application(Tk):
             self.other_com_ports.append(comport)
 
 if __name__ == '__main__':
-#>>>>>>> home_frame
     app = Application()

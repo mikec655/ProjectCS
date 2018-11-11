@@ -8,7 +8,6 @@ class Home(MyFrame):
         super().__init__(nb, "Home")
         self.aansturingen = aansturingen.copy()
         self.widgets = []
-        self.optionMenuLookUp = {}
         style = ttk.Style()
         style.configure('My.TFrame', background='white')
         self.subFrame = ttk.Frame(self, style='My.TFrame')
@@ -61,12 +60,11 @@ class Home(MyFrame):
             optionLabel.pack(side=LEFT) 
             options = ["over 1 uur", "over 2 uur", "over 3 uur", "over 4 uur", "einde dag"]
             option.set(options[0])
-            #optionMenuLookUp[aansturing.id] = option
             optionMenu = OptionMenu(optionSubFrame, option, *options)
             optionMenu.config(width=10)
             optionMenu.pack(side=RIGHT)
             optionSubFrame.pack(fill=X)
-            auto_button = Button(subFrame, text="Automatisch", command=aansturing.setTimeout)
+            auto_button = Button(subFrame, text="Automatisch", command=lambda: aansturing.setTimeout('auto'))
             auto_button.pack(fill=X)
             self.widgets.append(subFrame)
             subFrame.pack(padx=5, side=LEFT)
@@ -89,4 +87,4 @@ class Home(MyFrame):
 
     def automatisch(self):
         for aansturing in self.aansturingen:
-            aansturing.setTimeout("")
+            aansturing.setTimeout("auto")

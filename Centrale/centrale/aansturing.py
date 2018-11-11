@@ -11,7 +11,8 @@ class Aansturing():
         self.port = my_serial.port
         self.id = id
         self.name = self.get_name()
-        self.thread = threading.Thread(name="CommandThread")
+        self.status = ""
+        self.thread = threading.Thread(name=self.name + "CommandThread")
 
     def get_name(self):
         name = "Aansturing"
@@ -35,10 +36,8 @@ class Aansturing():
         if len(commands) == 0:
             return
         command = commands[0]
-        print("COMMAND:" + command)
         self.serial.write(command.encode("UTF-8") + b"\n")
         response = self.serial.readline().decode("UTF-8").strip('\n')
-        print("RESPONSE: " + response)
         if response == command:
             commands.remove(command)
             self.send_command(commands)
@@ -47,30 +46,32 @@ class Aansturing():
 
     def uitrollen(self, timeout=""):
         if not self.thread.isAlive():
-            self.thread = threading.Thread(target=self.send_command, args=(["_STOP", "_DWN"],))
+            self.thread = threading.Thread(name=self.name + "CommandThread", target=self.send_command, args=(["_STOP", "_DWN"],))
             self.thread.start()
             self.setTimeout(timeout)
-
+            self.status = "uitgerold"
 
     def inrollen(self, timeout=""):
         if not self.thread.isAlive():
-            self.thread = threading.Thread(target=self.send_command, args=(["_STOP", "_UP"],))
+            self.thread = threading.Thread(name=self.name + "CommandThread", target=self.send_command, args=(["_STOP", "_UP"],))
             self.thread.start()
             self.setTimeout(timeout)
+            self.status = "ingerold"
 
     def stop(self):
         if not self.thread.isAlive():
-            self.thread = threading.Thread(target=self.send_command, args=(["_STOP"],))
+            self.thread = threading.Thread(name=self.name + "CommandThread", target=self.send_command, args=(["_STOP"],))
             self.thread.start()
+            self.status = "onderbroken"
 
     def setTimeout(self, timeout=""):
         settings = settings_editor.readSettings()
-        if timeout == "":
+        if timeout == "auto":
             settings["aansturingen"][self.id]["timeout"] = ""
         elif timeout == "einde dag":
             time = settings["aansturingen"][self.id]["down"]
             settings["aansturingen"][self.id]["timeout"] = time
-        else:
+        elif timeout != "":
             hours = int(timeout[5])
             time = datetime.now() + timedelta(hours=hours)
             settings["aansturingen"][self.id]["timeout"] = datetime.strftime(time, "%H:%M")
