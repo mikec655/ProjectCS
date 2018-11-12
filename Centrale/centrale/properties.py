@@ -130,8 +130,6 @@ class Properties(MyFrame):
     def savesettings(self):
         settings = settings_editor.readSettings()
         
-        for sensor in self.knoplijst:
-            print(str(sensor.functiewaardeblok.get())+str(float(self.knoplijst[0].sensorwaardeblok.get())))
         
         for A in self.aansturingen:
             if str(self.waardeoption.get()) == A.name: #zoeken vanaf aansturing naam > aansturing id.
@@ -151,19 +149,22 @@ class Properties(MyFrame):
 
         
         #error boxen indien niet voldoende modules aangesloten zijn.
-        if not self.aansturing_id and len(self.knoplijst)== 0:
-            messagebox.showinfo("error", "Sluit een motormodule en sensormodule aan.")
-        elif len(self.knoplijst)== 0 and self.aansturing_id:
-            messagebox.showinfo("error", "Sluit een sensormodule aan.")
-        else:
-            messagebox.showinfo("error", "Sluit een motormodule aan.")
+        # if not self.aansturing_id and len(self.knoplijst)== 0:
+        #     messagebox.showinfo("error", "Sluit een motormodule en sensormodule aan.")
+        # elif len(self.knoplijst)== 0 and self.aansturing_id:
+        #     messagebox.showinfo("error", "Sluit een sensormodule aan.")
+        # else:
+        #     messagebox.showinfo("error", "Sluit een motormodule aan.")
         
         #schrijf en delete .json file entrys opbasis van aangevinkte checkbox en volledig ingevuld.
         for x in self.knoplijst:
-                if x.checkboxwaarde.get() == 1 and len(x.functiewaardeblok.get()== 1):
-                    settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id] = str(sensor.functiewaardeblok.get())+str(float(x.sensorwaardeblok.get()))
+                if x.checkboxwaarde.get() == 1 and len(x.functiewaardeblok.get()) > 0:
+                    settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id] = str(x.functiewaardeblok.get())+str(float(x.sensorwaardeblok.get()))
                 else:
-                    del settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id]
+                    try:
+                        del settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id]
+                    except KeyError:
+                        pass
     
         settings_editor.writeSettings(settings) 
 

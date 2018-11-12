@@ -484,7 +484,7 @@ void wait_for_task(void)
 		scheduler_add_task(turn_on_green_led, 0, 10);
 		scheduler_add_task(turn_on_yellow_led, 0, 100);
 		scheduler_add_task(turn_off_yellow_led, 50, 100);
-		scheduler_add_task(start_motor, 0, 0);
+		scheduler_add_task(start_motor_reversed, 0, 0);
 		scheduler_add_task(refresh_distance, 50, 20);
 		scheduler_add_task(check_if_up, 60, 20);
 		scheduler_add_task(wait_for_task, 50, 20);
@@ -495,6 +495,7 @@ void wait_for_task(void)
 		scheduler_delete_all_tasks();
 		scheduler_add_task(turn_off_yellow_led, 0, 0);
 		scheduler_add_task(refresh_distance, 0, 20);
+		scheduler_add_task(stop_motor, 0, 0);
 		scheduler_add_task(wait_for_task, 10, 20);
 		char message[8] = "_STOP\n";
 		transmit_string(message);
