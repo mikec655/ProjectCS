@@ -37,7 +37,7 @@ class Properties(MyFrame):
         onzichtbaar = Label(self, text="", background='white')
         onzichtbaar.grid(row = 3, column = 0, columnspan = 1,pady = 2)
 
-        autotitel = Label(self, text="Autmatische besturing:", background='white')
+        autotitel = Label(self, text="Automatische besturing:", background='white')
         autotitel.grid(row = 5, column = 0, columnspan = 1,pady = 2)
         autotitel.config(font=("Times new roman", 12, "bold"))
         
@@ -59,15 +59,15 @@ class Properties(MyFrame):
         timerformatlabel = Label(self, text="Format: hh:mm ", background='white')
         timerformatlabel.grid(row = 8, column = 12, columnspan = 1,  sticky='w')
 
-        self.sensortitel = Label(self, text= 'Grenswaarde:', background='white')
+        self.sensortitel = Label(self, text= 'Uitrollen als: ', background='white')
         self.sensortitel.grid(row = 0, column = 80, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel.config(font=("Times new roman", 14))
         
-        self.functietitel = Label(self, text= '</>:', background='white')
-        self.functietitel.grid(row = 0, column = 98, columnspan = 1, padx = 1, pady = 5)
-        self.functietitel.config(font=("Times new roman", 14, "bold"))
+        # self.functietitel = Label(self, text= '</>:', background='white')
+        # self.functietitel.grid(row = 0, column = 98, columnspan = 1, padx = 1, pady = 5)
+        # self.functietitel.config(font=("Times new roman", 14, "bold"))
         
-        self.sensortitel2 = Label(self, text= 'Gebruiken:', background='white')
+        self.sensortitel2 = Label(self, text= 'Aan/Uit', background='white')
         self.sensortitel2.grid(row = 0, column = 120, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel2.config(font=("Times new roman", 14))
 
@@ -158,8 +158,8 @@ class Properties(MyFrame):
         
         #schrijf en delete .json file entrys opbasis van aangevinkte checkbox en volledig ingevuld.
         for x in self.knoplijst:
-                if x.checkboxwaarde.get() == 1 and len(x.functiewaardeblok.get()) > 0:
-                    settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id] = str(x.functiewaardeblok.get())+str(float(x.sensorwaardeblok.get()))
+                if x.checkboxwaarde.get() == 1 and len(x.sensorwaardeblok.get()) > 0:
+                    settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id] = x.functiewaardeblokwaarde + str(float(x.sensorwaardeblok.get()))
                 else:
                     try:
                         del settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id]
@@ -195,24 +195,30 @@ class sensorblok():
         self.sensor = sensor
         self.sensorwaarde =''
         self.checkboxwaarde = IntVar()
+        self.functiewaardeblokwaarde = ">"
      
         self.sensortitel = ''
         self.sensortitel = Label( self.frame, text= str(self.sensor.name), background='white')
         self.sensortitel.grid(row = self.variabelevoorrijenaanpassen, column = 60, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel.config(font=("Times new roman", 14))
 
+        self.functiewaardeblok = Button(self.frame, text="hoger is als", command=self.setfunctiewaardeblok)
+        self.functiewaardeblok.grid(row=self.variabelevoorrijenaanpassen, column= 80, padx = 1, pady = 1)
+        #self.functiewaardeblok.config(width = 1)
+        self.vcmd = (self.functiewaardeblok.register(self.onValidate),'%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+
         self.sensorwaardeblok = Entry( self.frame, validate="key")
-        self.sensorwaardeblok.grid(row=self.variabelevoorrijenaanpassen, column= 80, columnspan = 1, padx = 1, pady = 1)
+        self.sensorwaardeblok.grid(row=self.variabelevoorrijenaanpassen, column=98, columnspan = 1, padx = 1, pady = 1)
         self.sensorwaardeblok['validatecommand'] = (self.sensorwaardeblok.register(self.testVal),'%P','%d')
         self.sensorwaardeblok.bind('<Return>', lambda _: self.setsensorwaarde())
 
         vcmd = (self.frame.register(self.onValidate),
                     '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
 
-        self.functiewaardeblok = Entry(self.frame, validate="key", validatecommand=vcmd)
-        self.functiewaardeblok.grid(row=self.variabelevoorrijenaanpassen, column= 98, columnspan = 1, padx = 1, pady = 1)
-        self.functiewaardeblok.config(width = 1)
-        self.vcmd = (self.functiewaardeblok.register(self.onValidate),'%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
+        # self.functiewaardeblok = Entry(self.frame, validate="key", validatecommand=vcmd)
+        # self.functiewaardeblok.grid(row=self.variabelevoorrijenaanpassen, column= 98, columnspan = 1, padx = 1, pady = 1)
+        # self.functiewaardeblok.config(width = 1)
+        # self.vcmd = (self.functiewaardeblok.register(self.onValidate),'%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
 
         self.checkbox = Checkbutton( self.frame, variable= self.checkboxwaarde, background='white')
         self.checkbox.grid(row=self.variabelevoorrijenaanpassen, column= 120 , columnspan = 1, padx = 1, pady = 1)
@@ -221,6 +227,14 @@ class sensorblok():
         self.widget.append(self.sensorwaardeblok)
         self.widget.append(self.checkbox)
         self.widget.append(self.functiewaardeblok)
+
+    def setfunctiewaardeblok(self):
+        if self.functiewaardeblokwaarde == ">":
+            self.functiewaardeblokwaarde = "<"
+            self.functiewaardeblok['text'] = "lager is als"
+        else:
+            self.functiewaardeblokwaarde = ">"
+            self.functiewaardeblok['text'] = "hoger is als"
 
     def setsensorwaarde(self):
         self.sensorwaarde = self.sensorwaardeblok.get()
@@ -245,10 +259,7 @@ class sensorblok():
     #Deze wordt aangeroept per < of > die getypt wordt in het invulveld.
     def onValidate(self, d, i, P, s, S, v, V, W):
         if i == "0":
-            if S == "<" or S == ">":
-                return True
-            else:
-                return False
+            return True
         else:
             return False
 
