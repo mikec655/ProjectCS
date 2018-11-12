@@ -18,4 +18,4 @@ def writeSettings(settings):
     with open(file_path, "w") as settings_file:
         json.dump(settings, settings_file, indent=4)
 
-setFilePath("Centrale/centrale/settings.json")
+setFilePath("settings.json")

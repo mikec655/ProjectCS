@@ -1,12 +1,26 @@
 {
     "aansturingen": {
         "649353436333514040E0": {
-            "name": "Aansturing1",
+            "name": "Kantine",
             "up": "",
             "down": "",
             "timeout": "",
             "sensor_value": {}
+        },
+        "55731323136351A04150": {
+            "name": "Aansturing2",
+            "up": "07:00",
+            "down": "19:00",
+            "timeout": "",
+            "sensor_value": {
+                "5": ">1000.0"
+            }
         }
     },
-    "sensor_name": {}
+    "sensor_name": {
+        "5": {
+            "name": "Lichtsensor1",
+            "type": "_LGHT"
+        }
+    }
 }

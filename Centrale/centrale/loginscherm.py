@@ -7,7 +7,7 @@ class Login(MyFrame):
 
     def __init__(self, nb):
         super().__init__(nb, "Login")
-        self.creds = 'Centrale/centrale/tempfile.temp'
+        self.creds = 'tempfile.temp'
         self.loggedin = ""
 
         # Here opens a password file.
@@ -20,7 +20,7 @@ class Login(MyFrame):
         
         #try to open a image
         try:  
-            self.path = Image.open("Centrale/centrale/zeng_logo.png")
+            self.path = Image.open("zeng_logo.png")
         except IOError: 
             pass
 

@@ -24,7 +24,7 @@ class Centrale(Tk):
         super().__init__()
         self.geometry("1000x700")
         self.title("Centrale")
-        icon = PhotoImage(file='Centrale/centrale/icon.png')
+        icon = PhotoImage(file='icon.png')
         self.tk.call('wm', 'iconphoto', self._w, icon)
 
         # control variables
@@ -143,7 +143,7 @@ class Centrale(Tk):
                     for frame in self.frames.keys():
                         if "sensor" in frame:
                             self.frames[frame].stop() 
-                    print("END")
+                    print("Program Exit")
                 break
 
     def checkLoggedIn(self):
@@ -167,7 +167,7 @@ class Centrale(Tk):
                         self.frames[frame].deleteFrame()
                         del self.frames[frame]
                     except:
-                        print('FrameDestroyError :(')
+                        pass
 
     def checkForDevices(self):
         # Controleert of er nieuwe device zijn toegevoed of bestaande devices zijn verwijderd

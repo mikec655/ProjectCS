@@ -32,7 +32,7 @@ class Properties(MyFrame):
         hernoemtitel.grid(row = 2, column = 0, columnspan = 1,pady = 2)
         hernoemtitel.config(font=("Times new roman", 12))
         self.hernoemen = Entry(self)
-        self.hernoemen.grid(row = 2, column= 12 , columnspan = 1, padx = 1, pady = 1)
+        self.hernoemen.grid(row = 2, column= 12 , columnspan = 1, padx = 20, pady = 1)
 
         onzichtbaar = Label(self, text="", background='white')
         onzichtbaar.grid(row = 3, column = 0, columnspan = 1,pady = 2)
@@ -41,7 +41,6 @@ class Properties(MyFrame):
         autotitel.grid(row = 5, column = 0, columnspan = 1,pady = 2)
         autotitel.config(font=("Times new roman", 12, "bold"))
         
-
         downtimertitel = Label(self, text="Omlaagtijd:", background='white')
         downtimertitel.grid(row = 6, column = 0, columnspan = 1,pady = 1)
         downtimertitel.config(font=("Times new roman", 12))
@@ -62,10 +61,6 @@ class Properties(MyFrame):
         self.sensortitel = Label(self, text= 'Uitrollen als: ', background='white')
         self.sensortitel.grid(row = 0, column = 80, columnspan = 1, padx = 1, pady = 5)
         self.sensortitel.config(font=("Times new roman", 14))
-        
-        # self.functietitel = Label(self, text= '</>:', background='white')
-        # self.functietitel.grid(row = 0, column = 98, columnspan = 1, padx = 1, pady = 5)
-        # self.functietitel.config(font=("Times new roman", 14, "bold"))
         
         self.sensortitel2 = Label(self, text= 'Aan/Uit', background='white')
         self.sensortitel2.grid(row = 0, column = 120, columnspan = 1, padx = 1, pady = 5)
@@ -114,6 +109,7 @@ class Properties(MyFrame):
         else:
             self.aansturingen = aansturingen.copy()
             self.sensors = sensors.copy()
+
             for instantie in self.knoplijst:
                 instantie.deletewidgets()
 
@@ -130,12 +126,9 @@ class Properties(MyFrame):
     def savesettings(self):
         settings = settings_editor.readSettings()
         
-        
         for A in self.aansturingen:
             if str(self.waardeoption.get()) == A.name: #zoeken vanaf aansturing naam > aansturing id.
-
                 self.aansturing_id = A.id
-                print("aansturing id = " + A.id ) # aansturingid voor json file
                 
                 if len(self.hernoemen.get()) > 0:
                     settings['aansturingen'][self.aansturing_id]['name'] = self.hernoemen.get()
@@ -146,25 +139,16 @@ class Properties(MyFrame):
                     settings_editor.writeSettings(settings) 
                     settings['aansturingen'][self.aansturing_id]['up'] = self.up.get()
                     settings_editor.writeSettings(settings) 
-
-        
-        #error boxen indien niet voldoende modules aangesloten zijn.
-        # if not self.aansturing_id and len(self.knoplijst)== 0:
-        #     messagebox.showinfo("error", "Sluit een motormodule en sensormodule aan.")
-        # elif len(self.knoplijst)== 0 and self.aansturing_id:
-        #     messagebox.showinfo("error", "Sluit een sensormodule aan.")
-        # else:
-        #     messagebox.showinfo("error", "Sluit een motormodule aan.")
         
         #schrijf en delete .json file entrys opbasis van aangevinkte checkbox en volledig ingevuld.
         for x in self.knoplijst:
+            try:
                 if x.checkboxwaarde.get() == 1 and len(x.sensorwaardeblok.get()) > 0:
                     settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id] = x.functiewaardeblokwaarde + str(float(x.sensorwaardeblok.get()))
                 else:
-                    try:
-                        del settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id]
-                    except KeyError:
-                        pass
+                    del settings['aansturingen'][self.aansturing_id]['sensor_value'][x.sensor.id]
+            except KeyError:
+                pass
     
         settings_editor.writeSettings(settings) 
 
@@ -238,7 +222,6 @@ class sensorblok():
 
     def setsensorwaarde(self):
         self.sensorwaarde = self.sensorwaardeblok.get()
-        print(self.sensorwaarde)
     
     #wordt gebruikt om het sensorblok te verwijderen indien sensor wordt losgekoppeld
     def deletewidgets(self):
