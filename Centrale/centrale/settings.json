@@ -4,7 +4,7 @@
             "name": "Aansturing1",
             "up": "",
             "down": "",
-            "timeout": "",
+            "timeout": "12:19",
             "sensor_value": {}
         }
     },
@@ -12,6 +12,10 @@
         "6": {
             "name": "Lichtsensor1",
             "type": "_LGHT"
+        },
+        "75435353138351F08050": {
+            "name": "Temperatuursensor1",
+            "type": "_TEMP"
         }
     }
 }

@@ -185,8 +185,7 @@ class Centrale(Tk):
                 # Als sensor niet meer aangesloten staat verwijder van sensor
                 if sensor.port not in [port.device for port in available_ports]:
                     try:
-                        self.frames[sensor.name].deleteFrame()
-                        del self.frames[sensor.name]
+                        self.framesToDelete.append(sensor.name)
                     except KeyError:
                         pass
                     sensor.disconnect()
