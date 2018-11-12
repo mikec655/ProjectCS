@@ -7,7 +7,8 @@ class MyFrame(ttk.Frame):
         style = ttk.Style()
         style.configure('My.TFrame', background='white')
         super().__init__(nb, style='My.TFrame')
-        nb.add(self, text=name)
+        self.nb = nb
+        self.nb.add(self, text=name)
     
     def deleteFrame(self):
         # hier wordt het frame verwijderd

@@ -1,21 +1,12 @@
 {
     "aansturingen": {
-        "55731323136351A04150": {
+        "649353436333514040E0": {
             "name": "Aansturing1",
             "up": "",
             "down": "",
-            "timeout": "15:50",
+            "timeout": "",
             "sensor_value": {}
         }
     },
-    "sensor_name": {
-        "6": {
-            "name": "Lichtsensor1",
-            "type": "_LGHT"
-        },
-        "75435353138351F08050": {
-            "name": "Temperatuursensor1",
-            "type": "_TEMP"
-        }
-    }
+    "sensor_name": {}
 }

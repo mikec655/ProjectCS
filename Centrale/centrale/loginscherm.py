@@ -79,7 +79,8 @@ class Login(MyFrame):
             self.loginB.destroy()
             self.loginB = Button(self.subFrame, text='Logout',command=self.logOut)
             self.loginB.grid(row=7, columnspan=3, pady=15, sticky="EW")
-            self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER) 
+            self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER)
+            self.nb.tab(self, text="Logout") 
 
     def logOut(self):
         # logout and go back to normal gui.
@@ -106,4 +107,6 @@ class Login(MyFrame):
 
         self.inlogError = Label(self.subFrame, text='',background='white', foreground="red")
         self.inlogError.grid(row=7, sticky=W)
-        self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER) 
+        self.subFrame.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+        self.nb.tab(self, text="Login") 
